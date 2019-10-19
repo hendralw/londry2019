@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Branch;
+use App\Duration;
 use Illuminate\Support\Facades\Validator;
 use Response;
 
-class BranchController extends Controller
+class DurationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +17,9 @@ class BranchController extends Controller
      */
     public function index(Request $request)
     {
-        $branches = Branch::orderBy('branches_id', 'ASC')->get();
-        return view('branch', compact('branches'));
+        $durations = Duration::orderBy('durations_id', 'ASC')->get();
+        return view('duration', compact('durations'));
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -29,7 +28,7 @@ class BranchController extends Controller
      */
     public function create()
     {
-        return view('branch');
+        return view('duration');
     }
 
     /**
@@ -42,16 +41,14 @@ class BranchController extends Controller
     {
         $messages = [
             'required' => 'Field is required.',
-            'numeric' => 'Field must be number.'
         ];
 
         $this->validate($request, [
-            'branches_name' => 'required', 
-            'branches_address' => 'required', 
-            'branches_phone' => 'required|numeric'], $messages);
+            'durations_name' => 'required',
+        ], $messages);
 
-        Branch::create($request->all());
-        return redirect()->route('Branch.index')->with('success', 'create item!');
+        Duration::create($request->all());
+        return redirect()->route('Duration.index')->with('success', 'create item!');
     }
 
     /**
@@ -62,8 +59,8 @@ class BranchController extends Controller
      */
     public function show($id)
     {
-        $branches = Branch::find($id);
-        return view('branch', compact('branches'));
+        $durations = Duration::find($id);
+        return view('duration', compact('durations'));
     }
 
     /**
@@ -74,8 +71,8 @@ class BranchController extends Controller
      */
     public function edit($id)
     {
-        $branches = Branch::find($id);
-        return view('branch', compact('branches'));
+        $durations = Duration::find($id);
+        return view('duration', compact('durations'));
     }
 
     /**
@@ -87,9 +84,9 @@ class BranchController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $id = $request->input('branches_id');
-        Branch::find($id)->update($request->all());
-        return redirect()->route('Branch.index')->with('success', 'update item!');
+        $id = $request->input('durations_id');
+        Duration::find($id)->update($request->all());
+        return redirect()->route('Duration.index')->with('success', 'update item!');
     }
 
     /**
@@ -100,7 +97,7 @@ class BranchController extends Controller
      */
     public function destroy($id)
     {
-        Branch::find($id)->delete();
-        return redirect()->route('Branch.index')->with('success', 'delete item!');
+        Duration::find($id)->delete();
+        return redirect()->route('Duration.index')->with('success', 'delete item!');
     }
 }

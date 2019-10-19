@@ -37,7 +37,7 @@
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Data Cabang</h4>
+                                    <h4>Data Durasi</h4>
                                 </div>
                             </div>
                         </div>
@@ -49,15 +49,15 @@
                                     </li>
                                     <li class="breadcrumb-item"><a href="#!">Data Master</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="#!">Data Cabang</a>
+                                    <li class="breadcrumb-item"><a href="#!">Data Durasi</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                         <div class="container"><br>
                             <button class="btn btn-primary btn-md waves-effect f-right d-inline-block md-trigger"
-                                data-toggle="modal" data-target="#default-Modal" id="open"><i
-                                    class="fa fa-plus"></i>Add Data</button>
+                                data-toggle="modal" data-target="#default-Modal" id="open"><i class="fa fa-plus"></i>Add
+                                Data</button>
                         </div>
                     </div>
                 </div>
@@ -79,41 +79,31 @@
                                                 <tr>
                                                     <th width=30px>No</th>
                                                     <th>Name</th>
-                                                    <th>Address</th>
-                                                    <th>Phone</th>
                                                     <th width="40px">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php $no = 0; ?>
-                                                @foreach ($branches as $branch)
+                                                @foreach ($durations as $duration)
                                                 <?php $no++ ?>
                                                 <tr>
                                                     <td>
                                                         {{ $no }}
                                                     </td>
                                                     <td>
-                                                        {{ $branch->branches_name }}
+                                                        {{ $duration->durations_name }}
                                                     </td>
                                                     <td>
-                                                        {{ $branch->branches_address }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $branch->branches_phone }}
-                                                    </td>
-                                                    <td>
-                                                        <a href="{{ route('Branch.edit', $branch->branches_id) }}"
+                                                        <a href="{{ route('Duration.edit', $duration->durations_id) }}"
                                                             data-toggle="modal" data-target="#editmodal"
-                                                            class="btn btn-warning btn-mini btn-round" id="branches_id"
-                                                            data-id="{{ $branch->branches_id }}"
-                                                            data-name="{{ $branch->branches_name }}"
-                                                            data-address="{{ $branch->branches_address }}"
-                                                            data-phone="{{ $branch->branches_phone }}">Edit</a>
+                                                            class="btn btn-warning btn-mini btn-round" id="durations_id"
+                                                            data-id="{{ $duration->durations_id }}"
+                                                            data-name="{{ $duration->durations_name }}">Edit</a>
 
-                                                        <a href="{{ route('Branch.destroy', $branch->branches_id) }}"
+                                                        <a href="{{ route('Duration.destroy', $duration->durations_id) }}"
                                                             data-toggle="modal" data-target="#deletemodal"
                                                             class="btn btn-danger btn-mini btn-round"
-                                                            id="branches_id">Delete</a>
+                                                            id="durations_id">Delete</a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -133,50 +123,27 @@
                     <div class="modal-content">
                         <div class="alert alert-danger" style="display:none"></div>
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Cabang</h4>
+                            <h4 class="modal-title">Add Durasi</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <div class="page-body">
-
-                                {{ Form::open(array('route' => 'Branch.store', 'method' => 'POST')) }}
-
+                                {{ Form::open(array('route' => 'Duration.store', 'method' => 'POST')) }}
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group row">
                                             <label class="col-sm-12 col-form-label">Name
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="branches_name"
-                                                    id="branches_name">
-                                                @if ($errors->has('branches_name'))
+                                                <input type="text" class="form-control" name="durations_name"
+                                                    id="durations_name">
+                                                @if ($errors->has('durations_name'))
                                                 <span class="text text-danger">
-                                                    {{ $errors->first('branches_name') }}
+                                                    {{ $errors->first('durations_name') }}
                                                 </span>
                                                 @endif
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Address</label>
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" id="branches_address"
-                                                    name="branches_address">
-                                                <strong id=address-error></strong>
-
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Phone
-                                            </label>
-                                            <div class="col-sm-12">
-                                                <input type="number" class="form-control" id="branches_phone"
-                                                    name="branches_phone">
-                                                <strong id=phone-error></strong>
-
-                                                <span class="messages"></span>
                                             </div>
                                         </div>
                                         <div class="form-group row f-right">
@@ -187,7 +154,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     {{ Form::close() }}
                                 </div>
                             </div>
@@ -208,8 +174,8 @@
                         </div>
                         <div class="modal-body">
                             <div class="page-body">
-                                @if(count($branches))
-                                {{ Form::model($branches, ['method' => 'PATCH', 'route' => ['Branch.update', $branch->branches_id]]) }}
+                                @if(count($durations))
+                                {{ Form::model($durations, ['method' => 'PATCH', 'route' => ['Duration.update', $duration->durations_id]]) }}
 
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -217,8 +183,8 @@
                                             <label class="col-sm-12 col-form-label">Id
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="branches_id"
-                                                    id="branches_id_edit">
+                                                <input type="text" class="form-control" name="durations_id"
+                                                    id="durations_id_edit">
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
@@ -226,25 +192,8 @@
                                             <label class="col-sm-12 col-form-label">Name
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="branches_name"
-                                                    id="branches_name_edit">
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Address</label>
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="branches_address"
-                                                    id="branches_address_edit">
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Phone
-                                            </label>
-                                            <div class="col-sm-12">
-                                                <input type="number" class="form-control" name="branches_phone"
-                                                    id="branches_phone_edit">
+                                                <input type="text" class="form-control" name="durations_name"
+                                                    id="durations_name_edit">
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
@@ -270,19 +219,20 @@
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="page-body">
-                                @if(count($branches))
-                                {{ Form::model($branches, ['method' => 'Delete', 'route' => ['Branch.destroy', $branch->branches_id]]) }}
-
+                                @if(count($durations))
+                                {{ Form::model($durations, ['method' => 'Delete', 'route' => ['Duration.destroy', $duration->durations_id]]) }}
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group row">
-                                            <label class="col-sm-12 col-form-label text-center"><h5>Are you sure want to
-                                                delete this data?</h5>
+                                            <label class="col-sm-12 col-form-label text-center">
+                                                <h5>Are you sure want to
+                                                    delete this data?</h5>
                                             </label>
                                         </div>
                                         <div style="text-align: center">
                                             <div class="col-sm-12">
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                                <button type="button" class="btn btn-danger"
+                                                    data-dismiss="modal">No</button>
                                                 <button type="submit" class="btn btn-primary m-b-0">Yes</button>
                                             </div>
                                         </div>
@@ -394,15 +344,11 @@
 <script type="text/javascript">
     $('#editmodal').on('show.bs.modal', function (e) {
         var a = $(e.relatedTarget);
-        var branches_id_edit = a.data('id');
-        var branches_name_edit = a.data('name');
-        var branches_address_edit = a.data('address');
-        var branches_phone_edit = a.data('phone');
+        var durations_id_edit = a.data('id');
+        var durations_name_edit = a.data('name');
         var modal = $(this)
-        document.getElementById("branches_id_edit").value = branches_id_edit;
-        document.getElementById("branches_name_edit").value = branches_name_edit;
-        document.getElementById("branches_address_edit").value = branches_address_edit;
-        document.getElementById("branches_phone_edit").value = branches_phone_edit;
+        document.getElementById("durations_id_edit").value = durations_id_edit;
+        document.getElementById("durations_name_edit").value = durations_name_edit;
     })
 </script>
 @endsection

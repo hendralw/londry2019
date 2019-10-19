@@ -18,6 +18,9 @@
                         <a href="{{ url('/Branch') }}">
                             <span class="pcoded-mtext">Cabang</span>
                         </a>
+                        <a href="{{ url('/Duration') }}">
+                            <span class="pcoded-mtext">Durasi</span>
+                        </a>
                     </li>
                 </ul>
             </li>
