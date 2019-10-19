@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Branch;
 
+
+use Illuminate\Support\Facades\Validator;
+use Response;
+
 class BranchController extends Controller
 {
     /**
@@ -15,20 +19,8 @@ class BranchController extends Controller
      */
     public function index(Request $request)
     {
-        // $query = $request->get('query');
-        // $query = str_replace(" ", "%", $query);
-        // $branches = Branch::where('branches_id', 'like', '%' . $query . '%')
-        //     ->orWhere('branches_name', 'like', '%' . $query . '%')
-        //     ->orWhere('branches_address', 'like', '%' . $query . '%')
-        //     ->orWhere('branches_phone', 'like', '%' . $query . '%')
-        //     ->paginate(1);
-        // if ($request->ajax()) {
-
-        //     return view('searchb', compact('branches'))->render();
-        // } else {
         $branches = Branch::orderBy('branches_id', 'ASC')->get();
         return view('branch', compact('branches'));
-        // }
     }
 
 
@@ -50,8 +42,18 @@ class BranchController extends Controller
      */
     public function store(Request $request)
     {
+        $messages = [
+            'required' => 'Field is required.',
+            'numeric' => 'Field must be number.'
+        ];
+
+        $this->validate($request, [
+            'branches_name' => 'required', 
+            'branches_address' => 'required', 
+            'branches_phone' => 'required|numeric'], $messages);
+
         Branch::create($request->all());
-        return redirect()->route('Branch.index')->with('success', 'item created succesfully');
+        return redirect()->route('Branch.index')->with('success', 'create item!');
     }
 
     /**
@@ -89,7 +91,7 @@ class BranchController extends Controller
     {
         $id = $request->input('branches_id');
         Branch::find($id)->update($request->all());
-        return redirect()->route('Branch.index')->with('success', 'item updated succesfully');
+        return redirect()->route('Branch.index')->with('success', 'update item!');
     }
 
     /**
@@ -101,6 +103,6 @@ class BranchController extends Controller
     public function destroy($id)
     {
         Branch::find($id)->delete();
-        return redirect()->route('Branch.index')->with('success', 'Item Deleted successfully');
+        return redirect()->route('Branch.index')->with('success', 'delete item!');
     }
 }
