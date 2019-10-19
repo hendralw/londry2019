@@ -84,6 +84,7 @@
                                             </thead>
                                             <tbody>
                                                 <?php $no = 0; ?>
+                                                @if(count($branches))
                                                 @foreach ($branches as $branch)
                                                 <?php $no++ ?>
                                                 <tr>
@@ -112,6 +113,13 @@
                                                     </td>
                                                 </tr>
                                                 @endforeach
+                                                @else
+                                                <tr>
+                                                    <td align="center" colspan="6">
+                                                        Empty Data
+                                                    </td>
+                                                </tr>
+                                                @endif
                                             </tbody>
                                         </table>
                                     </div>
@@ -134,6 +142,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="page-body">
+
                                 {{ Form::open(array('route' => 'Branch.store', 'method' => 'POST')) }}
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -187,6 +196,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="page-body">
+                                @if(count($branches))
                                 {{ Form::model($branches, ['method' => 'PATCH', 'route' => ['Branch.update', $branch->branches_id]]) }}
 
                                 {{-- {{ Form::open(array('route' => ['Branch.update', $branch->id], 'method' => 'PATCH')) }}
@@ -233,6 +243,7 @@
                                     </div>
                                 </div>
                                 {{ Form::close() }}
+                                @endif
                             </div>
                         </div>
                     </div>
