@@ -95,8 +95,9 @@ class DurationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        $id = $request->input('durations_id');
         Duration::find($id)->delete();
         return redirect()->route('Duration.index')->with('success', 'delete item!');
     }

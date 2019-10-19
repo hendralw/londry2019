@@ -37,8 +37,18 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        // $messages = [
+        //     'required' => 'Field is required.',
+        //     'numeric' => 'Field must be number.'
+        // ];
+
+        // $this->validate($request, [
+        //     'branches_name' => 'required', 
+        //     'branches_address' => 'required', 
+        //     'branches_phone' => 'required|numeric'], $messages);
+
         Employee::create($request->all());
-        return redirect()->route('Employee.index')->with('success', 'item created succesfully');
+        return redirect()->route('Employee.index')->with('success', 'create item!');
     }
 
     /**
@@ -74,8 +84,9 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $id = $request->input('employees_id');
         Employee::find($id)->update($request->all());
-        return redirect()->route('Employee.index')->with('success', 'item updated succesfully');
+        return redirect()->route('Employee.index')->with('success', 'update item!');
     }
 
     /**
@@ -87,6 +98,6 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         Employee::find($id)->delete();
-        return redirect()->route('Employee.index')->with('success', 'Item Deleted successfully');
+        return redirect()->route('Employee.index')->with('success', 'delete item!');
     }
 }

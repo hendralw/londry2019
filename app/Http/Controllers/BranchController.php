@@ -98,8 +98,9 @@ class BranchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        $id = $request->input('branches_id');
         Branch::find($id)->delete();
         return redirect()->route('Branch.index')->with('success', 'delete item!');
     }

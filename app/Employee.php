@@ -15,6 +15,7 @@ class Employee extends Model
     {
         return $this->belongsTo('App\Branch', 'branches_id');
     }
+    
     public function role()
     {
         return $this->belongsTo('App\Role', 'roles_id');

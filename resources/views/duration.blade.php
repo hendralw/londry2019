@@ -102,8 +102,9 @@
 
                                                         <a href="{{ route('Duration.destroy', $duration->durations_id) }}"
                                                             data-toggle="modal" data-target="#deletemodal"
-                                                            class="btn btn-danger btn-mini btn-round"
-                                                            id="durations_id">Delete</a>
+                                                            class="btn btn-danger btn-mini btn-round" id="durations_id"
+                                                            data-id="{{ $duration->durations_id }}"
+                                                            data-name="{{ $duration->durations_name }}">Delete</a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -176,7 +177,6 @@
                             <div class="page-body">
                                 @if(count($durations))
                                 {{ Form::model($durations, ['method' => 'PATCH', 'route' => ['Duration.update', $duration->durations_id]]) }}
-
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group row" hidden>
@@ -223,6 +223,24 @@
                                 {{ Form::model($durations, ['method' => 'Delete', 'route' => ['Duration.destroy', $duration->durations_id]]) }}
                                 <div class="row">
                                     <div class="col-sm-12">
+                                        <div class="form-group row" hidden>
+                                            <label class="col-sm-12 col-form-label">Id
+                                            </label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" name="durations_id"
+                                                    id="durations_id_delete">
+                                                <span class="messages"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" hidden>
+                                            <label class="col-sm-12 col-form-label">Name
+                                            </label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" name="durations_name"
+                                                    id="durations_name_delete">
+                                                <span class="messages"></span>
+                                            </div>
+                                        </div>
                                         <div class="form-group row">
                                             <label class="col-sm-12 col-form-label text-center">
                                                 <h5>Are you sure want to
@@ -350,5 +368,18 @@
         document.getElementById("durations_id_edit").value = durations_id_edit;
         document.getElementById("durations_name_edit").value = durations_name_edit;
     })
+
+</script>
+
+<script type="text/javascript">
+    $('#deletemodal').on('show.bs.modal', function (e) {
+        var a = $(e.relatedTarget);
+        var durations_id_delete = a.data('id');
+        var durations_name_delete = a.data('name');
+        var modal = $(this)
+        document.getElementById("durations_id_delete").value = durations_id_delete;
+        document.getElementById("durations_name_delete").value = durations_name_delete;
+    })
+
 </script>
 @endsection

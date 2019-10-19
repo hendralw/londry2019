@@ -15,11 +15,14 @@
                 </a>
                 <ul class="pcoded-submenu">
                     <li class="">
-                        <a href="{{ url('/Branch') }}">
+                        <a href="{{ ('Branch') }}">
                             <span class="pcoded-mtext">Cabang</span>
                         </a>
-                        <a href="{{ url('/Duration') }}">
+                        <a href="{{ ('Duration') }}">
                             <span class="pcoded-mtext">Durasi</span>
+                        </a>
+                        <a href="{{ ('Employee') }}">
+                            <span class="pcoded-mtext">Pegawai</span>
                         </a>
                     </li>
                 </ul>

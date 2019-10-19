@@ -37,7 +37,7 @@
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Data Cabang</h4>
+                                    <h4>Data Pegawai</h4>
                                 </div>
                             </div>
                         </div>
@@ -49,15 +49,15 @@
                                     </li>
                                     <li class="breadcrumb-item"><a href="#!">Data Master</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="#!">Data Cabang</a>
+                                    <li class="breadcrumb-item"><a href="#!">Data Pegawai</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                         <div class="container"><br>
                             <button class="btn btn-primary btn-md waves-effect f-right d-inline-block md-trigger"
-                                data-toggle="modal" data-target="#default-Modal" id="open"><i class="fa fa-plus"></i>Add
-                                Data</button>
+                                data-toggle="modal" data-target="#default-Modal" id="open"><i
+                                    class="fa fa-plus"></i>Add Data</button>
                         </div>
                     </div>
                 </div>
@@ -74,50 +74,70 @@
                             <div class="card">
                                 <div class="card-block">
                                     <div class="dt-responsive table-responsive">
-                                        <table id="new-cons" class="table table-striped table-bordered nowrap"
-                                            data-form="deleteForm">
+                                        <table id="new-cons" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
                                                     <th width=30px>No</th>
+                                                    <th>Cabang</th>
+                                                    <th>Id Role</th>
+                                                    <th>Id Status</th>
                                                     <th>Name</th>
                                                     <th>Address</th>
                                                     <th>Phone</th>
+                                                    <th>Salary</th>
+                                                    <th>Username</th>
+                                                    <th>Password</th>
                                                     <th width="40px">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php $no = 0; ?>
-                                                @foreach ($branches as $branch)
+                                                @foreach ($employees as $employee)
                                                 <?php $no++ ?>
                                                 <tr>
                                                     <td>
                                                         {{ $no }}
                                                     </td>
                                                     <td>
-                                                        {{ $branch->branches_name }}
+                                                        {{ $employee->branch->branches_name }}
                                                     </td>
                                                     <td>
-                                                        {{ $branch->branches_address }}
+                                                        {{ $employee->roles_id }}
                                                     </td>
                                                     <td>
-                                                        {{ $branch->branches_phone }}
+                                                        {{ $employee->status_id }}
                                                     </td>
                                                     <td>
-                                                        <a href="{{ route('Branch.edit', $branch->branches_id) }}"
+                                                        {{ $employee->employees_name }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $employee->employees_address }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $employee->employees_phone }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $employee->employees_salary }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $employee->username }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $employee->password }}
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ route('Employee.edit', $employee->employees_id) }}"
                                                             data-toggle="modal" data-target="#editmodal"
-                                                            class="btn btn-warning btn-mini btn-round" id="branches_id"
-                                                            data-id="{{ $branch->branches_id }}"
-                                                            data-name="{{ $branch->branches_name }}"
-                                                            data-address="{{ $branch->branches_address }}"
-                                                            data-phone="{{ $branch->branches_phone }}">Edit</a>
+                                                            class="btn btn-warning btn-mini btn-round" id="employees_id"
+                                                            data-id="{{ $employee->employees_id }}"
+                                                            data-name="{{ $employee->employees_name }}"
+                                                            data-address="{{ $employee->employees_address }}"
+                                                            data-phone="{{ $employee->employees_phone }}">Edit</a>
 
-                                                        <a href="{{ route('Branch.destroy', $branch->branches_id) }}"
+                                                        <a href="{{ route('Employee.destroy', $employee->employees_id) }}"
                                                             data-toggle="modal" data-target="#deletemodal"
-                                                            class="btn btn-danger btn-mini btn-round" id="branches_id"
-                                                            data-id="{{ $branch->branches_id }}"
-                                                            data-name="{{ $branch->branches_name }}"
-                                                            data-address="{{ $branch->branches_address }}"
-                                                            data-phone="{{ $branch->branches_phone }}">Delete</a>
+                                                            class="btn btn-danger btn-mini btn-round"
+                                                            id="employees_id">Delete</a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -137,25 +157,51 @@
                     <div class="modal-content">
                         <div class="alert alert-danger" style="display:none"></div>
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Cabang</h4>
+                            <h4 class="modal-title">Add Pegawai</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <div class="page-body">
-                                {{ Form::open(array('route' => 'Branch.store', 'method' => 'POST')) }}
+
+                                {{ Form::open(array('route' => 'Employee.store', 'method' => 'POST')) }}
+
                                 <div class="row">
                                     <div class="col-sm-12">
+                                        <div class="form-group row">
+                                            <label class="col-sm-12 col-form-label">Cabang
+                                            </label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" name="branches_id"
+                                                    id="branches_id">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-12 col-form-label">Role
+                                            </label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" name="roles_id"
+                                                    id="roles_id">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-12 col-form-label">Status
+                                            </label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" name="status_id"
+                                                    id="status_id">
+                                            </div>
+                                        </div>
                                         <div class="form-group row">
                                             <label class="col-sm-12 col-form-label">Name
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="branches_name"
-                                                    id="branches_name">
-                                                @if ($errors->has('branches_name'))
+                                                <input type="text" class="form-control" name="employees_name"
+                                                    id="employees_name">
+                                                @if ($errors->has('employees_name'))
                                                 <span class="text text-danger">
-                                                    {{ $errors->first('branches_name') }}
+                                                    {{ $errors->first('employees_name') }}
                                                 </span>
                                                 @endif
                                             </div>
@@ -163,9 +209,10 @@
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Address</label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" id="branches_address"
-                                                    name="branches_address">
+                                                <input type="text" class="form-control" id="employees_address"
+                                                    name="employees_address">
                                                 <strong id=address-error></strong>
+
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
@@ -173,9 +220,39 @@
                                             <label class="col-sm-2 col-form-label">Phone
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="number" class="form-control" id="branches_phone"
-                                                    name="branches_phone">
-                                                <strong id=phone-error></strong>
+                                                <input type="number" class="form-control" id="employees_phone"
+                                                    name="employees_phone">
+
+                                                <span class="messages"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Salary
+                                            </label>
+                                            <div class="col-sm-12">
+                                                <input type="number" class="form-control" id="employees_salary"
+                                                    name="employees_salary">
+
+                                                <span class="messages"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Username
+                                            </label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="username"
+                                                    name="username">
+
+                                                <span class="messages"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Password
+                                            </label>
+                                            <div class="col-sm-12">
+                                                <input type="password" class="form-control" id="password"
+                                                    name="password">
+
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
@@ -187,6 +264,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     {{ Form::close() }}
                                 </div>
                             </div>
@@ -196,7 +274,7 @@
             </div>
 
             {{-- Modal Edit Data --}}
-            <div class="modal fade" id="editmodal" tabindex="-1" role="dialog">
+            {{-- <div class="modal fade" id="editmodal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -207,16 +285,17 @@
                         </div>
                         <div class="modal-body">
                             <div class="page-body">
-                                @if(count($branches))
-                                {{ Form::model($branches, ['method' => 'PATCH', 'route' => ['Branch.update', $branch->branches_id]]) }}
+                                @if(count($employees))
+                                {{ Form::model($employees, ['method' => 'PATCH', 'route' => ['Employee.update', $employee->employees_id]]) }}
+
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group row" hidden>
                                             <label class="col-sm-12 col-form-label">Id
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="branches_id"
-                                                    id="branches_id_edit">
+                                                <input type="text" class="form-control" name="employees_id"
+                                                    id="employees_id_edit">
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
@@ -224,16 +303,16 @@
                                             <label class="col-sm-12 col-form-label">Name
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="branches_name"
-                                                    id="branches_name_edit">
+                                                <input type="text" class="form-control" name="employees_name"
+                                                    id="employees_name_edit">
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Address</label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="branches_address"
-                                                    id="branches_address_edit">
+                                                <input type="text" class="form-control" name="employees_address"
+                                                    id="employees_address_edit">
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
@@ -241,8 +320,8 @@
                                             <label class="col-sm-2 col-form-label">Phone
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="number" class="form-control" name="branches_phone"
-                                                    id="branches_phone_edit">
+                                                <input type="number" class="form-control" name="employees_phone"
+                                                    id="employees_phone_edit">
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
@@ -260,63 +339,27 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             {{-- Modal Delete Data --}}
-            <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog">
+            {{-- <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="page-body">
-                                @if(count($branches))
-                                {{ Form::model($branches, ['method' => 'Delete', 'route' => ['Branch.destroy', $branch->branches_id]]) }}
+                                @if(count($employees))
+                                {{ Form::model($employees, ['method' => 'Delete', 'route' => ['Employee.destroy', $employee->employees_id]]) }}
+
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <div class="form-group row" hidden>
-                                            <label class="col-sm-12 col-form-label">Id
-                                            </label>
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="branches_id"
-                                                    id="branches_id_delete">
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row" hidden>
-                                            <label class="col-sm-12 col-form-label">Name
-                                            </label>
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="branches_name"
-                                                    id="branches_name_delete">
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row" hidden>
-                                            <label class="col-sm-2 col-form-label">Address</label>
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="branches_address"
-                                                    id="branches_address_delete">
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row" hidden>
-                                            <label class="col-sm-2 col-form-label">Phone
-                                            </label>
-                                            <div class="col-sm-12">
-                                                <input type="number" class="form-control" name="branches_phone"
-                                                    id="branches_phone_delete">
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-12 col-form-label text-center">
-                                                <h5>Are you sure want to
-                                                    delete this data?</h5>
+                                            <label class="col-sm-12 col-form-label text-center"><h5>Are you sure want to
+                                                delete this data?</h5>
                                             </label>
                                         </div>
                                         <div style="text-align: center">
                                             <div class="col-sm-12">
-                                                <button type="button" class="btn btn-danger"
-                                                    data-dismiss="modal">No</button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
                                                 <button type="submit" class="btn btn-primary m-b-0">Yes</button>
                                             </div>
                                         </div>
@@ -328,7 +371,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
     <div class="md-overlay"></div>
@@ -425,35 +468,18 @@
 <script type="ae26a32c14305a2e2caf1aa9-text/javascript"
     src="{{ asset ('files/assets/pages/form-validation/form-validation.js') }}"></script>
 
-<script type="text/javascript">
+{{-- <script type="text/javascript">
     $('#editmodal').on('show.bs.modal', function (e) {
         var a = $(e.relatedTarget);
-        var branches_id_edit = a.data('id');
-        var branches_name_edit = a.data('name');
-        var branches_address_edit = a.data('address');
-        var branches_phone_edit = a.data('phone');
+        var employees_id_edit = a.data('id');
+        var employees_name_edit = a.data('name');
+        var employees_address_edit = a.data('address');
+        var employees_phone_edit = a.data('phone');
         var modal = $(this)
-        document.getElementById("branches_id_edit").value = branches_id_edit;
-        document.getElementById("branches_name_edit").value = branches_name_edit;
-        document.getElementById("branches_address_edit").value = branches_address_edit;
-        document.getElementById("branches_phone_edit").value = branches_phone_edit;
+        document.getElementById("employees_id_edit").value = employees_id_edit;
+        document.getElementById("employees_name_edit").value = employees_name_edit;
+        document.getElementById("employees_address_edit").value = employees_address_edit;
+        document.getElementById("employees_phone_edit").value = employees_phone_edit;
     })
-</script>
-
-<script type="text/javascript">
-    $('#deletemodal').on('show.bs.modal', function (e) {
-        var a = $(e.relatedTarget);
-        var branches_id_delete = a.data('id');
-        var branches_name_delete = a.data('name');
-        var branches_address_delete = a.data('address');
-        var branches_phone_delete = a.data('phone');
-        var modal = $(this)
-        document.getElementById("branches_id_delete").value = branches_id_delete;
-        document.getElementById("branches_name_delete").value = branches_name_delete;
-        document.getElementById("branches_address_delete").value = branches_address_delete;
-        document.getElementById("branches_phone_delete").value = branches_phone_delete;
-    })
-
-</script>
-
+</script> --}}
 @endsection

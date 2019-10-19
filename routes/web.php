@@ -17,3 +17,4 @@ Route::get('/', function () {
 
 Route::resource('Branch', 'BranchController');
 Route::resource('Duration', 'DurationController');
+Route::resource('Employee', 'EmployeeController');
