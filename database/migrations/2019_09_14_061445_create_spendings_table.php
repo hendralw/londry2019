@@ -15,11 +15,13 @@ class CreateSpendingsTable extends Migration
     {
         Schema::create('spendings', function (Blueprint $table) {
             $table->bigIncrements('spendings_id');
-            $table->integer('branches_id');
-            $table->integer('spending_categories_id');
+            $table->unsignedBigInteger('branches_id');
+            $table->foreign('branches_id')->references('branches_id')->on('branches')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedBigInteger('spending_categories_id');
+            $table->foreign('spending_categories_id')->references('spending_categories_id')->on('spending_categories')->onUpdate('cascade')->onDelete('cascade');
             $table->string('spendings_name');
             $table->string('spendings_total');
-            $table->dateTime('spendings_date');
+            $table->string('spendings_date');
             $table->timestamps();
         });
     }

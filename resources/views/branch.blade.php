@@ -103,6 +103,7 @@
                                                         {{ $branch->branches_phone }}
                                                     </td>
                                                     <td>
+<<<<<<< HEAD
                                                         <a href="{{ route('Branch.edit', $branch->branches_id) }}"
                                                             data-toggle="modal" data-target="#editmodal"
                                                             class="btn btn-warning btn-mini btn-round" id="branches_id"
@@ -118,6 +119,14 @@
                                                             data-name="{{ $branch->branches_name }}"
                                                             data-address="{{ $branch->branches_address }}"
                                                             data-phone="{{ $branch->branches_phone }}">Delete</a>
+=======
+                                                        <a href="{{ route('Branch.edit', $branch->branches_id) }}" data-toggle="modal" data-target="#editmodal" id="branches_id" data-id="{{ $branch->branches_id }}"><i class="fa fa-pencil btn btn-warning btn-mini btn-round"></i></a>
+
+                                                        <!-- <i href="Branch/destroy/{{ $branch->branches_id }}" id="branches_id"><i class="fa fa-trash-o btn btn-danger btn-mini btn-round"></i></a> -->
+                                                        {!! Form::open(['method' => 'Delete', 'route' => ['Branch.destroy', $branch->branches_id], 'style'=>'display:inline', 'id'=>'delete_form']) !!}
+                                                        <a href="#" onclick="document.getElementById('delete_form').submit()"> <i class="fa fa-trash-o btn btn-danger btn-mini btn-round"></i></a>
+                                                        {!! Form::close() !!}
+>>>>>>> master
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -248,7 +257,7 @@
                                         </div>
                                         <div class="form-group row f-right">
                                             <div class="col-sm-12">
-                                                <button type="reset" class="btn btn-danger">Reset</button>
+                                                <!-- <button type="reset" class="btn btn-danger">Reset</button> -->
                                                 <button type="submit" class="btn btn-primary m-b-0">Update</button>
                                             </div>
                                         </div>
