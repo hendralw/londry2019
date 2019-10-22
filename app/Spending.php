@@ -11,9 +11,9 @@ class Spending extends Model
     public $timestamps = true;
     protected $fillable = ['branches_id', 'spending_categories_id', 'spendings_name', 'spendings_total', 'spendings_date'];
 
-    public function item_category()
+    public function spending_category()
     {
-        return $this->belongsTo('App\Item_Category', 'item_categories_id');
+        return $this->belongsTo('App\Spending_Category', 'spending_categories_id');
     }
 
     public function branch()

@@ -19,6 +19,10 @@
 <link rel="stylesheet" type="text/css" href="{{ asset ('files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset ('files/assets/pages/data-table/extensions/responsive/css/responsive.dataTables.css') }}">
 
+<link rel="stylesheet" type="text/css" href="{{ asset ('files/assets/pages/advance-elements/css/bootstrap-datetimepicker.css') }}">
+
+<link rel="stylesheet" type="text/css" href="{{ asset ('files/bower_components/bootstrap-daterangepicker/css/daterangepicker.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ asset ('files/bower_components/datedropper/css/datedropper.min.css') }}" />
 
 <link href="{{ asset ('files/assets/pages/jquery.filer/css/jquery.filer.css') }}" type="text/css" rel="stylesheet" />
 <link href="{{ asset ('files/assets/pages/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css') }}" type="text/css" rel="stylesheet" />
@@ -36,7 +40,7 @@
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Data Cabang</h4>
+                                    <h4>Data Pengeluaran</h4>
                                 </div>
                             </div>
                         </div>
@@ -46,10 +50,9 @@
                                     <li class="breadcrumb-item">
                                         <a href="{{ '/' }}"> <i class="feather icon-home"></i> </a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="#!">Data Master</a>
+                                    <li class="breadcrumb-item"><a href="#!">Spending</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="#!">Data Cabang</a>
-                                    </li>
+
                                 </ul>
                             </div>
                         </div>
@@ -77,37 +80,45 @@
                                                     <th width=30px>Name</th>
                                                     <th width=30px>Id</th>
                                                     <th>No</th>
-                                                    <th>Address</th>
-                                                    <th>Phone</th>
+                                                    <th>Cabang</th>
+                                                    <th>Kategori</th>
+                                                    <th>Total</th>
+                                                    <th>Tanggal</th>
                                                     <th width="40px">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php $no = 0; ?>
-                                                @if(count($branches))
-                                                @foreach ($branches as $branch)
+                                                @if(count($spendings))
+                                                @foreach ($spendings as $spending)
                                                 <?php $no++ ?>
                                                 <tr>
                                                     <td>
-                                                        {{ $branch->branches_name }}
+                                                        {{ $spending->spendings_name }}
                                                     </td>
                                                     <td>
-                                                        {{ $branch->branches_id }}
+                                                        {{ $spending->spendings_id }}
                                                     </td>
                                                     <td>
                                                         {{ $no }}
                                                     </td>
                                                     <td>
-                                                        {{ $branch->branches_address }}
+                                                        {{ $spending->branch->branches_name }}
                                                     </td>
                                                     <td>
-                                                        {{ $branch->branches_phone }}
+                                                        {{ $spending->spending_category->spending_categories_name }}
                                                     </td>
                                                     <td>
-                                                        <a href="{{ route('Branch.edit', $branch->branches_id) }}" data-toggle="modal" data-target="#editmodal" id="branches_id" data-id="{{ $branch->branches_id }}"><i class="fa fa-pencil btn btn-warning btn-mini btn-round"></i></a>
+                                                        Rp.{{ $spending->spendings_total }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $spending->spendings_date }}
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ route('Spending.edit', $spending->spendings_id) }}" data-toggle="modal" data-target="#editmodal" id="spendings_id" data-id="{{ $spending->spendings_id }}" data-branch="{{ $spending->branches_id }}" data-name="{{ $spending->spendings_name }}" data-category="{{ $spending->spending_categories_id }}" data-total="{{ $spending->spendings_total }}" data-date="{{ $spending->spendings_date }}"><i class="fa fa-pencil btn btn-warning btn-mini btn-round"></i></a>
 
-                                                        <!-- <i href="Branch/destroy/{{ $branch->branches_id }}" id="branches_id"><i class="fa fa-trash-o btn btn-danger btn-mini btn-round"></i></a> -->
-                                                        {!! Form::open(['method' => 'Delete', 'route' => ['Branch.destroy', $branch->branches_id], 'style'=>'display:inline', 'id'=>'delete_form']) !!}
+
+                                                        {!! Form::open(['method' => 'Delete', 'route' => ['Spending.destroy', $spending->spendings_id], 'style'=>'display:inline', 'id'=>'delete_form']) !!}
                                                         <a href="#" onclick="document.getElementById('delete_form').submit()"> <i class="fa fa-trash-o btn btn-danger btn-mini btn-round"></i></a>
                                                         {!! Form::close() !!}
                                                     </td>
@@ -115,7 +126,7 @@
                                                 @endforeach
                                                 @else
                                                 <tr>
-                                                    <td align="center" colspan="6">
+                                                    <td align="center" colspan="8">
                                                         Empty Data
                                                     </td>
                                                 </tr>
@@ -143,29 +154,61 @@
                         <div class="modal-body">
                             <div class="page-body">
 
-                                {{ Form::open(array('route' => 'Branch.store', 'method' => 'POST')) }}
+                                {{ Form::open(array('route' => 'Spending.store', 'method' => 'POST')) }}
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group row">
                                             <label class="col-sm-12 col-form-label">Name
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="branches_name" id="branches_name">
+                                                <input type="text" class="form-control" name="spendings_name" id="spendings_name">
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Address</label>
+                                            <label class="col-sm-2 col-form-label">Cabang</label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" id="branches_address" name="branches_address">
+                                                <!-- <input type="text" class="form-control" id="spending_categories_id " name="spending_categories_id "> -->
+                                                <select name="branches_id" id="branches_id" class="form-control">
+                                                    <option value="" disabled selected></option>
+                                                    @foreach($branches as $branch)
+                                                    <option value="{{ $branch->branches_id }}">{{ $branch->branches_name }}</option>
+                                                    @endforeach
+                                                </select>
+
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Phone
+                                            <label class="col-sm-2 col-form-label">Kategori
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="number" class="form-control" id="branches_phone" name="branches_phone">
+                                                <select name="spending_categories_id" id="spending_categories_id" class="form-control">
+                                                    <option value="" disabled selected></option>
+                                                    @foreach($spending_categories as $category)
+                                                    <option value="{{ $category->spending_categories_id  }}">{{ $category->spending_categories_name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="messages"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Total
+                                            </label>
+                                            <div class="col-sm-12 row">
+                                                <p class="col">Rp.</p>
+                                                <input type="number" class="form-control col-10" name="spendings_total" id="spendings_total">
+
+                                                <span class="messages"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Tanggal
+                                            </label>
+                                            <div class="col-sm-12">
+                                                <div class="input-group date fj-date">
+                                                    <input id="spendings_date" name="spendings_date" class="form-control" type="text" placeholder="Select your date" /><span class="input-group-addon">
+                                                </div>
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
@@ -196,8 +239,8 @@
                         </div>
                         <div class="modal-body">
                             <div class="page-body">
-                                @if(count($branches))
-                                {{ Form::model($branches, ['method' => 'PATCH', 'route' => ['Branch.update', $branch->branches_id]]) }}
+                                @if(count($spendings))
+                                {{ Form::model($spendings, ['method' => 'PATCH', 'route' => ['Spending.update', $spending->spendings_id]]) }}
 
                                 {{-- {{ Form::open(array('route' => ['Branch.update', $branch->id], 'method' => 'PATCH')) }}
                                 --}}
@@ -207,7 +250,7 @@
                                             <label class="col-sm-12 col-form-label">Id
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="branches_id" id="branches_id_modal">
+                                                <input type="text" class="form-control" name="spendings_id" id="spendings_id_modal">
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
@@ -215,29 +258,61 @@
                                             <label class="col-sm-12 col-form-label">Name
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="branches_name" id="branches_name" value="">
-                                                {{-- <span class="messages"></span> --}}
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Address</label>
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" id="branches_address" name="branches_address" value="">
+                                                <input type="text" class="form-control" name="spendings_name" id="spendings_name_modal">
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Phone
+                                            <label class="col-sm-2 col-form-label">Cabang</label>
+                                            <div class="col-sm-12">
+                                                <!-- <input type="text" class="form-control" id="spending_categories_id " name="spending_categories_id "> -->
+                                                <select name="branches_id" id="branches_id_modal" class="form-control">
+                                                    <option value="" disabled selected></option>
+                                                    @foreach($branches as $branch)
+                                                    <option value="{{ $branch->branches_id }}">{{ $branch->branches_name }}</option>
+                                                    @endforeach
+                                                </select>
+
+                                                <span class="messages"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Kategori
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="number" class="form-control" id="branches_phone" name="branches_phone" value="">
+                                                <select name="spending_categories_id" id="spending_categories_id_modal" class="form-control">
+                                                    <option value="" disabled selected></option>
+                                                    @foreach($spending_categories as $category)
+                                                    <option value="{{ $category->spending_categories_id  }}">{{ $category->spending_categories_name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="messages"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Total
+                                            </label>
+                                            <div class="col-sm-12 row">
+                                                <p class="col">Rp.</p>
+                                                <input type="number" class="form-control col-10" name="spendings_total" id="spendings_total_modal">
+
+                                                <span class="messages"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Tanggal
+                                            </label>
+                                            <div class="col-sm-12">
+                                                <div class="input-group date fj-date">
+                                                    <input id="spendings_date_modal" name="spendings_date" class="form-control" type="text" placeholder="Select your date" /><span class="input-group-addon">
+                                                </div>
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
                                         <div class="form-group row f-right">
                                             <div class="col-sm-12">
                                                 <!-- <button type="reset" class="btn btn-danger">Reset</button> -->
-                                                <button type="submit" class="btn btn-primary m-b-0">Update</button>
+                                                <button type="submit" class="btn btn-primary m-b-0">Save</button>
                                             </div>
                                         </div>
                                     </div>
@@ -264,6 +339,22 @@
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/modernizr/js/modernizr.js') }}"></script>
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/modernizr/js/css-scrollbars.js') }}"></script>
 
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/pages/advance-elements/moment-with-locales.min.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/pages/advance-elements/bootstrap-datetimepicker.min.js') }}"></script>
+
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/bower_components/bootstrap-daterangepicker/js/daterangepicker.js') }}"></script>
+
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/bower_components/datedropper/js/datedropper.min.js') }}"></script>
+
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/bower_components/sweetalert/js/sweetalert.min.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/js/modal.js') }}"></script>
+
+
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/js/modalEffects.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/js/classie.js') }}"></script>
+
+
 <script src="{{ asset('files/bower_components/datatables.net/js/jquery.dataTables.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
 <script src="{{ asset('files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js')}}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
 <script src="{{ asset('files/assets/pages/data-table/js/jszip.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
@@ -281,6 +372,8 @@
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/i18next-xhr-backend/js/i18nextXHRBackend.min.js') }}"></script>
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/i18next-browser-languagedetector/js/i18nextBrowserLanguageDetector.min.js') }}"></script>
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/jquery-i18next/js/jquery-i18next.min.js') }}"></script>
+
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="../files/assets/pages/advance-elements/custom-picker.js"></script>
 
 <script src="{{ asset('files/assets/pages/data-table/extensions/responsive/js/responsive-custom.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
 <script src="{{ asset('files/assets/js/pcoded.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
@@ -307,10 +400,21 @@
     $('#editmodal').on('show.bs.modal', function(e) {
         var a = $(e.relatedTarget);
         var id = a.data('id');
+        var branch = a.data('branch');
+        var category = a.data('category');
+        var name = a.data('name');
+        var total = a.data('total');
+        var date = a.data('date');
         // $("#branches_idmodal").val(id);
         var modal = $(this)
-        document.getElementById("branches_id_modal").value = id;
+        document.getElementById("spendings_id_modal").value = id;
+        document.getElementById("branches_id_modal").value = branch;
+        document.getElementById("spending_categories_id_modal").value = category;
+        document.getElementById("spendings_name_modal").value = name;
+        document.getElementById("spendings_total_modal").value = total;
+        document.getElementById("spendings_date_modal").value = date;
 
     })
 </script>
+
 @endsection

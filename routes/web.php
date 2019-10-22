@@ -16,3 +16,5 @@ Route::get('/', function () {
 });
 
 Route::resource('Branch', 'BranchController');
+Route::resource('Spending', 'SpendingController');
+Route::resource('Spending_Category', 'SpendingCategoryController');

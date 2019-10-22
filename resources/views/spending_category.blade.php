@@ -19,6 +19,10 @@
 <link rel="stylesheet" type="text/css" href="{{ asset ('files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset ('files/assets/pages/data-table/extensions/responsive/css/responsive.dataTables.css') }}">
 
+<link rel="stylesheet" type="text/css" href="{{ asset ('files/assets/pages/advance-elements/css/bootstrap-datetimepicker.css') }}">
+
+<link rel="stylesheet" type="text/css" href="{{ asset ('files/bower_components/bootstrap-daterangepicker/css/daterangepicker.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ asset ('files/bower_components/datedropper/css/datedropper.min.css') }}" />
 
 <link href="{{ asset ('files/assets/pages/jquery.filer/css/jquery.filer.css') }}" type="text/css" rel="stylesheet" />
 <link href="{{ asset ('files/assets/pages/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css') }}" type="text/css" rel="stylesheet" />
@@ -36,7 +40,7 @@
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Data Cabang</h4>
+                                    <h4>Data Kategori Pengeluaran</h4>
                                 </div>
                             </div>
                         </div>
@@ -48,8 +52,9 @@
                                     </li>
                                     <li class="breadcrumb-item"><a href="#!">Data Master</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="#!">Data Cabang</a>
+                                    <li class="breadcrumb-item"><a href="#!">Spending</a>
                                     </li>
+
                                 </ul>
                             </div>
                         </div>
@@ -77,37 +82,29 @@
                                                     <th width=30px>Name</th>
                                                     <th width=30px>Id</th>
                                                     <th>No</th>
-                                                    <th>Address</th>
-                                                    <th>Phone</th>
                                                     <th width="40px">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php $no = 0; ?>
-                                                @if(count($branches))
-                                                @foreach ($branches as $branch)
+                                                @if(count($spending_categories))
+                                                @foreach ($spending_categories as $category)
                                                 <?php $no++ ?>
                                                 <tr>
                                                     <td>
-                                                        {{ $branch->branches_name }}
+                                                        {{ $category->spending_categories_name }}
                                                     </td>
                                                     <td>
-                                                        {{ $branch->branches_id }}
+                                                        {{ $category->spending_categories_id }}
                                                     </td>
                                                     <td>
                                                         {{ $no }}
                                                     </td>
                                                     <td>
-                                                        {{ $branch->branches_address }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $branch->branches_phone }}
-                                                    </td>
-                                                    <td>
-                                                        <a href="{{ route('Branch.edit', $branch->branches_id) }}" data-toggle="modal" data-target="#editmodal" id="branches_id" data-id="{{ $branch->branches_id }}"><i class="fa fa-pencil btn btn-warning btn-mini btn-round"></i></a>
+                                                        <a href="#" data-toggle="modal" data-target="#editmodal" id="spending_categories_id" data-id="{{ $category->spending_categories_id }}" data-name="{{ $category->spending_categories_name }}"><i class="fa fa-pencil btn btn-warning btn-mini btn-round"></i></a>
 
-                                                        <!-- <i href="Branch/destroy/{{ $branch->branches_id }}" id="branches_id"><i class="fa fa-trash-o btn btn-danger btn-mini btn-round"></i></a> -->
-                                                        {!! Form::open(['method' => 'Delete', 'route' => ['Branch.destroy', $branch->branches_id], 'style'=>'display:inline', 'id'=>'delete_form']) !!}
+
+                                                        {!! Form::open(['method' => 'Delete', 'route' => ['Spending_Category.destroy', $category->spending_categories_id], 'style'=>'display:inline', 'id'=>'delete_form']) !!}
                                                         <a href="#" onclick="document.getElementById('delete_form').submit()"> <i class="fa fa-trash-o btn btn-danger btn-mini btn-round"></i></a>
                                                         {!! Form::close() !!}
                                                     </td>
@@ -115,7 +112,7 @@
                                                 @endforeach
                                                 @else
                                                 <tr>
-                                                    <td align="center" colspan="6">
+                                                    <td align="center" colspan="8">
                                                         Empty Data
                                                     </td>
                                                 </tr>
@@ -135,7 +132,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Cabang</h4>
+                            <h4 class="modal-title">Add Category</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -143,32 +140,20 @@
                         <div class="modal-body">
                             <div class="page-body">
 
-                                {{ Form::open(array('route' => 'Branch.store', 'method' => 'POST')) }}
+                                {{ Form::open(array('route' => 'Spending_Category.store', 'method' => 'POST')) }}
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group row">
                                             <label class="col-sm-12 col-form-label">Name
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="branches_name" id="branches_name">
+                                                <input type="text" class="form-control" name="spending_categories_name" id="spending_categories_name">
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Address</label>
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" id="branches_address" name="branches_address">
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Phone
-                                            </label>
-                                            <div class="col-sm-12">
-                                                <input type="number" class="form-control" id="branches_phone" name="branches_phone">
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
+
+
+
                                         <div class="form-group row f-right">
                                             <div class="col-sm-12">
                                                 <button type="reset" class="btn btn-danger">Reset</button>
@@ -189,15 +174,15 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Edit Cabang</h4>
+                            <h4 class="modal-title">Edit Category</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <div class="page-body">
-                                @if(count($branches))
-                                {{ Form::model($branches, ['method' => 'PATCH', 'route' => ['Branch.update', $branch->branches_id]]) }}
+                                @if(count($spending_categories))
+                                {{ Form::model($spending_categories, ['method' => 'PATCH', 'route' => ['Spending_Category.update', $category->spending_categories_id]]) }}
 
                                 {{-- {{ Form::open(array('route' => ['Branch.update', $branch->id], 'method' => 'PATCH')) }}
                                 --}}
@@ -207,7 +192,7 @@
                                             <label class="col-sm-12 col-form-label">Id
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="branches_id" id="branches_id_modal">
+                                                <input type="text" class="form-cont rol" name="spending_categories_id" id="spending_categories_id_modal" hidden>
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
@@ -215,29 +200,17 @@
                                             <label class="col-sm-12 col-form-label">Name
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="branches_name" id="branches_name" value="">
-                                                {{-- <span class="messages"></span> --}}
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Address</label>
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" id="branches_address" name="branches_address" value="">
+                                                <input type="text" class="form-control" name="spending_categories_name" id="spending_categories_name_modal">
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Phone
-                                            </label>
-                                            <div class="col-sm-12">
-                                                <input type="number" class="form-control" id="branches_phone" name="branches_phone" value="">
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
+
+
+
                                         <div class="form-group row f-right">
                                             <div class="col-sm-12">
-                                                <!-- <button type="reset" class="btn btn-danger">Reset</button> -->
-                                                <button type="submit" class="btn btn-primary m-b-0">Update</button>
+                                                <button type="reset" class="btn btn-danger">Reset</button>
+                                                <button type="submit" class="btn btn-primary m-b-0">Save</button>
                                             </div>
                                         </div>
                                     </div>
@@ -264,6 +237,22 @@
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/modernizr/js/modernizr.js') }}"></script>
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/modernizr/js/css-scrollbars.js') }}"></script>
 
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/pages/advance-elements/moment-with-locales.min.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/pages/advance-elements/bootstrap-datetimepicker.min.js') }}"></script>
+
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/bower_components/bootstrap-daterangepicker/js/daterangepicker.js') }}"></script>
+
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/bower_components/datedropper/js/datedropper.min.js') }}"></script>
+
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/bower_components/sweetalert/js/sweetalert.min.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/js/modal.js') }}"></script>
+
+
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/js/modalEffects.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/js/classie.js') }}"></script>
+
+
 <script src="{{ asset('files/bower_components/datatables.net/js/jquery.dataTables.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
 <script src="{{ asset('files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js')}}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
 <script src="{{ asset('files/assets/pages/data-table/js/jszip.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
@@ -281,6 +270,8 @@
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/i18next-xhr-backend/js/i18nextXHRBackend.min.js') }}"></script>
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/i18next-browser-languagedetector/js/i18nextBrowserLanguageDetector.min.js') }}"></script>
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/jquery-i18next/js/jquery-i18next.min.js') }}"></script>
+
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="../files/assets/pages/advance-elements/custom-picker.js"></script>
 
 <script src="{{ asset('files/assets/pages/data-table/extensions/responsive/js/responsive-custom.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
 <script src="{{ asset('files/assets/js/pcoded.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
@@ -307,10 +298,12 @@
     $('#editmodal').on('show.bs.modal', function(e) {
         var a = $(e.relatedTarget);
         var id = a.data('id');
+        var name = a.data('name');
         // $("#branches_idmodal").val(id);
         var modal = $(this)
-        document.getElementById("branches_id_modal").value = id;
-
+        document.getElementById("spending_categories_name_modal").value = name;
+        document.getElementById("spending_categories_id_modal").value = id;
     })
 </script>
+
 @endsection

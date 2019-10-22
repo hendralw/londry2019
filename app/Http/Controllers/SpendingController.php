@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Spending;
+use App\Branch;
+use App\Spending_Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -16,7 +18,9 @@ class SpendingController extends Controller
     public function index(Request $request)
     {
         $spendings = Spending::orderBy('spendings_id', 'ASC')->get();
-        return view('spending', compact('spendings'));
+        $branches = Branch::orderBy('branches_id', 'ASC')->get();
+        $spending_categories = Spending_Category::orderBy('spending_categories_id', 'ASC')->get();
+        return view('spending', compact('spendings', 'branches', 'spending_categories'));
     }
 
     /**
@@ -74,6 +78,7 @@ class SpendingController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $id = $request->input('spendings_id');
         Spending::find($id)->update($request->all());
         return redirect()->route('Spending.index')->with('success', 'item updated succesfully');
     }
