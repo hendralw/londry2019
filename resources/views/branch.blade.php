@@ -15,14 +15,11 @@
 <link rel="stylesheet" type="text/css"
     href="{{ asset ('files/assets/pages/data-table/extensions/responsive/css/responsive.dataTables.css') }}">
 
-
 <link href="{{ asset ('files/assets/pages/jquery.filer/css/jquery.filer.css') }}" type="text/css" rel="stylesheet" />
 <link href="{{ asset ('files/assets/pages/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css') }}"
     type="text/css" rel="stylesheet" />
 
 <link rel="stylesheet" type="text/css" href="{{ asset ('files/assets/icon/font-awesome/css/font-awesome.min.css') }}">
-
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.js"></script>
@@ -103,30 +100,21 @@
                                                         {{ $branch->branches_phone }}
                                                     </td>
                                                     <td>
-<<<<<<< HEAD
+
                                                         <a href="{{ route('Branch.edit', $branch->branches_id) }}"
                                                             data-toggle="modal" data-target="#editmodal"
-                                                            class="btn btn-warning btn-mini btn-round" id="branches_id"
-                                                            data-id="{{ $branch->branches_id }}"
+                                                            id="branches_id" data-id="{{ $branch->branches_id }}"
                                                             data-name="{{ $branch->branches_name }}"
                                                             data-address="{{ $branch->branches_address }}"
-                                                            data-phone="{{ $branch->branches_phone }}">Edit</a>
+                                                            data-phone="{{ $branch->branches_phone }}"><i
+                                                                class="fa fa-pencil btn btn-warning btn-mini btn-round"></i>
+                                                        </a>
 
                                                         <a href="{{ route('Branch.destroy', $branch->branches_id) }}"
                                                             data-toggle="modal" data-target="#deletemodal"
-                                                            class="btn btn-danger btn-mini btn-round" id="branches_id"
-                                                            data-id="{{ $branch->branches_id }}"
-                                                            data-name="{{ $branch->branches_name }}"
-                                                            data-address="{{ $branch->branches_address }}"
-                                                            data-phone="{{ $branch->branches_phone }}">Delete</a>
-=======
-                                                        <a href="{{ route('Branch.edit', $branch->branches_id) }}" data-toggle="modal" data-target="#editmodal" id="branches_id" data-id="{{ $branch->branches_id }}"><i class="fa fa-pencil btn btn-warning btn-mini btn-round"></i></a>
+                                                            id="branches_id" data-id="{{ $branch->branches_id }}"><i
+                                                                class="fa fa-trash-o btn btn-danger btn-mini btn-round"></i></a>
 
-                                                        <!-- <i href="Branch/destroy/{{ $branch->branches_id }}" id="branches_id"><i class="fa fa-trash-o btn btn-danger btn-mini btn-round"></i></a> -->
-                                                        {!! Form::open(['method' => 'Delete', 'route' => ['Branch.destroy', $branch->branches_id], 'style'=>'display:inline', 'id'=>'delete_form']) !!}
-                                                        <a href="#" onclick="document.getElementById('delete_form').submit()"> <i class="fa fa-trash-o btn btn-danger btn-mini btn-round"></i></a>
-                                                        {!! Form::close() !!}
->>>>>>> master
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -447,20 +435,15 @@
         document.getElementById("branches_address_edit").value = branches_address_edit;
         document.getElementById("branches_phone_edit").value = branches_phone_edit;
     })
+
 </script>
 
 <script type="text/javascript">
     $('#deletemodal').on('show.bs.modal', function (e) {
         var a = $(e.relatedTarget);
         var branches_id_delete = a.data('id');
-        var branches_name_delete = a.data('name');
-        var branches_address_delete = a.data('address');
-        var branches_phone_delete = a.data('phone');
         var modal = $(this)
         document.getElementById("branches_id_delete").value = branches_id_delete;
-        document.getElementById("branches_name_delete").value = branches_name_delete;
-        document.getElementById("branches_address_delete").value = branches_address_delete;
-        document.getElementById("branches_phone_delete").value = branches_phone_delete;
     })
 
 </script>

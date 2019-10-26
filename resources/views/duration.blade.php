@@ -96,15 +96,17 @@
                                                     <td>
                                                         <a href="{{ route('Duration.edit', $duration->durations_id) }}"
                                                             data-toggle="modal" data-target="#editmodal"
-                                                            class="btn btn-warning btn-mini btn-round" id="durations_id"
+                                                            id="durations_id"
                                                             data-id="{{ $duration->durations_id }}"
-                                                            data-name="{{ $duration->durations_name }}">Edit</a>
+                                                            data-name="{{ $duration->durations_name }}"><i
+                                                            class="fa fa-pencil btn btn-warning btn-mini btn-round"></i></a>
 
                                                         <a href="{{ route('Duration.destroy', $duration->durations_id) }}"
                                                             data-toggle="modal" data-target="#deletemodal"
-                                                            class="btn btn-danger btn-mini btn-round" id="durations_id"
+                                                            id="durations_id"
                                                             data-id="{{ $duration->durations_id }}"
-                                                            data-name="{{ $duration->durations_name }}">Delete</a>
+                                                            data-name="{{ $duration->durations_name }}"><i
+                                                            class="fa fa-trash-o btn btn-danger btn-mini btn-round"></i></a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -375,11 +377,8 @@
     $('#deletemodal').on('show.bs.modal', function (e) {
         var a = $(e.relatedTarget);
         var durations_id_delete = a.data('id');
-        var durations_name_delete = a.data('name');
         var modal = $(this)
         document.getElementById("durations_id_delete").value = durations_id_delete;
-        document.getElementById("durations_name_delete").value = durations_name_delete;
     })
-
 </script>
 @endsection
