@@ -2,33 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use App\Role;
 use App\Http\Controllers\Controller;
+use App\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
-
-class RoleController extends Controller
+class AuthController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            if (!Session::get('login')) {
-                return redirect('Login')->with('alert', 'Kamu harus login dulu');
-            } else {
-                return $next($request);
-            }
-        });
-    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $roles = Role::orderBy('roles_id', 'ASC')->get();
-        return view('role', compact('roles'));
+        return view('login');
+    }
+
+    public function loginPost(Request $request)
+    {
+        $username = $request->username;
+        $password = $request->password;
+        $data = Employee::where('username', $username)->first();
+        if ($data) {
+            if (Hash::check($password, $data->password)) {
+                Session::put('name', $data->employees_name);
+                Session::put('id', $data->employees_id);
+                Session::put('username', $data->username);
+                Session::put('login', TRUE);
+                return redirect('/')->with('success', 'create item!');
+            } else {
+                return redirect('Login')->with('alert', 'Password atau Email, Salah !');
+            }
+        } else {
+            return redirect('Login')->with('alert', 'Password atau Email, Salah!');
+        }
+    }
+    public function logout()
+    {
+        Session::flush();
+        return redirect('Login')->with('alert', 'Kamu sudah logout');
     }
 
     /**
@@ -38,7 +52,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('role');
+        //
     }
 
     /**
@@ -49,8 +63,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        Role::create($request->all());
-        return redirect()->route('Role.index')->with('success', 'item created succesfully');
+        //
     }
 
     /**
@@ -61,8 +74,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        $roles = Role::find($id);
-        return view('role', compact('roles'));
+        //
     }
 
     /**
@@ -73,8 +85,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $roles = Role::find($id);
-        return view('role', compact('roles'));
+        //
     }
 
     /**
@@ -86,8 +97,7 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Role::find($id)->update($request->all());
-        return redirect()->route('Role.index')->with('success', 'item updated succesfully');
+        //
     }
 
     /**
@@ -98,7 +108,6 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        Role::find($id)->delete();
-        return redirect()->route('Role.index')->with('success', 'Item Deleted successfully');
+        //
     }
 }

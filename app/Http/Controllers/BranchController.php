@@ -7,9 +7,21 @@ use App\Http\Controllers\Controller;
 use App\Branch;
 use Illuminate\Support\Facades\Validator;
 use Response;
+use Illuminate\Support\Facades\Session;
+
 
 class BranchController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!Session::get('login')) {
+                return redirect('Login')->with('alert', 'Kamu harus login dulu');
+            } else {
+                return $next($request);
+            }
+        });
+    }
     /**
      * Display a listing of the resource.
      *

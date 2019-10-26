@@ -7,9 +7,20 @@ use App\Branch;
 use App\Spending_Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class SpendingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!Session::get('login')) {
+                return redirect('Login')->with('alert', 'Kamu harus login dulu');
+            } else {
+                return $next($request);
+            }
+        });
+    }
     /**
      * Display a listing of the resource.
      *

@@ -74,12 +74,14 @@
 
     <section class="login-block">
 
+
         <div class="container">
+
             <div class="row">
                 <div class="col-sm-12">
 
-                    
-                    {{ Form::open(array('route' => 'Login.login', 'method' => 'POST', 'class' => 'md-float-material form-material')) }}
+                    <form action="{{ url('/loginPost') }}" method="post" class="md-float-material form-material">
+                        {{ csrf_field() }}
                         <div class="text-center">
                             <img src="{{ asset ('files/assets/images/logo.png') }}" alt="logo.png') }}">
                         </div>
@@ -89,9 +91,15 @@
                                     <div class="col-md-12">
                                         <h3 class="text-center">Sign In</h3>
                                     </div>
+
                                 </div>
+                                @if ($message = Session::get('alert'))
+                                <div class="alert alert-danger border-danger">
+                                    <strong>Success</strong> {{ $message }}
+                                </div>
+                                @endif
                                 <div class="form-group form-primary">
-                                    <input type="text" name="email" class="form-control" required="" placeholder="Your Username">
+                                    <input type="text" name="username" class="form-control" required="" placeholder="Your Username">
                                     <span class="form-bar"></span>
                                 </div>
                                 <div class="form-group form-primary">
@@ -114,7 +122,7 @@
                                 </div>
                                 <div class="row m-t-30">
                                     <div class="col-md-12">
-                                        <button type="button" class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20">Sign in</button>
+                                        <button type="submit" class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20">Sign in</button>
                                     </div>
                                 </div>
                                 <hr />
@@ -129,7 +137,7 @@
                                 </div>
                             </div>
                         </div>
-                    {{ form::close() }}
+                    </form>
 
                 </div>
 

@@ -102,7 +102,7 @@
                                                         {{ $employee->branch->branches_name }}
                                                     </td>
                                                     <td>
-                                                        {{ $employee->roles_id }}
+                                                        {{ $employee->role->roles_name }}
                                                     </td>
                                                     <td>
                                                         {{ $employee->status_id }}
