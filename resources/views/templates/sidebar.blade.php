@@ -24,6 +24,12 @@
                         <a href="{{ ('Employee') }}">
                             <span class="pcoded-mtext">Pegawai</span>
                         </a>
+                        <a href="{{ ('Item_Category') }}">
+                            <span class="pcoded-mtext">Kategori Item</span>
+                        </a>
+                        <a href="{{ ('List_Item') }}">
+                            <span class="pcoded-mtext">List Item</span>
+                        </a>
                     </li>
                 </ul>
             </li>

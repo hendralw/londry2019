@@ -15,4 +15,14 @@ class List_Item extends Model
     {
         return $this->belongsTo('App\Item_Category', 'item_categories_id');
     }
+
+    public function unit_item()
+    {
+        return $this->belongsTo('App\Unit_Item', 'unit_items_id');
+    }
+
+    public function duration()
+    {
+        return $this->belongsTo('App\Duration', 'durations_id');
+    }
 }

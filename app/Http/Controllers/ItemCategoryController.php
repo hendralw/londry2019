@@ -74,8 +74,9 @@ class ItemCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $id = $request->input('item_categories_id');
         Item_Category::find($id)->update($request->all());
-        return redirect()->route('Item_Category.index')->with('success', 'item updated succesfully');
+        return redirect()->route('Item_Category.index')->with('success', 'update item!');
     }
 
     /**
@@ -84,9 +85,10 @@ class ItemCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        $id = $request->input('item_categories_id');
         Item_Category::find($id)->delete();
-        return redirect()->route('Item_Category.index')->with('success', 'Item Deleted successfully');
+        return redirect()->route('Item_Category.index')->with('success', 'delete item!');
     }
 }

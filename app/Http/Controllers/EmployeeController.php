@@ -16,7 +16,7 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $branches = Branch::orderBy('branches_id', 'ASC')->get();
         $roles = Role::orderBy('roles_id', 'ASC')->get();
@@ -109,8 +109,9 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        $id = $request->input('employees_id');        
         Employee::find($id)->delete();
         return redirect()->route('Employee.index')->with('success', 'delete item!');
     }

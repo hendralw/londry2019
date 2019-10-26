@@ -37,7 +37,7 @@
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Data Pegawai</h4>
+                                    <h4>Data Kategori Item</h4>
                                 </div>
                             </div>
                         </div>
@@ -49,15 +49,15 @@
                                     </li>
                                     <li class="breadcrumb-item"><a href="#!">Data Master</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="#!">Data Pegawai</a>
+                                    <li class="breadcrumb-item"><a href="#!">Data Kategori Item</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                         <div class="container"><br>
                             <button class="btn btn-primary btn-md waves-effect f-right d-inline-block md-trigger"
-                                data-toggle="modal" data-target="#default-Modal" id="open"><i
-                                    class="fa fa-plus"></i>Add Data</button>
+                                data-toggle="modal" data-target="#default-Modal" id="open"><i class="fa fa-plus"></i>Add
+                                Data</button>
                         </div>
                     </div>
                 </div>
@@ -78,62 +78,35 @@
                                             <thead>
                                                 <tr>
                                                     <th width=30px>No</th>
-                                                    <th>Cabang</th>
-                                                    <th>Role</th>
                                                     <th>Name</th>
-                                                    <th>Address</th>
-                                                    <th>Phone</th>
-                                                    <th>Salary</th>
-                                                    <th>Username</th>
-                                                    <th>Password</th>
                                                     <th width="40px">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php $no = 0; ?>
-                                                @foreach ($employees as $employee)
+                                                @foreach ($item_categories as $item_category)
                                                 <?php $no++ ?>
                                                 <tr>
                                                     <td>
                                                         {{ $no }}
                                                     </td>
                                                     <td>
-                                                        {{ $employee->branch->branches_name }}
+                                                        {{ $item_category->item_categories_name }}
                                                     </td>
                                                     <td>
-                                                        {{ $employee->roles_id }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $employee->employees_name }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $employee->employees_address }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $employee->employees_phone }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $employee->employees_salary }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $employee->username }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $employee->password }}
-                                                    </td>
-                                                    <td>
-                                                        <a href="{{ route('Employee.edit', $employee->employees_id) }}"
+                                                        <a href="{{ route('Item_Category.edit', $item_category->item_categories_id) }}"
                                                             data-toggle="modal" data-target="#editmodal"
-                                                            class="btn btn-warning btn-mini btn-round" id="employees_id"
-                                                            data-id="{{ $employee->employees_id }}"
-                                                            data-name="{{ $employee->employees_name }}"
-                                                            data-address="{{ $employee->employees_address }}"
-                                                            data-phone="{{ $employee->employees_phone }}">Edit</a>
+                                                            id="item_categories_id"
+                                                            data-id="{{ $item_category->item_categories_id }}"
+                                                            data-name="{{ $item_category->item_categories_name }}"><i
+                                                            class="fa fa-pencil btn btn-warning btn-mini btn-round"></i></a>
 
-                                                        <a href="{{ route('Employee.destroy', $employee->employees_id) }}"
+                                                        <a href="{{ route('Item_Category.destroy', $item_category->item_categories_id) }}"
                                                             data-toggle="modal" data-target="#deletemodal"
-                                                            class="btn btn-danger btn-mini btn-round"
-                                                            id="employees_id">Delete</a>
+                                                            id="item_categories_id"
+                                                            data-id="{{ $item_category->item_categories_id }}"
+                                                            data-name="{{ $item_category->item_categories_name }}"><i
+                                                            class="fa fa-trash-o btn btn-danger btn-mini btn-round"></i></a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -153,104 +126,27 @@
                     <div class="modal-content">
                         <div class="alert alert-danger" style="display:none"></div>
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Pegawai</h4>
+                            <h4 class="modal-title">Add Kategori Item</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <div class="page-body">
-
-                                {{ Form::open(array('route' => 'Employee.store', 'method' => 'POST')) }}
-
+                                {{ Form::open(array('route' => 'Item_Category.store', 'method' => 'POST')) }}
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <div class="form-group row">
-                                            <label class="col-sm-12 col-form-label">Cabang
-                                            </label>
-                                            <div class="col-sm-12">
-                                            <select name="branches_id" id="branches_id" class="form-control">
-                                                    <option value="" disabled selected>-- Select Cabang --</option>
-                                                    @foreach($branches as $branch)
-                                                    <option value="{{ $branch->branches_id }}">{{ $branch->branches_name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-12 col-form-label">Role
-                                            </label>
-                                            <div class="col-sm-12">
-                                            <select name="roles_id" id="roles_id" class="form-control">
-                                                    <option value="" disabled selected></option>
-                                                    @foreach($roles as $role)
-                                                    <option value="{{ $role->roles_id }}">{{ $role->roles_name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                    
                                         <div class="form-group row">
                                             <label class="col-sm-12 col-form-label">Name
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="employees_name"
-                                                    id="employees_name">
-                                                @if ($errors->has('employees_name'))
+                                                <input type="text" class="form-control" name="item_categories_name"
+                                                    id="item_categories_name">
+                                                {{-- @if ($errors->has('item_categories_name'))
                                                 <span class="text text-danger">
-                                                    {{ $errors->first('employees_name') }}
+                                                    {{ $errors->first('item_categories_name') }}
                                                 </span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Address</label>
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" id="employees_address"
-                                                    name="employees_address">
-                                                <strong id=address-error></strong>
-
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Phone
-                                            </label>
-                                            <div class="col-sm-12">
-                                                <input type="number" class="form-control" id="employees_phone"
-                                                    name="employees_phone">
-
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Salary
-                                            </label>
-                                            <div class="col-sm-12">
-                                                <input type="number" class="form-control" id="employees_salary"
-                                                    name="employees_salary">
-
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Username
-                                            </label>
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" id="username"
-                                                    name="username">
-
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Password
-                                            </label>
-                                            <div class="col-sm-12">
-                                                <input type="password" class="form-control" id="password"
-                                                    name="password">
-
-                                                <span class="messages"></span>
+                                                @endif --}}
                                             </div>
                                         </div>
                                         <div class="form-group row f-right">
@@ -261,7 +157,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     {{ Form::close() }}
                                 </div>
                             </div>
@@ -271,28 +166,27 @@
             </div>
 
             {{-- Modal Edit Data --}}
-            {{-- <div class="modal fade" id="editmodal" tabindex="-1" role="dialog">
+            <div class="modal fade" id="editmodal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Edit Cabang</h4>
+                            <h4 class="modal-title">Edit Kategori Item</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <div class="page-body">
-                                @if(count($employees))
-                                {{ Form::model($employees, ['method' => 'PATCH', 'route' => ['Employee.update', $employee->employees_id]]) }}
-
+                                @if(count($item_categories))
+                                {{ Form::model($item_categories, ['method' => 'PATCH', 'route' => ['Item_Category.update', $item_category->item_categories_id]]) }}
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group row" hidden>
                                             <label class="col-sm-12 col-form-label">Id
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="employees_id"
-                                                    id="employees_id_edit">
+                                                <input type="text" class="form-control" name="item_categories_id"
+                                                    id="item_categories_id_edit">
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
@@ -300,25 +194,8 @@
                                             <label class="col-sm-12 col-form-label">Name
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="employees_name"
-                                                    id="employees_name_edit">
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Address</label>
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="employees_address"
-                                                    id="employees_address_edit">
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Phone
-                                            </label>
-                                            <div class="col-sm-12">
-                                                <input type="number" class="form-control" name="employees_phone"
-                                                    id="employees_phone_edit">
+                                                <input type="text" class="form-control" name="item_categories_name"
+                                                    id="item_categories_name_edit">
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
@@ -336,27 +213,46 @@
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
 
             {{-- Modal Delete Data --}}
-            {{-- <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog">
+            <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="page-body">
-                                @if(count($employees))
-                                {{ Form::model($employees, ['method' => 'Delete', 'route' => ['Employee.destroy', $employee->employees_id]]) }}
-
+                                @if(count($item_categories))
+                                {{ Form::model($item_categories, ['method' => 'Delete', 'route' => ['Item_Category.destroy', $item_category->item_categories_id]]) }}
                                 <div class="row">
                                     <div class="col-sm-12">
+                                        <div class="form-group row" hidden>
+                                            <label class="col-sm-12 col-form-label">Id
+                                            </label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" name="item_categories_id"
+                                                    id="item_categories_id_delete">
+                                                <span class="messages"></span>
+                                            </div>
+                                        </div>
+                                        {{-- <div class="form-group row" hidden>
+                                            <label class="col-sm-12 col-form-label">Name
+                                            </label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" name="item_categories_name"
+                                                    id="item_categories_name_delete">
+                                                <span class="messages"></span>
+                                            </div>
+                                        </div> --}}
                                         <div class="form-group row">
-                                            <label class="col-sm-12 col-form-label text-center"><h5>Are you sure want to
-                                                delete this data?</h5>
+                                            <label class="col-sm-12 col-form-label text-center">
+                                                <h5>Are you sure want to
+                                                    delete this data?</h5>
                                             </label>
                                         </div>
                                         <div style="text-align: center">
                                             <div class="col-sm-12">
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                                <button type="button" class="btn btn-danger"
+                                                    data-dismiss="modal">No</button>
                                                 <button type="submit" class="btn btn-primary m-b-0">Yes</button>
                                             </div>
                                         </div>
@@ -368,7 +264,7 @@
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
         </div>
     </div>
     <div class="md-overlay"></div>
@@ -465,18 +361,24 @@
 <script type="ae26a32c14305a2e2caf1aa9-text/javascript"
     src="{{ asset ('files/assets/pages/form-validation/form-validation.js') }}"></script>
 
-{{-- <script type="text/javascript">
+<script type="text/javascript">
     $('#editmodal').on('show.bs.modal', function (e) {
         var a = $(e.relatedTarget);
-        var employees_id_edit = a.data('id');
-        var employees_name_edit = a.data('name');
-        var employees_address_edit = a.data('address');
-        var employees_phone_edit = a.data('phone');
+        var item_categories_id_edit = a.data('id');
+        var item_categories_name_edit = a.data('name');
         var modal = $(this)
-        document.getElementById("employees_id_edit").value = employees_id_edit;
-        document.getElementById("employees_name_edit").value = employees_name_edit;
-        document.getElementById("employees_address_edit").value = employees_address_edit;
-        document.getElementById("employees_phone_edit").value = employees_phone_edit;
+        document.getElementById("item_categories_id_edit").value = item_categories_id_edit;
+        document.getElementById("item_categories_name_edit").value = item_categories_name_edit;
     })
-</script> --}}
+
+</script>
+
+<script type="text/javascript">
+    $('#deletemodal').on('show.bs.modal', function (e) {
+        var a = $(e.relatedTarget);
+        var item_categories_id_delete = a.data('id');
+        var modal = $(this)
+        document.getElementById("item_categories_id_delete").value = item_categories_id_delete;
+    })
+</script>
 @endsection

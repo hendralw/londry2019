@@ -37,7 +37,7 @@
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Data Pegawai</h4>
+                                    <h4>Data List Item</h4>
                                 </div>
                             </div>
                         </div>
@@ -49,15 +49,15 @@
                                     </li>
                                     <li class="breadcrumb-item"><a href="#!">Data Master</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="#!">Data Pegawai</a>
+                                    <li class="breadcrumb-item"><a href="#!">Data List Item</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                         <div class="container"><br>
                             <button class="btn btn-primary btn-md waves-effect f-right d-inline-block md-trigger"
-                                data-toggle="modal" data-target="#default-Modal" id="open"><i
-                                    class="fa fa-plus"></i>Add Data</button>
+                                data-toggle="modal" data-target="#default-Modal" id="open"><i class="fa fa-plus"></i>Add
+                                Data</button>
                         </div>
                     </div>
                 </div>
@@ -78,62 +78,52 @@
                                             <thead>
                                                 <tr>
                                                     <th width=30px>No</th>
-                                                    <th>Cabang</th>
-                                                    <th>Role</th>
+                                                    <th>Kategori</th>
+                                                    <th>Satuan</th>
+                                                    <th>Durasi</th>
                                                     <th>Name</th>
-                                                    <th>Address</th>
-                                                    <th>Phone</th>
-                                                    <th>Salary</th>
-                                                    <th>Username</th>
-                                                    <th>Password</th>
+                                                    <th>Price</th>
                                                     <th width="40px">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php $no = 0; ?>
-                                                @foreach ($employees as $employee)
+                                                @foreach ($list_items as $list_item)
                                                 <?php $no++ ?>
                                                 <tr>
                                                     <td>
                                                         {{ $no }}
                                                     </td>
                                                     <td>
-                                                        {{ $employee->branch->branches_name }}
+                                                        {{ $list_item->item_category->item_categories_name }}
                                                     </td>
                                                     <td>
-                                                        {{ $employee->roles_id }}
+                                                        {{ $list_item->unit->unit_items_name }}
                                                     </td>
                                                     <td>
-                                                        {{ $employee->employees_name }}
+                                                        {{ $list_item->duration->durations_name }}
                                                     </td>
                                                     <td>
-                                                        {{ $employee->employees_address }}
+                                                        {{ $list_item->list_items_name }}
                                                     </td>
                                                     <td>
-                                                        {{ $employee->employees_phone }}
+                                                        {{ $list_item->list_items_price }}
                                                     </td>
                                                     <td>
-                                                        {{ $employee->employees_salary }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $employee->username }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $employee->password }}
-                                                    </td>
-                                                    <td>
-                                                        <a href="{{ route('Employee.edit', $employee->employees_id) }}"
+                                                        <a href="{{ route('List_Item.edit', $list_item->list_items_id) }}"
                                                             data-toggle="modal" data-target="#editmodal"
-                                                            class="btn btn-warning btn-mini btn-round" id="employees_id"
-                                                            data-id="{{ $employee->employees_id }}"
-                                                            data-name="{{ $employee->employees_name }}"
-                                                            data-address="{{ $employee->employees_address }}"
-                                                            data-phone="{{ $employee->employees_phone }}">Edit</a>
+                                                            id="list_items_id"
+                                                            data-category="{{ $list_item->item_category->item_categories_name }}"
+                                                            data-unit="{{ $list_item->unit->unit_items_name }}"
+                                                            data-duration="{{ $list_item->duration->durations_name }}"
+                                                            data-name="{{ $list_item->list_items_name }}"
+                                                            data-price="{{ $list_item->list_items_price }}"><i
+                                                                class="fa fa-pencil btn btn-warning btn-mini btn-round"></i></a>
 
-                                                        <a href="{{ route('Employee.destroy', $employee->employees_id) }}"
+                                                        <a href="{{ route('List_Item.destroy', $list_item->list_items_id) }}"
                                                             data-toggle="modal" data-target="#deletemodal"
-                                                            class="btn btn-danger btn-mini btn-round"
-                                                            id="employees_id">Delete</a>
+                                                            id="list_items_id"><i
+                                                                class="fa fa-trash-o btn btn-danger btn-mini btn-round"></i></a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -153,7 +143,7 @@
                     <div class="modal-content">
                         <div class="alert alert-danger" style="display:none"></div>
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Pegawai</h4>
+                            <h4 class="modal-title">Add Item</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -161,94 +151,69 @@
                         <div class="modal-body">
                             <div class="page-body">
 
-                                {{ Form::open(array('route' => 'Employee.store', 'method' => 'POST')) }}
+                                {{ Form::open(array('route' => 'List_Item.store', 'method' => 'POST')) }}
 
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group row">
-                                            <label class="col-sm-12 col-form-label">Cabang
+                                            <label class="col-sm-12 col-form-label">Kategori
                                             </label>
                                             <div class="col-sm-12">
-                                            <select name="branches_id" id="branches_id" class="form-control">
-                                                    <option value="" disabled selected>-- Select Cabang --</option>
-                                                    @foreach($branches as $branch)
-                                                    <option value="{{ $branch->branches_id }}">{{ $branch->branches_name }}</option>
+                                                <select name="item_categories_id" id="item_categories_id" class="form-control">
+                                                    <option value="" disabled selected>-- Select Kategori --</option>
+                                                    @foreach($item_categories as $item_category)
+                                                    <option value="{{ $item_category->item_categories_id }}">
+                                                        {{ $item_category->item_categories_name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-12 col-form-label">Role
+                                            <label class="col-sm-12 col-form-label">Satuan
                                             </label>
                                             <div class="col-sm-12">
-                                            <select name="roles_id" id="roles_id" class="form-control">
+                                                <select name="unit_items_id" id="unit_items_id" class="form-control">
                                                     <option value="" disabled selected></option>
-                                                    @foreach($roles as $role)
-                                                    <option value="{{ $role->roles_id }}">{{ $role->roles_name }}</option>
+                                                    @foreach($unit_items as $unit)
+                                                    <option value="{{ $unit->unit_items_id }}">{{ $unit->unit_items_name }}
+                                                    </option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
-                                    
+                                        <div class="form-group row">
+                                            <label class="col-sm-12 col-form-label">Durasi
+                                            </label>
+                                            <div class="col-sm-12">
+                                                <select name="durations_id" id="durations_id" class="form-control">
+                                                    <option value="" disabled selected></option>
+                                                    @foreach($durations as $duration)
+                                                    <option value="{{ $duration->durations_id }}">{{ $duration->durations_name }}
+                                                    </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
                                         <div class="form-group row">
                                             <label class="col-sm-12 col-form-label">Name
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="employees_name"
-                                                    id="employees_name">
-                                                @if ($errors->has('employees_name'))
+                                                <input type="text" class="form-control" name="list_items_name"
+                                                    id="list_items_name">
+                                                @if ($errors->has('list_items_name'))
                                                 <span class="text text-danger">
-                                                    {{ $errors->first('employees_name') }}
+                                                    {{ $errors->first('list_items_name') }}
                                                 </span>
                                                 @endif
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Address</label>
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" id="employees_address"
-                                                    name="employees_address">
-                                                <strong id=address-error></strong>
-
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Phone
+                                            <label class="col-sm-2 col-form-label">Price
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="number" class="form-control" id="employees_phone"
-                                                    name="employees_phone">
-
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Salary
-                                            </label>
-                                            <div class="col-sm-12">
-                                                <input type="number" class="form-control" id="employees_salary"
-                                                    name="employees_salary">
-
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Username
-                                            </label>
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" id="username"
-                                                    name="username">
-
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Password
-                                            </label>
-                                            <div class="col-sm-12">
-                                                <input type="password" class="form-control" id="password"
-                                                    name="password">
+                                                <input type="number" class="form-control" id="list_items_price"
+                                                    name="list_items_price">
 
                                                 <span class="messages"></span>
                                             </div>
@@ -282,96 +247,95 @@
                         </div>
                         <div class="modal-body">
                             <div class="page-body">
-                                @if(count($employees))
-                                {{ Form::model($employees, ['method' => 'PATCH', 'route' => ['Employee.update', $employee->employees_id]]) }}
+                                @if(count($list_items))
+                                {{ Form::model($list_items, ['method' => 'PATCH', 'route' => ['List_Item.update', $list_item->list_items_id]]) }}
 
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group row" hidden>
-                                            <label class="col-sm-12 col-form-label">Id
-                                            </label>
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="employees_id"
-                                                    id="employees_id_edit">
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-12 col-form-label">Name
-                                            </label>
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="employees_name"
-                                                    id="employees_name_edit">
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Address</label>
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="employees_address"
-                                                    id="employees_address_edit">
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Phone
-                                            </label>
-                                            <div class="col-sm-12">
-                                                <input type="number" class="form-control" name="employees_phone"
-                                                    id="employees_phone_edit">
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row f-right">
-                                            <div class="col-sm-12">
-                                                <button type="reset" class="btn btn-danger">Reset</button>
-                                                <button type="submit" class="btn btn-primary m-b-0">Update</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{ Form::close() }}
-                                @endif
-                            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group row" hidden>
+                        <label class="col-sm-12 col-form-label">Id
+                        </label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name="list_items_id" id="list_items_id_edit">
+                            <span class="messages"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-form-label">Name
+                        </label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name="list_items_name" id="list_items_name_edit">
+                            <span class="messages"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Address</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name="list_items_address"
+                                id="list_items_address_edit">
+                            <span class="messages"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Phone
+                        </label>
+                        <div class="col-sm-12">
+                            <input type="number" class="form-control" name="list_items_phone"
+                                id="list_items_phone_edit">
+                            <span class="messages"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row f-right">
+                        <div class="col-sm-12">
+                            <button type="reset" class="btn btn-danger">Reset</button>
+                            <button type="submit" class="btn btn-primary m-b-0">Update</button>
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
+            {{ Form::close() }}
+            @endif
+        </div>
+    </div>
+</div>
+</div>
+</div> --}}
 
-            {{-- Modal Delete Data --}}
-            {{-- <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog">
+{{-- Modal Delete Data --}}
+{{-- <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="page-body">
-                                @if(count($employees))
-                                {{ Form::model($employees, ['method' => 'Delete', 'route' => ['Employee.destroy', $employee->employees_id]]) }}
+                                @if(count($list_items))
+                                {{ Form::model($list_items, ['method' => 'Delete', 'route' => ['List_Item.destroy', $list_item->list_items_id]]) }}
 
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group row">
-                                            <label class="col-sm-12 col-form-label text-center"><h5>Are you sure want to
-                                                delete this data?</h5>
-                                            </label>
-                                        </div>
-                                        <div style="text-align: center">
-                                            <div class="col-sm-12">
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-                                                <button type="submit" class="btn btn-primary m-b-0">Yes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{ Form::close() }}
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="form-group row">
+            <label class="col-sm-12 col-form-label text-center">
+                <h5>Are you sure want to
+                    delete this data?</h5>
+            </label>
+        </div>
+        <div style="text-align: center">
+            <div class="col-sm-12">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                <button type="submit" class="btn btn-primary m-b-0">Yes</button>
+            </div>
         </div>
     </div>
-    <div class="md-overlay"></div>
+</div>
+{{ Form::close() }}
+@endif
+</div>
+</div>
+</div>
+</div>
+</div> --}}
+</div>
+</div>
+<div class="md-overlay"></div>
 </div>
 <script data-cfasync="false" src="{{ asset('cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js') }}">
 </script>
@@ -468,15 +432,15 @@
 {{-- <script type="text/javascript">
     $('#editmodal').on('show.bs.modal', function (e) {
         var a = $(e.relatedTarget);
-        var employees_id_edit = a.data('id');
-        var employees_name_edit = a.data('name');
-        var employees_address_edit = a.data('address');
-        var employees_phone_edit = a.data('phone');
+        var list_items_id_edit = a.data('id');
+        var list_items_name_edit = a.data('name');
+        var list_items_address_edit = a.data('address');
+        var list_items_phone_edit = a.data('phone');
         var modal = $(this)
-        document.getElementById("employees_id_edit").value = employees_id_edit;
-        document.getElementById("employees_name_edit").value = employees_name_edit;
-        document.getElementById("employees_address_edit").value = employees_address_edit;
-        document.getElementById("employees_phone_edit").value = employees_phone_edit;
+        document.getElementById("list_items_id_edit").value = list_items_id_edit;
+        document.getElementById("list_items_name_edit").value = list_items_name_edit;
+        document.getElementById("list_items_address_edit").value = list_items_address_edit;
+        document.getElementById("list_items_phone_edit").value = list_items_phone_edit;
     })
 </script> --}}
 @endsection

@@ -18,14 +18,16 @@ Route::get('/', function () {
 Route::resource('Branch', 'BranchController');
 Route::resource('Duration', 'DurationController');
 Route::resource('Employee', 'EmployeeController');
-<<<<<<< Updated upstream
+Route::resource('Item_Category', 'ItemCategoryController');
+Route::resource('List_Item', 'ListItemController');
+
 Route::resource('Unit_Item', 'UnitItemController');
 Route::resource('Spending', 'SpendingController');
 Route::resource('Spending_Category', 'SpendingCategoryController');
 Route::resource('Role', 'RoleController');
 Route::resource('Login', 'LoginController');
-=======
+
 Route::resource('Spending', 'SpendingController');
 Route::resource('Spending_Category', 'SpendingCategoryController');
 
->>>>>>> Stashed changes
+

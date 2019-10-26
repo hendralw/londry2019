@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\List_Item;
+use App\Item_Category;
+use App\Unit_Item;
+use App\Duration;
 use Illuminate\Http\Request;
 
 class ListItemController extends Controller
@@ -15,8 +18,11 @@ class ListItemController extends Controller
      */
     public function index()
     {
+        $item_categories = Item_Category::orderBy('item_categories_id', 'ASC')->get();
+        $unit_items = Unit_Item::orderBy('unit_items_id', 'ASC')->get();
+        $durations = Duration::orderBy('durations_id', 'ASC')->get();
         $list_items = List_Item::orderBy('list_items_id', 'ASC')->get();
-        return view('item', compact('list_items'));
+        return view('item', compact('item_categories','unit_items','durations','list_items'));
     }
 
     /**
@@ -74,6 +80,7 @@ class ListItemController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $id = $request->input('list_items_id');
         List_Item::find($id)->update($request->all());
         return redirect()->route('List_Item.index')->with('success', 'item updated succesfully');
     }
@@ -84,8 +91,9 @@ class ListItemController extends Controller
      * @param  \App\List_Item  $list_Item
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        $id = $request->input('list_items_id');
         List_Item::find($id)->delete();
         return redirect()->route('List_Item.index')->with('success', 'Item Deleted successfully');
     }
