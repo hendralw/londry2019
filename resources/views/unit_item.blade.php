@@ -40,7 +40,7 @@
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Data Kategori Pengeluaran</h4>
+                                    <h4>Data Kategori Unit Item</h4>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                                     </li>
                                     <li class="breadcrumb-item"><a href="#!">Data Master</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="#!">Spending</a>
+                                    <li class="breadcrumb-item"><a href="#!">Unit Item</a>
                                     </li>
 
                                 </ul>
@@ -87,30 +87,30 @@
                                             </thead>
                                             <tbody>
                                                 <?php $no = 0; ?>
-                                                @if(count($spending_categories))
-                                                @foreach ($spending_categories as $category)
+                                                @if(count($unit_items))
+                                                @foreach ($unit_items as $unit)
                                                 <?php $no++ ?>
                                                 <tr>
                                                     <td>
-                                                        {{ $category->spending_categories_name }}
+                                                        {{ $unit->unit_items_name }}
                                                     </td>
                                                     <td>
-                                                        {{ $category->spending_categories_id }}
+                                                        {{ $unit->unit_items_id }}
                                                     </td>
                                                     <td>
                                                         {{ $no }}
                                                     </td>
                                                     <td>
-                                                        <a href="#" data-toggle="modal" data-target="#editmodal" id="spending_categories_id" data-id="{{ $category->spending_categories_id }}" data-name="{{ $category->spending_categories_name }}"><i class="fa fa-pencil btn btn-warning btn-mini btn-round"></i></a>
+                                                        <a href="#" data-toggle="modal" data-target="#editmodal" id="unit_items_id" data-id="{{ $unit->unit_items_id }}" data-name="{{ $unit->unit_items_name }}"><i class="fa fa-pencil btn btn-warning btn-mini btn-round"></i></a>
 
 
-                                                        {!! Form::open(['method' => 'Delete', 'route' => ['Spending_Category.destroy', $category->spending_categories_id], 'style'=>'display:inline', 'id'=>'delete_form']) !!}
+                                                        {!! Form::open(['method' => 'Delete', 'route' => ['Unit_Item.destroy', $unit->unit_items_id], 'style'=>'display:inline', 'id'=>'delete_form']) !!}
                                                         <a href="#" onclick="document.getElementById('delete_form').submit()"> <i class="fa fa-trash-o btn btn-danger btn-mini btn-round"></i></a>
                                                         {!! Form::close() !!}
                                                     </td>
                                                 </tr>
                                                 @endforeach
-                                            
+
                                                 @endif
                                             </tbody>
                                         </table>
@@ -127,7 +127,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Category</h4>
+                            <h4 class="modal-title">Add Unit Item</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -135,14 +135,14 @@
                         <div class="modal-body">
                             <div class="page-body">
 
-                                {{ Form::open(array('route' => 'Spending_Category.store', 'method' => 'POST')) }}
+                                {{ Form::open(array('route' => 'Unit_Item.store', 'method' => 'POST')) }}
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group row">
                                             <label class="col-sm-12 col-form-label">Name
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="spending_categories_name" id="spending_categories_name">
+                                                <input type="text" class="form-control" name="unit_items_name" id="unit_items_name">
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
@@ -176,8 +176,8 @@
                         </div>
                         <div class="modal-body">
                             <div class="page-body">
-                                @if(count($spending_categories))
-                                {{ Form::model($spending_categories, ['method' => 'PATCH', 'route' => ['Spending_Category.update', $category->spending_categories_id]]) }}
+                                @if(count($unit_items))
+                                {{ Form::model($unit_items, ['method' => 'PATCH', 'route' => ['Unit_Item.update', $unit->unit_items_id]]) }}
 
                                 {{-- {{ Form::open(array('route' => ['Branch.update', $branch->id], 'method' => 'PATCH')) }}
                                 --}}
@@ -187,7 +187,8 @@
                                             <label class="col-sm-12 col-form-label">Id
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-cont rol" name="spending_categories_id" id="spending_categories_id_modal" hidden>
+
+                                                <input type="text" class="form-cont rol" name="unit_items_id" id="unit_items_id_modal" hidden>
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
@@ -195,7 +196,7 @@
                                             <label class="col-sm-12 col-form-label">Name
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="spending_categories_name" id="spending_categories_name_modal">
+                                                <input type="text" class="form-control" name="unit_items_name" id="unit_items_name_modal">
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
@@ -296,8 +297,8 @@
         var name = a.data('name');
         // $("#branches_idmodal").val(id);
         var modal = $(this)
-        document.getElementById("spending_categories_name_modal").value = name;
-        document.getElementById("spending_categories_id_modal").value = id;
+        document.getElementById("unit_items_name_modal").value = name;
+        document.getElementById("unit_items_id_modal").value = id;
     })
 </script>
 

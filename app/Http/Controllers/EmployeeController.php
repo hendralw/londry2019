@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Employee;
+use App\Role;
+use App\Branch;
+use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
 {
@@ -15,8 +18,10 @@ class EmployeeController extends Controller
      */
     public function index()
     {
+        $branches = Branch::orderBy('branches_id', 'ASC')->get();
+        $roles = Role::orderBy('roles_id', 'ASC')->get();
         $employees = Employee::orderBy('employees_id', 'ASC')->get();
-        return view('employee', compact('employees'));
+        return view('employee', compact('employees', 'branches', 'roles'));
     }
 
     /**
@@ -46,8 +51,17 @@ class EmployeeController extends Controller
         //     'branches_name' => 'required', 
         //     'branches_address' => 'required', 
         //     'branches_phone' => 'required|numeric'], $messages);
-
-        Employee::create($request->all());
+  
+        $password = Hash::make($request->input('password'));
+        Employee::create(['branches_id' => $request->branches_id,
+        'roles_id' => $request->roles_id,
+        'employees_name' => $request->employees_name,
+        'employees_phone' => $request->employees_phone,
+        'employees_address' => $request->employees_address,
+        'employees_salary' => $request->employees_salary,
+        'username' => $request->username,
+        'password' => $password]);
+       
         return redirect()->route('Employee.index')->with('success', 'create item!');
     }
 

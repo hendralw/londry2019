@@ -9,7 +9,7 @@ class Employee extends Model
     protected $table = "employees";
     protected $primaryKey = 'employees_id';
     public $timestamps = true;
-    protected $fillable = ['branches_id', 'roles_id', 'status_id', 'employees_name', 'employees_phone', 'employees_address', 'employees_salary', 'username', 'password'];
+    protected $fillable = ['branches_id', 'roles_id', 'employees_name', 'employees_phone', 'employees_address', 'employees_salary', 'username', 'password'];
 
     public function branch()
     {

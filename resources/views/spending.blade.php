@@ -124,12 +124,7 @@
                                                     </td>
                                                 </tr>
                                                 @endforeach
-                                                @else
-                                                <tr>
-                                                    <td align="center" colspan="8">
-                                                        Empty Data
-                                                    </td>
-                                                </tr>
+
                                                 @endif
                                             </tbody>
                                         </table>

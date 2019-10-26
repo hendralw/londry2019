@@ -16,10 +16,10 @@ Route::get('/', function () {
 });
 
 Route::resource('Branch', 'BranchController');
-<<<<<<< HEAD
 Route::resource('Duration', 'DurationController');
 Route::resource('Employee', 'EmployeeController');
-=======
+Route::resource('Unit_Item', 'UnitItemController');
 Route::resource('Spending', 'SpendingController');
 Route::resource('Spending_Category', 'SpendingCategoryController');
->>>>>>> master
+Route::resource('Role', 'RoleController');
+Route::resource('Login', 'LoginController');

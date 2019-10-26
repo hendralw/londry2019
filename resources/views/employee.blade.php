@@ -173,26 +173,27 @@
                                             <label class="col-sm-12 col-form-label">Cabang
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="branches_id"
-                                                    id="branches_id">
+                                            <select name="branches_id" id="branches_id" class="form-control">
+                                                    <option value="" disabled selected></option>
+                                                    @foreach($branches as $branch)
+                                                    <option value="{{ $branch->branches_id }}">{{ $branch->branches_name }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-12 col-form-label">Role
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="roles_id"
-                                                    id="roles_id">
+                                            <select name="roles_id" id="roles_id" class="form-control">
+                                                    <option value="" disabled selected></option>
+                                                    @foreach($roles as $role)
+                                                    <option value="{{ $role->roles_id }}">{{ $role->roles_name }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-12 col-form-label">Status
-                                            </label>
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="status_id"
-                                                    id="status_id">
-                                            </div>
-                                        </div>
+                                    
                                         <div class="form-group row">
                                             <label class="col-sm-12 col-form-label">Name
                                             </label>
