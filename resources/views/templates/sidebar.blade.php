@@ -30,8 +30,20 @@
                         <a href="{{ ('List_Item') }}">
                             <span class="pcoded-mtext">List Item</span>
                         </a>
+                        <a href="{{ ('Spending_Category') }}">
+                            <span class="pcoded-mtext">Spending Category</span>
+                        </a>
+                        <a href="{{ ('Unit_Item') }}">
+                            <span class="pcoded-mtext">Unit Item </span>
+                        </a>
                     </li>
                 </ul>
+            </li>
+            <li class="">
+                <a href="{{ ('Spending') }}">
+                    <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                    <span class="pcoded-mtext">Spending</span>
+                </a>
             </li>
         </ul>
     </div>
