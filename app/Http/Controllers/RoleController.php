@@ -5,9 +5,21 @@ namespace App\Http\Controllers;
 use App\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!Session::get('login')) {
+                return redirect('Login')->with('alert', 'Kamu harus login dulu');
+            } else {
+                return $next($request);
+            }
+        });
+    }
     /**
      * Display a listing of the resource.
      *

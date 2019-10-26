@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
-class LoginController extends Controller
+class AuthController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +19,30 @@ class LoginController extends Controller
     {
         return view('login');
     }
+
     public function loginPost(Request $request)
     {
-        $email = $request->email;
+        $username = $request->username;
         $password = $request->password;
-        
+        $data = Employee::where('username', $username)->first();
+        if ($data) {
+            if (Hash::check($password, $data->password)) {
+                Session::put('name', $data->employees_name);
+                Session::put('id', $data->employees_id);
+                Session::put('username', $data->username);
+                Session::put('login', TRUE);
+                return redirect('/')->with('success', 'create item!');
+            } else {
+                return redirect('Login')->with('alert', 'Password atau Email, Salah !');
+            }
+        } else {
+            return redirect('Login')->with('alert', 'Password atau Email, Salah!');
+        }
+    }
+    public function logout()
+    {
+        Session::flush();
+        return redirect('Login')->with('alert', 'Kamu sudah logout');
     }
 
     /**

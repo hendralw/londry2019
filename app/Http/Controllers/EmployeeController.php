@@ -8,9 +8,21 @@ use App\Employee;
 use App\Role;
 use App\Branch;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
+
 
 class EmployeeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!Session::get('login')) {
+                return redirect('Login')->with('alert', 'Kamu harus login dulu');
+            } else {
+                return $next($request);
+            }
+        });
+    }
     /**
      * Display a listing of the resource.
      *

@@ -8,9 +8,21 @@ use App\Item_Category;
 use App\Unit_Item;
 use App\Duration;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+
 
 class ListItemController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!Session::get('login')) {
+                return redirect('Login')->with('alert', 'Kamu harus login dulu');
+            } else {
+                return $next($request);
+            }
+        });
+    }
     /**
      * Display a listing of the resource.
      *
