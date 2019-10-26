@@ -30,3 +30,7 @@ Route::resource('Role', 'RoleController');
 Route::get('/Login', 'AuthController@index');
 Route::post('/loginPost', 'AuthController@loginPost');
 Route::get('/logout', 'AuthController@logout');
+<<<<<<< HEAD
+=======
+
+>>>>>>> master

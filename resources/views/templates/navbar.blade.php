@@ -24,7 +24,7 @@
                         <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn"
                             data-dropdown-out="fadeOut">
                             <li>
-                                <a href="auth-normal-sign-in.html">
+                                <a href="{{ '/logout' }}">
                                     <i class="feather icon-log-out"></i> Logout
                                 </a>
                             </li>
