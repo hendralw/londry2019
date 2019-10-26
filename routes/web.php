@@ -25,19 +25,8 @@ Route::resource('Unit_Item', 'UnitItemController');
 Route::resource('Spending', 'SpendingController');
 Route::resource('Spending_Category', 'SpendingCategoryController');
 Route::resource('Role', 'RoleController');
-<<<<<<< Updated upstream
-Route::resource('Login', 'LoginController');
 
-Route::resource('Spending', 'SpendingController');
-Route::resource('Spending_Category', 'SpendingCategoryController');
-
-<<<<<<< HEAD
-
-=======
->>>>>>> Stashed changes
-=======
 Route::get('/Login', 'AuthController@index');
 Route::post('/loginPost', 'AuthController@loginPost');
 Route::get('/logout', 'AuthController@logout');
->>>>>>> Stashed changes
->>>>>>> master
+
