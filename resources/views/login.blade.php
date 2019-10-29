@@ -95,7 +95,7 @@
                                 </div>
                                 @if ($message = Session::get('alert'))
                                 <div class="alert alert-danger border-danger">
-                                    <strong>Success</strong> {{ $message }}
+                                    <strong>Failed</strong> {{ $message }}
                                 </div>
                                 @endif
                                 <div class="form-group form-primary">

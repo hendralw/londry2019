@@ -135,7 +135,7 @@
                         <div class="modal-body">
                             <div class="page-body">
 
-                                {{ Form::open(array('route' => 'Unit_Item.store', 'method' => 'POST')) }}
+                                {{ Form::open(array('route' => 'Unit_Item.store', 'method' => 'POST', 'id' => 'addForm')) }}
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group row">
@@ -242,10 +242,10 @@
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/bower_components/datedropper/js/datedropper.min.js') }}"></script>
 
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/bower_components/sweetalert/js/sweetalert.min.js') }}"></script>
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/js/modal.js') }}"></script>
+<!-- <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/js/modal.js') }}"></script> -->
 
 
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/js/modalEffects.js') }}"></script>
+<!-- <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/js/modalEffects.js') }}"></script> -->
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/js/classie.js') }}"></script>
 
 
@@ -266,8 +266,8 @@
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/i18next-xhr-backend/js/i18nextXHRBackend.min.js') }}"></script>
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/i18next-browser-languagedetector/js/i18nextBrowserLanguageDetector.min.js') }}"></script>
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/jquery-i18next/js/jquery-i18next.min.js') }}"></script>
-
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="../files/assets/pages/advance-elements/custom-picker.js"></script>
+<!-- 
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="../files/assets/pages/advance-elements/custom-picker.js"></script> -->
 
 <script src="{{ asset('files/assets/pages/data-table/extensions/responsive/js/responsive-custom.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
 <script src="{{ asset('files/assets/js/pcoded.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
@@ -301,5 +301,46 @@
         document.getElementById("unit_items_id_modal").value = id;
     })
 </script>
+<script src="{{ asset('files/assets/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
+    // $.validator.setDefaults({
+    //     submitHandler: function() {
+    //         alert("submitted!");
+    //     }
+    // });
 
+    $(document).ready(function() {
+        $("#addForm").validate({
+            rules: {
+                unit_items_name: {
+                    required: true,
+                    minlength: 2
+                },
+            },
+            messages: {
+                unit_items_name: {
+                    required: "Please enter a username",
+                    minlength: "Your username must consist of at least 2 characters"
+                },
+            },
+            errorElement: "em",
+            errorPlacement: function(error, element) {
+                // Add the `help-block` class to the error element
+                error.addClass("help-block");
+
+                if (element.prop("type") === "checkbox") {
+                    error.insertAfter(element.parent("label"));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).parents(".col-sm-5").addClass("has-error").removeClass("has-success");
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).parents(".col-sm-5").addClass("has-success").removeClass("has-error");
+            }
+        });
+    });
+</script>
 @endsection

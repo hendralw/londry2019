@@ -1,5 +1,15 @@
 <?php
 
+
+// use Illuminate\Routing\Route as IlluminateRoute;
+// use App\Http\Controllers\CaseInsensitiveUriValidator;
+// use Illuminate\Routing\Matching\UriValidator;
+
+// $validators = IlluminateRoute::getValidators();
+// $validators[] = new CaseInsensitiveUriValidator;
+// IlluminateRoute::$validators = array_filter($validators, function ($validator) {
+//     return get_class($validator) != UriValidator::class;
+// });
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,7 +40,3 @@ Route::resource('Role', 'RoleController');
 Route::get('/Login', 'AuthController@index');
 Route::post('/loginPost', 'AuthController@loginPost');
 Route::get('/logout', 'AuthController@logout');
-<<<<<<< HEAD
-=======
-
->>>>>>> master

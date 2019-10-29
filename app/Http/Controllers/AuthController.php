@@ -8,6 +8,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
+// use Illuminate\Routing\Route;
+// use Illuminate\Routing\Matching\ValidatorInterface;
+// class CaseInsensitiveUriValidator implements ValidatorInterface
+// {
+//   public function matches(Route $route, Request $request)
+//   {
+//     $path = $request->path() == '/' ? '/' : '/'.$request->path();
+//     return preg_match(preg_replace('/$/','i', $route->getCompiled()->getRegex()), rawurldecode($path));
+//   }
+// }
+
 class AuthController extends Controller
 {
     /**
@@ -31,7 +42,7 @@ class AuthController extends Controller
                 Session::put('id', $data->employees_id);
                 Session::put('username', $data->username);
                 Session::put('login', TRUE);
-                return redirect('/')->with('success', 'create item!');
+                return redirect('/')->with('success', 'Login Berhasil!');
             } else {
                 return redirect('Login')->with('alert', 'Password atau Email, Salah !');
             }

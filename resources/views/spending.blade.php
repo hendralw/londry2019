@@ -149,7 +149,7 @@
                         <div class="modal-body">
                             <div class="page-body">
 
-                                {{ Form::open(array('route' => 'Spending.store', 'method' => 'POST')) }}
+                                {{ Form::open(array('route' => 'Spending.store', 'method' => 'POST', 'id' => 'addForm')) }}
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group row">
@@ -193,9 +193,8 @@
                                             <div class="col-sm-12 row">
                                                 <p class="col">Rp.</p>
                                                 <input type="number" class="form-control col-10" name="spendings_total" id="spendings_total">
-
-                                                <span class="messages"></span>
                                             </div>
+                                            <div class="col-12" id="errors"></div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Tanggal
@@ -204,7 +203,7 @@
                                                 <div class="input-group date fj-date">
                                                     <input id="spendings_date" name="spendings_date" class="form-control" type="text" placeholder="Select your date" /><span class="input-group-addon">
                                                 </div>
-                                                <span class="messages"></span>
+
                                             </div>
                                         </div>
                                         <div class="form-group row f-right">
@@ -290,7 +289,6 @@
                                             <div class="col-sm-12 row">
                                                 <p class="col">Rp.</p>
                                                 <input type="number" class="form-control col-10" name="spendings_total" id="spendings_total_modal">
-
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
@@ -410,6 +408,61 @@
         document.getElementById("spendings_date_modal").value = date;
 
     })
+</script>
+<script src="{{ asset('files/assets/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
+    // $.validator.setDefaults({
+    //     submitHandler: function() {
+    //         alert("submitted!");
+    //     }
+    // });
+
+    $(document).ready(function() {
+        $("#addForm").validate({
+            rules: {
+                spendings_name: {
+                    required: true,
+                    minlength: 2
+                },
+                branches_id: "required",
+                spending_categories_id: "required",
+                spendings_total: "required",
+                spendings_date: "required"
+
+
+            },
+            messages: {
+                spendings_name: {
+                    required: "Please enter a Spending name",
+                    minlength: "Your Spending name must consist of at least 2 characters"
+                },
+                branches_id: "please choose a branch",
+                spending_categories_id: "Please choose a category",
+                spendings_total: "Please fill the total box",
+                spendings_date: "Please choose a date"
+            },
+            errorElement: "em",
+            errorPlacement: function(error, element) {
+                // Add the `help-block` class to the error element
+                error.addClass("help-block");
+
+                if (element.prop("id") === "spendings_date") {
+                    error.insertAfter(element.parent("div"));
+                } else if (element.prop("id") === "spendings_total") {
+                    // errorLabelContainer: '#errors';
+                    error.appendTo("#errors");
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).parents(".col-sm-5").addClass("has-error").removeClass("has-success");
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).parents(".col-sm-5").addClass("has-success").removeClass("has-error");
+            }
+        });
+    });
 </script>
 
 @endsection
