@@ -113,7 +113,18 @@ class EmployeeController extends Controller
     public function update(Request $request, $id)
     {
         $id = $request->input('employees_id');
-        Employee::find($id)->update($request->all());
+        // Employee::find($id)->update($request->all());
+        $password = Hash::make($request->input('password'));
+        Employee::find($id)->update([
+            'branches_id' => $request->branches_id,
+            'roles_id' => $request->roles_id,
+            'employees_name' => $request->employees_name,
+            'employees_phone' => $request->employees_phone,
+            'employees_address' => $request->employees_address,
+            'employees_salary' => $request->employees_salary,
+            'username' => $request->username,
+            'password' => $password
+        ]);
         return redirect()->route('Employee.index')->with('success', 'update item!');
     }
 

@@ -278,32 +278,6 @@
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
-                                        <div class="form-group row" hidden>
-                                            <label class="col-sm-12 col-form-label">Name
-                                            </label>
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="branches_name"
-                                                    id="branches_name_delete">
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row" hidden>
-                                            <label class="col-sm-2 col-form-label">Address</label>
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="branches_address"
-                                                    id="branches_address_delete">
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row" hidden>
-                                            <label class="col-sm-2 col-form-label">Phone
-                                            </label>
-                                            <div class="col-sm-12">
-                                                <input type="number" class="form-control" name="branches_phone"
-                                                    id="branches_phone_delete">
-                                                <span class="messages"></span>
-                                            </div>
-                                        </div>
                                         <div class="form-group row">
                                             <label class="col-sm-12 col-form-label text-center">
                                                 <h5>Are you sure want to
@@ -435,7 +409,6 @@
         document.getElementById("branches_address_edit").value = branches_address_edit;
         document.getElementById("branches_phone_edit").value = branches_phone_edit;
     })
-
 </script>
 
 <script type="text/javascript">
