@@ -100,8 +100,13 @@ class SpendingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+<<<<<<< HEAD
     public function destroy(Request $request, $id)
+=======
+    public function destroy(Request $request,$id)
+>>>>>>> master
     {
+        $id = $request->input('spendings_id');
         Spending::find($id)->delete();
         return redirect()->route('Spending.index')->with('success', 'Item Deleted successfully');
     }

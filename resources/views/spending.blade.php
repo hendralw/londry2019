@@ -14,18 +14,26 @@
 
 
 
-<link rel="stylesheet" type="text/css" href="{{ asset ('files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset ('files/assets/pages/data-table/css/buttons.dataTables.min.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset ('files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset ('files/assets/pages/data-table/extensions/responsive/css/responsive.dataTables.css') }}">
+<link rel="stylesheet" type="text/css"
+    href="{{ asset ('files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet" type="text/css"
+    href="{{ asset ('files/assets/pages/data-table/css/buttons.dataTables.min.css') }}">
+<link rel="stylesheet" type="text/css"
+    href="{{ asset ('files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}">
+<link rel="stylesheet" type="text/css"
+    href="{{ asset ('files/assets/pages/data-table/extensions/responsive/css/responsive.dataTables.css') }}">
 
-<link rel="stylesheet" type="text/css" href="{{ asset ('files/assets/pages/advance-elements/css/bootstrap-datetimepicker.css') }}">
+<link rel="stylesheet" type="text/css"
+    href="{{ asset ('files/assets/pages/advance-elements/css/bootstrap-datetimepicker.css') }}">
 
-<link rel="stylesheet" type="text/css" href="{{ asset ('files/bower_components/bootstrap-daterangepicker/css/daterangepicker.css') }}" />
-<link rel="stylesheet" type="text/css" href="{{ asset ('files/bower_components/datedropper/css/datedropper.min.css') }}" />
+<link rel="stylesheet" type="text/css"
+    href="{{ asset ('files/bower_components/bootstrap-daterangepicker/css/daterangepicker.css') }}" />
+<link rel="stylesheet" type="text/css"
+    href="{{ asset ('files/bower_components/datedropper/css/datedropper.min.css') }}" />
 
 <link href="{{ asset ('files/assets/pages/jquery.filer/css/jquery.filer.css') }}" type="text/css" rel="stylesheet" />
-<link href="{{ asset ('files/assets/pages/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css') }}" type="text/css" rel="stylesheet" />
+<link href="{{ asset ('files/assets/pages/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css') }}"
+    type="text/css" rel="stylesheet" />
 
 <link rel="stylesheet" type="text/css" href="{{ asset ('files/assets/icon/font-awesome/css/font-awesome.min.css') }}">
 
@@ -57,7 +65,8 @@
                             </div>
                         </div>
                         <div class="container"><br>
-                            <button class="btn btn-primary btn-md waves-effect f-right d-inline-block md-trigger" data-toggle="modal" data-target="#default-Modal"><i class="fa fa-plus"></i>Add</button>
+                            <button class="btn btn-primary btn-md waves-effect f-right d-inline-block md-trigger"
+                                data-toggle="modal" data-target="#default-Modal"><i class="fa fa-plus"></i>Add</button>
                         </div>
                     </div>
                 </div>
@@ -77,9 +86,8 @@
                                         <table id="new-cons" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
-                                                    <th width=30px>Name</th>
-                                                    <th width=30px>Id</th>
-                                                    <th>No</th>
+                                                    <th width=30px>No</th>
+                                                    <th>Name</th>
                                                     <th>Cabang</th>
                                                     <th>Kategori</th>
                                                     <th>Total</th>
@@ -89,18 +97,14 @@
                                             </thead>
                                             <tbody>
                                                 <?php $no = 0; ?>
-                                                @if(count($spendings))
                                                 @foreach ($spendings as $spending)
                                                 <?php $no++ ?>
                                                 <tr>
                                                     <td>
-                                                        {{ $spending->spendings_name }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $spending->spendings_id }}
-                                                    </td>
-                                                    <td>
                                                         {{ $no }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $spending->spendings_name }}
                                                     </td>
                                                     <td>
                                                         {{ $spending->branch->branches_name }}
@@ -115,17 +119,24 @@
                                                         {{ $spending->spendings_date }}
                                                     </td>
                                                     <td>
-                                                        <a href="{{ route('Spending.edit', $spending->spendings_id) }}" data-toggle="modal" data-target="#editmodal" id="spendings_id" data-id="{{ $spending->spendings_id }}" data-branch="{{ $spending->branches_id }}" data-name="{{ $spending->spendings_name }}" data-category="{{ $spending->spending_categories_id }}" data-total="{{ $spending->spendings_total }}" data-date="{{ $spending->spendings_date }}"><i class="fa fa-pencil btn btn-warning btn-mini btn-round"></i></a>
+                                                        <a href="{{ route('Spending.edit', $spending->spendings_id) }}"
+                                                            data-toggle="modal" data-target="#editmodal"
+                                                            id="spendings_id" data-id="{{ $spending->spendings_id }}"
+                                                            data-branch="{{ $spending->branches_id }}"
+                                                            data-name="{{ $spending->spendings_name }}"
+                                                            data-category="{{ $spending->spending_categories_id }}"
+                                                            data-total="{{ $spending->spendings_total }}"
+                                                            data-date="{{ $spending->spendings_date }}"><i
+                                                                class="fa fa-pencil btn btn-warning btn-mini btn-round"></i></a>
 
-
-                                                        {!! Form::open(['method' => 'Delete', 'route' => ['Spending.destroy', $spending->spendings_id], 'style'=>'display:inline', 'id'=>'delete_form']) !!}
-                                                        <a href="#" onclick="document.getElementById('delete_form').submit()"> <i class="fa fa-trash-o btn btn-danger btn-mini btn-round"></i></a>
-                                                        {!! Form::close() !!}
+                                                        <a href="{{ route('Spending.destroy', $spending->spendings_id) }}"
+                                                            data-toggle="modal" data-target="#deletemodal"
+                                                            id="spendings_id" data-id="{{ $spending->spendings_id }}"><i
+                                                                class="fa fa-trash-o btn btn-danger btn-mini btn-round"></i></a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
 
-                                                @endif
                                             </tbody>
                                         </table>
                                     </div>
@@ -136,7 +147,7 @@
                 </div>
             </div>
 
-            {{-- Add Data --}}
+            {{-- Modal Add Data --}}
             <div class="modal fade" id="default-Modal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -156,7 +167,8 @@
                                             <label class="col-sm-12 col-form-label">Name
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="spendings_name" id="spendings_name">
+                                                <input type="text" class="form-control" name="spendings_name"
+                                                    id="spendings_name">
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
@@ -167,7 +179,8 @@
                                                 <select name="branches_id" id="branches_id" class="form-control">
                                                     <option value="" disabled selected></option>
                                                     @foreach($branches as $branch)
-                                                    <option value="{{ $branch->branches_id }}">{{ $branch->branches_name }}</option>
+                                                    <option value="{{ $branch->branches_id }}">
+                                                        {{ $branch->branches_name }}</option>
                                                     @endforeach
                                                 </select>
 
@@ -178,10 +191,12 @@
                                             <label class="col-sm-2 col-form-label">Kategori
                                             </label>
                                             <div class="col-sm-12">
-                                                <select name="spending_categories_id" id="spending_categories_id" class="form-control">
+                                                <select name="spending_categories_id" id="spending_categories_id"
+                                                    class="form-control">
                                                     <option value="" disabled selected></option>
                                                     @foreach($spending_categories as $category)
-                                                    <option value="{{ $category->spending_categories_id  }}">{{ $category->spending_categories_name }}</option>
+                                                    <option value="{{ $category->spending_categories_id  }}">
+                                                        {{ $category->spending_categories_name }}</option>
                                                     @endforeach
                                                 </select>
                                                 <span class="messages"></span>
@@ -192,7 +207,8 @@
                                             </label>
                                             <div class="col-sm-12 row">
                                                 <p class="col">Rp.</p>
-                                                <input type="number" class="form-control col-10" name="spendings_total" id="spendings_total">
+                                                <input type="number" class="form-control col-10" name="spendings_total"
+                                                    id="spendings_total">
                                             </div>
                                             <div class="col-12" id="errors"></div>
                                         </div>
@@ -201,7 +217,10 @@
                                             </label>
                                             <div class="col-sm-12">
                                                 <div class="input-group date fj-date">
-                                                    <input id="spendings_date" name="spendings_date" class="form-control" type="text" placeholder="Select your date" /><span class="input-group-addon">
+                                                    <input id="spendings_date" name="spendings_date"
+                                                        class="form-control" type="text"
+                                                        placeholder="Select your date" /><span
+                                                        class="input-group-addon">
                                                 </div>
 
                                             </div>
@@ -221,7 +240,7 @@
                 </div>
             </div>
 
-            {{-- Edit Data --}}
+            {{-- Modal Edit Data --}}
             <div class="modal fade" id="editmodal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -244,7 +263,8 @@
                                             <label class="col-sm-12 col-form-label">Id
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="spendings_id" id="spendings_id_modal">
+                                                <input type="text" class="form-control" name="spendings_id"
+                                                    id="spendings_id_modal">
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
@@ -252,7 +272,8 @@
                                             <label class="col-sm-12 col-form-label">Name
                                             </label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="spendings_name" id="spendings_name_modal">
+                                                <input type="text" class="form-control" name="spendings_name"
+                                                    id="spendings_name_modal">
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
@@ -263,7 +284,8 @@
                                                 <select name="branches_id" id="branches_id_modal" class="form-control">
                                                     <option value="" disabled selected></option>
                                                     @foreach($branches as $branch)
-                                                    <option value="{{ $branch->branches_id }}">{{ $branch->branches_name }}</option>
+                                                    <option value="{{ $branch->branches_id }}">
+                                                        {{ $branch->branches_name }}</option>
                                                     @endforeach
                                                 </select>
 
@@ -274,10 +296,12 @@
                                             <label class="col-sm-2 col-form-label">Kategori
                                             </label>
                                             <div class="col-sm-12">
-                                                <select name="spending_categories_id" id="spending_categories_id_modal" class="form-control">
+                                                <select name="spending_categories_id" id="spending_categories_id_modal"
+                                                    class="form-control">
                                                     <option value="" disabled selected></option>
                                                     @foreach($spending_categories as $category)
-                                                    <option value="{{ $category->spending_categories_id  }}">{{ $category->spending_categories_name }}</option>
+                                                    <option value="{{ $category->spending_categories_id  }}">
+                                                        {{ $category->spending_categories_name }}</option>
                                                     @endforeach
                                                 </select>
                                                 <span class="messages"></span>
@@ -288,7 +312,8 @@
                                             </label>
                                             <div class="col-sm-12 row">
                                                 <p class="col">Rp.</p>
-                                                <input type="number" class="form-control col-10" name="spendings_total" id="spendings_total_modal">
+                                                <input type="number" class="form-control col-10" name="spendings_total"
+                                                    id="spendings_total_modal">
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
@@ -297,7 +322,10 @@
                                             </label>
                                             <div class="col-sm-12">
                                                 <div class="input-group date fj-date">
-                                                    <input id="spendings_date_modal" name="spendings_date" class="form-control" type="text" placeholder="Select your date" /><span class="input-group-addon">
+                                                    <input id="spendings_date_modal" name="spendings_date"
+                                                        class="form-control" type="text"
+                                                        placeholder="Select your date" /><span
+                                                        class="input-group-addon">
                                                 </div>
                                                 <span class="messages"></span>
                                             </div>
@@ -317,30 +345,86 @@
                     </div>
                 </div>
             </div>
+
+            {{-- Modal Delete Data --}}
+            <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="page-body">
+                                @if(count($spendings))
+                                {{ Form::model($spendings, ['method' => 'Delete', 'route' => ['Spending.destroy', $spending->spendings_id]]) }}
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group row">
+                                            <label class="col-sm-12 col-form-label">Id
+                                            </label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" name="spendings_id"
+                                                    id="spendings_id_delete">
+                                                <span class="messages"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-12 col-form-label text-center">
+                                                <h5>Are you sure want to
+                                                    delete this data?</h5>
+                                            </label>
+                                        </div>
+                                        <div style="text-align: center">
+                                            <div class="col-sm-12">
+                                                <button type="button" class="btn btn-danger"
+                                                    data-dismiss="modal">No</button>
+                                                <button type="submit" class="btn btn-primary m-b-0">Yes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{ Form::close() }}
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="md-overlay"></div>
 </div>
-<script data-cfasync="false" src="{{ asset('cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js') }}"></script>
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/jquery/js/jquery.min.js') }}"></script>
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/jquery-ui/js/jquery-ui.min.js') }}"></script>
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/popper.js/js/popper.min.js') }}"></script>
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/bootstrap/js/bootstrap.min.js') }}"></script>
+<script data-cfasync="false" src="{{ asset('cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js') }}">
+</script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript"
+    src="{{ asset('files/bower_components/jquery/js/jquery.min.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript"
+    src="{{ asset('files/bower_components/jquery-ui/js/jquery-ui.min.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript"
+    src="{{ asset('files/bower_components/popper.js/js/popper.min.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript"
+    src="{{ asset('files/bower_components/bootstrap/js/bootstrap.min.js') }}"></script>
 
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/jquery-slimscroll/js/jquery.slimscroll.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript"
+    src="{{ asset('files/bower_components/jquery-slimscroll/js/jquery.slimscroll.js') }}"></script>
 
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/modernizr/js/modernizr.js') }}"></script>
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/modernizr/js/css-scrollbars.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript"
+    src="{{ asset('files/bower_components/modernizr/js/modernizr.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript"
+    src="{{ asset('files/bower_components/modernizr/js/css-scrollbars.js') }}"></script>
 
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/pages/advance-elements/moment-with-locales.min.js') }}"></script>
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/pages/advance-elements/bootstrap-datetimepicker.min.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript"
+    src="{{ asset ('files/assets/pages/advance-elements/moment-with-locales.min.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript"
+    src="{{ asset ('files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript"
+    src="{{ asset ('files/assets/pages/advance-elements/bootstrap-datetimepicker.min.js') }}"></script>
 
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/bower_components/bootstrap-daterangepicker/js/daterangepicker.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript"
+    src="{{ asset ('files/bower_components/bootstrap-daterangepicker/js/daterangepicker.js') }}"></script>
 
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/bower_components/datedropper/js/datedropper.min.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript"
+    src="{{ asset ('files/bower_components/datedropper/js/datedropper.min.js') }}"></script>
 
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/bower_components/sweetalert/js/sweetalert.min.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript"
+    src="{{ asset ('files/bower_components/sweetalert/js/sweetalert.min.js') }}"></script>
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/js/modal.js') }}"></script>
 
 
@@ -348,32 +432,53 @@
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/js/classie.js') }}"></script>
 
 
-<script src="{{ asset('files/bower_components/datatables.net/js/jquery.dataTables.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
-<script src="{{ asset('files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js')}}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
-<script src="{{ asset('files/assets/pages/data-table/js/jszip.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
+<script src="{{ asset('files/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"
+    type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
+<script src="{{ asset('files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js')}}"
+    type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
+<script src="{{ asset('files/assets/pages/data-table/js/jszip.min.js') }}"
+    type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
 
-<script src="{{ asset('files/assets/pages/data-table/js/pdfmake.min.js')}}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
-<script src="{{ asset('files/assets/pages/data-table/js/vfs_fonts.js')}}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
-<script src="{{ asset('files/assets/pages/data-table/extensions/responsive/js/dataTables.responsive.min.js')}}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
-<script src="{{ asset('files/bower_components/datatables.net-buttons/js/buttons.print.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
-<script src="{{ asset('files/bower_components/datatables.net-buttons/js/buttons.html5.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
-<script src="{{ asset('files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
-<script src="{{ asset('files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
-<script src="{{ asset('files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
+<script src="{{ asset('files/assets/pages/data-table/js/pdfmake.min.js')}}"
+    type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
+<script src="{{ asset('files/assets/pages/data-table/js/vfs_fonts.js')}}"
+    type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
+<script src="{{ asset('files/assets/pages/data-table/extensions/responsive/js/dataTables.responsive.min.js')}}"
+    type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
+<script src="{{ asset('files/bower_components/datatables.net-buttons/js/buttons.print.min.js') }}"
+    type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
+<script src="{{ asset('files/bower_components/datatables.net-buttons/js/buttons.html5.min.js') }}"
+    type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
+<script src="{{ asset('files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"
+    type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
+<script src="{{ asset('files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}"
+    type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
+<script src="{{ asset('files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"
+    type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
 
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/i18next/js/i18next.min.js') }}"></script>
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/i18next-xhr-backend/js/i18nextXHRBackend.min.js') }}"></script>
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/i18next-browser-languagedetector/js/i18nextBrowserLanguageDetector.min.js') }}"></script>
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/jquery-i18next/js/jquery-i18next.min.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript"
+    src="{{ asset('files/bower_components/i18next/js/i18next.min.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript"
+    src="{{ asset('files/bower_components/i18next-xhr-backend/js/i18nextXHRBackend.min.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript"
+    src="{{ asset('files/bower_components/i18next-browser-languagedetector/js/i18nextBrowserLanguageDetector.min.js') }}">
+</script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript"
+    src="{{ asset('files/bower_components/jquery-i18next/js/jquery-i18next.min.js') }}"></script>
 
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="../files/assets/pages/advance-elements/custom-picker.js"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="../files/assets/pages/advance-elements/custom-picker.js">
+</script>
 
-<script src="{{ asset('files/assets/pages/data-table/extensions/responsive/js/responsive-custom.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
+<script src="{{ asset('files/assets/pages/data-table/extensions/responsive/js/responsive-custom.js') }}"
+    type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
 <script src="{{ asset('files/assets/js/pcoded.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
-<script src="{{ asset('files/assets/js/vartical-layout.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
-<script src="{{ asset('files/assets/js/jquery.mCustomScrollbar.concat.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
+<script src="{{ asset('files/assets/js/vartical-layout.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript">
+</script>
+<script src="{{ asset('files/assets/js/jquery.mCustomScrollbar.concat.min.js') }}"
+    type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/assets/js/script.js') }}"></script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"
+    type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
 <script type="260fa9511e1061cdeb18b6d1-text/javascript">
     window.dataLayer = window.dataLayer || [];
 
@@ -383,14 +488,22 @@
     gtag('js', new Date());
 
     gtag('config', 'UA-23581568-13');
+
 </script>
-<script src="{{ asset ('ajax.cloudflare.com/cdn-cgi/scripts/95c75768/cloudflare-static/rocket-loader.min.js') }}" data-cf-settings="260fa9511e1061cdeb18b6d1-|49" defer=""></script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="{{ asset ('ajax.cloudflare.com/cdn-cgi/scripts/95c75768/cloudflare-static/rocket-loader.min.js') }}"
+    data-cf-settings="260fa9511e1061cdeb18b6d1-|49" defer=""></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+</script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+</script>
 
 <script type="text/javascript">
-    $('#editmodal').on('show.bs.modal', function(e) {
+    $('#editmodal').on('show.bs.modal', function (e) {
         var a = $(e.relatedTarget);
         var id = a.data('id');
         var branch = a.data('branch');
@@ -408,7 +521,19 @@
         document.getElementById("spendings_date_modal").value = date;
 
     })
+
 </script>
+
+<script type="text/javascript">
+    $('#deletemodal').on('show.bs.modal', function (e) {
+        var a = $(e.relatedTarget);
+        var spendings_id_delete = a.data('id');
+        var modal = $(this)
+        document.getElementById("spendings_id_delete").value = spendings_id_delete;
+    })
+
+</script>
+
 <script src="{{ asset('files/assets/js/jquery.validate.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     // $.validator.setDefaults({
@@ -417,7 +542,7 @@
     //     }
     // });
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         $("#addForm").validate({
             rules: {
                 spendings_name: {
@@ -442,7 +567,7 @@
                 spendings_date: "Please choose a date"
             },
             errorElement: "em",
-            errorPlacement: function(error, element) {
+            errorPlacement: function (error, element) {
                 // Add the `help-block` class to the error element
                 error.addClass("help-block");
 
@@ -455,14 +580,15 @@
                     error.insertAfter(element);
                 }
             },
-            highlight: function(element, errorClass, validClass) {
+            highlight: function (element, errorClass, validClass) {
                 $(element).parents(".col-sm-5").addClass("has-error").removeClass("has-success");
             },
-            unhighlight: function(element, errorClass, validClass) {
+            unhighlight: function (element, errorClass, validClass) {
                 $(element).parents(".col-sm-5").addClass("has-success").removeClass("has-error");
             }
         });
     });
+
 </script>
 
 @endsection

@@ -86,6 +86,7 @@ class SpendingCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $id = $request->input('spending_categories_id');
         Spending_Category::find($id)->update($request->all());
         return redirect()->route('Spending_Category.index')->with('success', 'item updated succesfully');
     }
@@ -96,8 +97,9 @@ class SpendingCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        $id = $request->input('spending_categories_id');
         Spending_Category::find($id)->delete();
         return redirect()->route('Spending_Category.index')->with('success', 'Item Deleted successfully');
     }
