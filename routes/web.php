@@ -36,6 +36,8 @@ Route::resource('Unit_Item', 'UnitItemController');
 Route::resource('Spending', 'SpendingController');
 Route::resource('Spending_Category', 'SpendingCategoryController');
 Route::resource('Role', 'RoleController');
+Route::resource('Transaction', 'TransactionController');
+Route::resource('Transaction_Detail', 'TransactionDetailController');
 
 Route::get('/Login', 'AuthController@index');
 Route::post('/loginPost', 'AuthController@loginPost');

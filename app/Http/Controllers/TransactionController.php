@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Spending;
-use App\Branch;
-use App\Spending_Category;
+use App\Transaction;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class SpendingController extends Controller
+class TransactionController extends Controller
 {
     public function __construct()
     {
@@ -26,12 +24,10 @@ class SpendingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $spendings = Spending::orderBy('spendings_id', 'ASC')->get();
-        $branches = Branch::orderBy('branches_id', 'ASC')->get();
-        $spending_categories = Spending_Category::orderBy('spending_categories_id', 'ASC')->get();
-        return view('spending', compact('spendings', 'branches', 'spending_categories'));
+        $transactions = Transaction::orderBy('transactions_id', 'ASC')->get();
+        return view('transaction', compact('transactions'));
     }
 
     /**
@@ -41,7 +37,7 @@ class SpendingController extends Controller
      */
     public function create()
     {
-        return view('spending');
+        return view('transaction');
     }
 
     /**
@@ -52,8 +48,8 @@ class SpendingController extends Controller
      */
     public function store(Request $request)
     {
-        Spending::create($request->all());
-        return redirect()->route('Spending.index')->with('success', 'item created succesfully');
+        Transaction::create($request->all());
+        return redirect()->route('Transaction.index')->with('success', 'item created succesfully');
     }
 
     /**
@@ -64,8 +60,8 @@ class SpendingController extends Controller
      */
     public function show($id)
     {
-        $spendings = Spending::find($id);
-        return view('spending', compact('spendings'));
+        $transactions = Transaction::find($id);
+        return view('transaction', compact('transactions'));
     }
 
     /**
@@ -76,8 +72,8 @@ class SpendingController extends Controller
      */
     public function edit($id)
     {
-        $spendings = Spending::find($id);
-        return view('spending', compact('spendings'));
+        $transactions = Transaction::find($id);
+        return view('transaction', compact('transactions'));
     }
 
     /**
@@ -89,9 +85,10 @@ class SpendingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $id = $request->input('spendings_id');
-        Spending::find($id)->update($request->all());
-        return redirect()->route('Spending.index')->with('success', 'item updated succesfully');
+       
+        $id = $request->input('transactions_id');
+        Transaction::find($id)->update($request->all());
+        return redirect()->route('Transaction.index')->with('success', 'item updated succesfully');
     }
 
     /**
@@ -100,9 +97,9 @@ class SpendingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
-        Spending::find($id)->delete();
-        return redirect()->route('Spending.index')->with('success', 'Item Deleted successfully');
+        Transaction::find($id)->delete();
+        return redirect()->route('Transaction.index')->with('success', 'Item Deleted successfully');
     }
 }
