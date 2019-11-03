@@ -140,4 +140,5 @@ class EmployeeController extends Controller
         Employee::find($id)->delete();
         return redirect()->route('Employee.index')->with('success', 'delete item!');
     }
+  
 }

@@ -1,6 +1,7 @@
 <?php
 
-
+use Illuminate\Http\Request;
+use App\Employee;
 // use Illuminate\Routing\Route as IlluminateRoute;
 // use App\Http\Controllers\CaseInsensitiveUriValidator;
 // use Illuminate\Routing\Matching\UriValidator;
@@ -45,3 +46,14 @@ Route::get('/logout', 'AuthController@logout');
 
 
 Route::get('/', 'AuthController@home');
+
+Route::post('/checkusers', function (Request $request) {
+
+    $user = Employee::where('username', $request->input('username'))->first();
+
+    if ($user) {
+        return false;
+    } else {
+        return true;
+    }
+});
