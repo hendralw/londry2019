@@ -30,6 +30,14 @@ class AuthController extends Controller
     {
         return view('login');
     }
+    public function home()
+    {
+        if (!Session::get('login')) {
+            return redirect('Login')->with('alert', 'Kamu harus login dulu');
+        } else {
+            return view('templates.content');
+        }
+    }
 
     public function loginPost(Request $request)
     {

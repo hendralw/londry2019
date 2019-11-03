@@ -79,9 +79,8 @@
                                         <table id="new-cons" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
-                                                    <th width=30px>Name</th>
-                                                    <th width=30px>Id</th>
-                                                    <th>No</th>
+                                                    <th width=30px>No</th>
+                                                    <th>Name</th>
                                                     <th width="40px">Action</th>
                                                 </tr>
                                             </thead>
@@ -92,21 +91,16 @@
                                                 <?php $no++ ?>
                                                 <tr>
                                                     <td>
-                                                        {{ $unit->unit_items_name }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $unit->unit_items_id }}
-                                                    </td>
-                                                    <td>
                                                         {{ $no }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $unit->unit_items_name }}
                                                     </td>
                                                     <td>
                                                         <a href="#" data-toggle="modal" data-target="#editmodal" id="unit_items_id" data-id="{{ $unit->unit_items_id }}" data-name="{{ $unit->unit_items_name }}"><i class="fa fa-pencil btn btn-warning btn-mini btn-round"></i></a>
 
 
-                                                        {!! Form::open(['method' => 'Delete', 'route' => ['Unit_Item.destroy', $unit->unit_items_id], 'style'=>'display:inline', 'id'=>'delete_form']) !!}
-                                                        <a href="#" onclick="document.getElementById('delete_form').submit()"> <i class="fa fa-trash-o btn btn-danger btn-mini btn-round"></i></a>
-                                                        {!! Form::close() !!}
+                                                        <a href="{{ route('Unit_Item.destroy', $unit->unit_items_id) }}" data-toggle="modal" data-target="#deletemodal" id="unit_items_id" data-id="{{ $unit->unit_items_id }}"><i class="fa fa-trash-o btn btn-danger btn-mini btn-round"></i></a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -218,6 +212,45 @@
                     </div>
                 </div>
             </div>
+            {{-- Modal Delete Data --}}
+            <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="page-body">
+                                @if(count($unit_items))
+                                {{ Form::model($unit_items, ['method' => 'Delete', 'route' => ['Unit_Item.destroy', $unit->unit_items_id]]) }}
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group row">
+                                            <label class="col-sm-12 col-form-label">Id
+                                            </label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" name="unit_items_id" id="unit_items_id_delete">
+                                                <span class="messages"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-12 col-form-label text-center">
+                                                <h5>Are you sure want to
+                                                    delete this data?</h5>
+                                            </label>
+                                        </div>
+                                        <div style="text-align: center">
+                                            <div class="col-sm-12">
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                                <button type="submit" class="btn btn-primary m-b-0">Yes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{ Form::close() }}
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="md-overlay"></div>
@@ -301,14 +334,16 @@
         document.getElementById("unit_items_id_modal").value = id;
     })
 </script>
+<script type="text/javascript">
+    $('#deletemodal').on('show.bs.modal', function(e) {
+        var a = $(e.relatedTarget);
+        var unit_items_id_delete = a.data('id');
+        var modal = $(this)
+        document.getElementById("unit_items_id_delete").value = unit_items_id_delete;
+    })
+</script>
 <script src="{{ asset('files/assets/js/jquery.validate.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
-    // $.validator.setDefaults({
-    //     submitHandler: function() {
-    //         alert("submitted!");
-    //     }
-    // });
-
     $(document).ready(function() {
         $("#addForm").validate({
             rules: {

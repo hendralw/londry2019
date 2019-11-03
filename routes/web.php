@@ -21,9 +21,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('templates.content');
-});
+// Route::get('/', function () {
+//     return view('templates.content');
+// });
 
 Route::resource('Branch', 'BranchController');
 Route::resource('Duration', 'DurationController');
@@ -42,3 +42,6 @@ Route::resource('Transaction_Detail', 'TransactionDetailController');
 Route::get('/Login', 'AuthController@index');
 Route::post('/loginPost', 'AuthController@loginPost');
 Route::get('/logout', 'AuthController@logout');
+
+
+Route::get('/', 'AuthController@home');
