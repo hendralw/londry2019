@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Employee;
@@ -140,5 +141,5 @@ class EmployeeController extends Controller
         Employee::find($id)->delete();
         return redirect()->route('Employee.index')->with('success', 'delete item!');
     }
-  
+    
 }

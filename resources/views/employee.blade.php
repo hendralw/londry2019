@@ -215,8 +215,7 @@
                                             </label>
                                             <div class="col-sm-12">
                                                 <input type="text" class="form-control" id="username" name="username">
-
-                                                <span class="messages"></span>
+                                                <span id="error_user"></span>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -231,7 +230,7 @@
                                         <div class="form-group row f-right">
                                             <div class="col-sm-12">
                                                 <button type="reset" class="btn btn-danger">Reset</button>
-                                                <button type="submit" class="btn btn-primary m-b-0" id="submitForm">Save</button>
+                                                <button type="submit" name="submitForm" class="btn btn-primary m-b-0" id="submitForm">Save</button>
                                             </div>
                                         </div>
                                     </div>
@@ -524,11 +523,7 @@
                 employees_salary: "required",
                 username: {
                     required: true,
-                    minlength: 2,
-                    remote: {
-                        url: "checkusers",
-                        type: "post"
-                    }
+                    minlength: 2
                 },
                 password: {
                     required: true,
@@ -553,8 +548,7 @@
                 employees_salary: "Please fill a salary",
                 username: {
                     required: "Please enter a username",
-                    minlength: "Username consist of at least 2 characters",
-                    remote: "This username already exits."
+                    minlength: "Username consist of at least 2 characters"
                 },
                 password: {
                     required: "Please enter a password",
@@ -578,7 +572,48 @@
             unhighlight: function(element, errorClass, validClass) {
                 $(element).parents(".col-sm-5").addClass("has-success").removeClass("has-error");
             }
+
         });
     });
 </script>
+
+<script>
+    $(document).ready(function() {
+        document.getElementById('username').value = ''
+        $('#submitForm').attr('disabled', 'disabled');
+        $('#username').keyup(function() {
+            var error_user = '';
+            var username = $('#username').val();
+            var _token = $('input[name="_token"]').val();
+
+            $.ajax({
+                url: "{{url('/Employee/check')}}",
+                method: "POST",
+                data: {
+                    username: username,
+                    _token: _token
+                },
+                success: function(result) {
+                    if (!$('#username').val()){
+                        $('#error_user').html('');
+                        $('#username').removeClass('has-error');
+                        $('#submitForm').attr('disabled', 'disabled');
+                    }
+                    else if (result == 'unique') {
+                        $('#error_user').html('');
+                        $('#username').removeClass('has-error');
+                        $('#submitForm').attr('disabled', false);
+                    } else {
+                        $('#error_user').html('<label class="text-danger">Username not Available</label>');
+                        $('#username').addClass('has-error');
+                        $('#submitForm').attr('disabled', 'disabled');
+                    }
+                }
+            })
+
+        });
+
+    });
+</script>
+
 @endsection

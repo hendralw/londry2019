@@ -47,13 +47,5 @@ Route::get('/logout', 'AuthController@logout');
 
 Route::get('/', 'AuthController@home');
 
-Route::post('/checkusers', function (Request $request) {
-
-    $user = Employee::where('username', $request->input('username'))->first();
-
-    if ($user) {
-        return false;
-    } else {
-        return true;
-    }
-});
+Route::post('/Employee/check', 'UniqeCheckController@checkEmployee');
+Route::post('/Item_Category/check', 'UniqeCheckController@checkItemCategory');
