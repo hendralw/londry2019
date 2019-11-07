@@ -384,12 +384,10 @@
         var a = $(e.relatedTarget);
         var id = a.data('id');
         var name = a.data('name');
-        // $("#branches_idmodal").val(id);
         var modal = $(this)
         document.getElementById("spending_categories_name_modal").value = name;
         document.getElementById("spending_categories_id_modal").value = id;
     })
-
 </script>
 
 <script type="text/javascript">
@@ -399,7 +397,6 @@
         var modal = $(this)
         document.getElementById("spending_categories_id_delete").value = spending_categories_id_delete;
     })
-
 </script>
 
 @endsection
