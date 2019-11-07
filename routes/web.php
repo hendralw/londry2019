@@ -1,6 +1,7 @@
 <?php
 
-
+use Illuminate\Http\Request;
+use App\Employee;
 // use Illuminate\Routing\Route as IlluminateRoute;
 // use App\Http\Controllers\CaseInsensitiveUriValidator;
 // use Illuminate\Routing\Matching\UriValidator;
@@ -21,9 +22,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('templates.content');
-});
+// Route::get('/', function () {
+//     return view('templates.content');
+// });
 
 Route::resource('Branch', 'BranchController');
 Route::resource('Duration', 'DurationController');
@@ -36,7 +37,15 @@ Route::resource('Unit_Item', 'UnitItemController');
 Route::resource('Spending', 'SpendingController');
 Route::resource('Spending_Category', 'SpendingCategoryController');
 Route::resource('Role', 'RoleController');
+Route::resource('Transaction', 'TransactionController');
+Route::resource('Transaction_Detail', 'TransactionDetailController');
 
 Route::get('/Login', 'AuthController@index');
 Route::post('/loginPost', 'AuthController@loginPost');
 Route::get('/logout', 'AuthController@logout');
+
+
+Route::get('/', 'AuthController@home');
+
+Route::post('/Employee/check', 'UniqeCheckController@checkEmployee');
+Route::post('/Item_Category/check', 'UniqeCheckController@checkItemCategory');

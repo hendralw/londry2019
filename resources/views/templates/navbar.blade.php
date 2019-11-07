@@ -4,7 +4,7 @@
             <a class="mobile-menu" id="mobile-collapse" href="#!">
                 <i class="feather icon-menu"></i>
             </a>
-            <a href="index.html">
+            <a href="{{ url('/') }}">
                 <img class="img-fluid" src="{{ asset ('files/assets/images/logo.png') }}" alt="Theme-Logo" />
             </a>
             <a class="mobile-options">
@@ -16,13 +16,11 @@
                 <li class="user-profile header-notification">
                     <div class="dropdown-primary dropdown">
                         <div class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="{{ asset ('files/assets/images/avatar-4.jpg') }}" class="img-radius"
-                                alt="User-Profile-Image">
+                            <img src="{{ asset ('files/assets/images/avatar-4.jpg') }}" class="img-radius" alt="User-Profile-Image">
                             <span>John Doe</span>
                             <i class="feather icon-chevron-down"></i>
                         </div>
-                        <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn"
-                            data-dropdown-out="fadeOut">
+                        <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                             <li>
                                 <a href="{{ '/logout' }}">
                                     <i class="feather icon-log-out"></i> Logout

@@ -18,21 +18,38 @@
                         <a href="{{ ('Branch') }}">
                             <span class="pcoded-mtext">Cabang</span>
                         </a>
+                    </li>
+                    <li class="">
                         <a href="{{ ('Duration') }}">
                             <span class="pcoded-mtext">Durasi</span>
                         </a>
+                    </li>
+                    <li class="">
                         <a href="{{ ('Employee') }}">
                             <span class="pcoded-mtext">Pegawai</span>
                         </a>
+                    </li>
+                    <li class="">
+                        <a href="{{ ('Role') }}">
+                            <span class="pcoded-mtext">Role Pegawai</span>
+                        </a>
+                    </li>
+                    <li class="">
                         <a href="{{ ('Item_Category') }}">
                             <span class="pcoded-mtext">Kategori Item</span>
                         </a>
+                    </li>
+                    <li class="">
                         <a href="{{ ('List_Item') }}">
                             <span class="pcoded-mtext">List Item</span>
                         </a>
+                    </li>
+                    <li class="">
                         <a href="{{ ('Spending_Category') }}">
                             <span class="pcoded-mtext">Spending Category</span>
                         </a>
+                    </li>
+                    <li class="">
                         <a href="{{ ('Unit_Item') }}">
                             <span class="pcoded-mtext">Unit Item </span>
                         </a>

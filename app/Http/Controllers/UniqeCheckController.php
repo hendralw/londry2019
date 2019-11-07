@@ -1,24 +1,34 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Unit_Item;
-use App\Http\Controllers\Controller;
+use App\Employee;
+use App\Item_Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
-
-class UnitItemController extends Controller
+class UniqeCheckController extends Controller
 {
-    public function __construct()
+
+    public function checkEmployee(Request $request)
     {
-        $this->middleware(function ($request, $next) {
-            if (!Session::get('login')) {
-                return redirect('Login')->with('alert', 'Kamu harus login dulu');
+        if ($request->get('username')) {
+            $user = Employee::all()->where('username', $request->get('username'))->first();
+            if ($user) {
+                echo 'not_unique';
             } else {
-                return $next($request);
+                echo 'unique';
             }
-        });
+        }
+    }
+    public function checkItemCategory(Request $request)
+    {
+        if ($request->get('item_categories_name')) {
+            $user = Item_Category::all()->where('item_categories_name', $request->get('item_categories_name'))->first();
+            if ($user) {
+                echo 'not_unique';
+            } else {
+                echo 'unique';
+            }
+        }
     }
     /**
      * Display a listing of the resource.
@@ -27,8 +37,7 @@ class UnitItemController extends Controller
      */
     public function index()
     {
-        $unit_items = Unit_Item::orderBy('unit_items_id', 'ASC')->get();
-        return view('unit_item', compact('unit_items'));
+        //
     }
 
     /**
@@ -38,7 +47,7 @@ class UnitItemController extends Controller
      */
     public function create()
     {
-        return view('unit_item');
+        //
     }
 
     /**
@@ -49,8 +58,7 @@ class UnitItemController extends Controller
      */
     public function store(Request $request)
     {
-        Unit_Item::create($request->all());
-        return redirect()->route('Unit_Item.index')->with('success', 'item created succesfully');
+        //
     }
 
     /**
@@ -61,8 +69,7 @@ class UnitItemController extends Controller
      */
     public function show($id)
     {
-        $unit_items = Unit_Item::find($id);
-        return view('unit_item', compact('unit_items'));
+        //
     }
 
     /**
@@ -73,8 +80,7 @@ class UnitItemController extends Controller
      */
     public function edit($id)
     {
-        $unit_items = Unit_Item::find($id);
-        return view('unit_item', compact('unit_items'));
+        //
     }
 
     /**
@@ -86,9 +92,7 @@ class UnitItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $id = $request->input('unit_items_id');
-        Unit_Item::find($id)->update($request->all());
-        return redirect()->route('Unit_Item.index')->with('success', 'item updated succesfully');
+        //
     }
 
     /**
@@ -97,10 +101,8 @@ class UnitItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
-        $id = $request->input('unit_items_id');
-        Unit_Item::find($id)->delete();
-        return redirect()->route('Unit_Item.index')->with('success', 'Item Deleted successfully');
+        //
     }
 }

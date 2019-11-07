@@ -20,6 +20,11 @@ class Employee extends Model
     {
         return $this->belongsTo('App\Role', 'roles_id');
     }
+
+    public function transaction()
+    {
+        return $this->hasMany('App\Transaction', 'transactions_id');
+    }
     // public function status()
     // {
     //     return $this->belongsTo('App\Branch', 'branches_id');
