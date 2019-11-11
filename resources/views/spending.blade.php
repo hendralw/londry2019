@@ -28,8 +28,7 @@
 
 <link rel="stylesheet" type="text/css"
     href="{{ asset ('files/bower_components/bootstrap-daterangepicker/css/daterangepicker.css') }}" />
-<link rel="stylesheet" type="text/css"
-    href="{{ asset ('files/bower_components/datedropper/css/datedropper.min.css') }}" />
+
 
 <link href="{{ asset ('files/assets/pages/jquery.filer/css/jquery.filer.css') }}" type="text/css" rel="stylesheet" />
 <link href="{{ asset ('files/assets/pages/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css') }}"
@@ -420,15 +419,11 @@
 <script type="260fa9511e1061cdeb18b6d1-text/javascript"
     src="{{ asset ('files/bower_components/bootstrap-daterangepicker/js/daterangepicker.js') }}"></script>
 
-<script type="260fa9511e1061cdeb18b6d1-text/javascript"
-    src="{{ asset ('files/bower_components/datedropper/js/datedropper.min.js') }}"></script>
+
 
 <script type="260fa9511e1061cdeb18b6d1-text/javascript"
     src="{{ asset ('files/bower_components/sweetalert/js/sweetalert.min.js') }}"></script>
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/js/modal.js') }}"></script>
 
-
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/js/modalEffects.js') }}"></script>
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/js/classie.js') }}"></script>
 
 
@@ -466,8 +461,6 @@
 <script type="260fa9511e1061cdeb18b6d1-text/javascript"
     src="{{ asset('files/bower_components/jquery-i18next/js/jquery-i18next.min.js') }}"></script>
 
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="../files/assets/pages/advance-elements/custom-picker.js">
-</script>
 
 <script src="{{ asset('files/assets/pages/data-table/extensions/responsive/js/responsive-custom.js') }}"
     type="260fa9511e1061cdeb18b6d1-text/javascript"></script>

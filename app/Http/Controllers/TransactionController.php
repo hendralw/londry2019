@@ -24,10 +24,19 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $transactions = Transaction::orderBy('transactions_id', 'ASC')->get();
-        return view('transaction', compact('transactions'));
+        $query = $request->get('query');
+        $query = str_replace(" ", "%", $query);
+        $transactions = Transaction::where('transactions_id', 'like', '%' . $query . '%')
+            ->orWhere('customers_name', 'like', '%' . $query . '%')
+            ->orWhere('created_at', 'like', '%' . $query . '%')->get();
+        if ($request->ajax()) {
+            return view('searchb', compact('transactions'))->render();
+        } else {
+            // $transactions = Transaction::orderBy('transactions_id', 'ASC')->get();
+            return view('transaction', compact('transactions'));
+        }
     }
 
     /**
@@ -85,7 +94,7 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $id)
     {
-       
+
         $id = $request->input('transactions_id');
         Transaction::find($id)->update($request->all());
         return redirect()->route('Transaction.index')->with('success', 'item updated succesfully');
