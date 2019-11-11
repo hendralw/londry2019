@@ -171,7 +171,7 @@
                         <div class="modal-body">
                             <div class="page-body">
                                 @if(count($unit_items))
-                                {{ Form::model($unit_items, ['method' => 'PATCH', 'route' => ['Unit_Item.update', $unit->unit_items_id]]) }}
+                                {{ Form::model($unit_items, ['method' => 'PATCH', 'route' => ['Unit_Item.update', $unit->unit_items_id], 'id' => 'editForm']) }}
 
                                 {{-- {{ Form::open(array('route' => ['Branch.update', $branch->id], 'method' => 'PATCH')) }}
                                 --}}
@@ -346,6 +346,42 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $("#addForm").validate({
+            rules: {
+                unit_items_name: {
+                    required: true,
+                    minlength: 2
+                },
+            },
+            messages: {
+                unit_items_name: {
+                    required: "Please enter a username",
+                    minlength: "Your username must consist of at least 2 characters"
+                },
+            },
+            errorElement: "em",
+            errorPlacement: function(error, element) {
+                // Add the `help-block` class to the error element
+                error.addClass("help-block");
+
+                if (element.prop("type") === "checkbox") {
+                    error.insertAfter(element.parent("label"));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).parents(".col-sm-5").addClass("has-error").removeClass("has-success");
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).parents(".col-sm-5").addClass("has-success").removeClass("has-error");
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#editForm").validate({
             rules: {
                 unit_items_name: {
                     required: true,

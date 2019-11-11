@@ -247,7 +247,7 @@
                         <div class="modal-body">
                             <div class="page-body">
                                 @if(count($list_items))
-                                {{ Form::model($list_items, ['method' => 'PATCH', 'route' => ['List_Item.update', $list_item->list_items_id]]) }}
+                                {{ Form::model($list_items, ['method' => 'PATCH', 'route' => ['List_Item.update', $list_item->list_items_id], 'id' => 'editForm']) }}
 
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -488,7 +488,61 @@
                 },
                 list_items_price: {
                     required: true,
+                    minlength: 2,
+                    digits: true
+                }
+
+            },
+            messages: {
+                item_categories_id: "Please choose Category",
+                unit_items_id: "Please choose unit item",
+                durations_id: "please choose duration",
+                list_items_name: {
+                    required: "Please enter a name",
+                    minlength: "Name consist of at least 2 characters"
+                },
+                list_items_price: {
+                    required: "Please enter a price",
+                    minlength: "Price consist of at least 2 digits"
+                }
+            },
+            errorElement: "em",
+            errorPlacement: function (error, element) {
+                // Add the `help-block` class to the error element
+                error.addClass("help-block");
+
+                if (element.prop("type") === "checkbox") {
+                    error.insertAfter(element.parent("label"));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).parents(".col-sm-5").addClass("has-error").removeClass("has-success");
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).parents(".col-sm-5").addClass("has-success").removeClass("has-error");
+            }
+
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#editForm").validate({
+            rules: {
+                item_categories_id: "required",
+                unit_items_id: "required",
+                durations_id: "required",
+                list_items_name: {
+                    required: true,
                     minlength: 2
+                },
+                list_items_price: {
+                    required: true,
+                    minlength: 2,
+                    digits: true
                 }
 
             },

@@ -256,7 +256,7 @@
                         <div class="modal-body">
                             <div class="page-body">
                                 @if(count($employees))
-                                {{ Form::model($employees, ['method' => 'PATCH', 'route' => ['Employee.update', $employee->employees_id]]) }}
+                                {{ Form::model($employees, ['method' => 'PATCH', 'route' => ['Employee.update', $employee->employees_id], 'id' => 'editForm']) }}
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group row">
@@ -353,7 +353,7 @@
                                         <div class="form-group row f-right">
                                             <div class="col-sm-12">
                                                 <!-- <button type="reset" class="btn btn-danger">Reset</button> -->
-                                                <button type="submit" class="btn btn-primary m-b-0">Update</button>
+                                                <button type="submit" id="submitForm" class="btn btn-primary m-b-0">Update</button>
                                             </div>
                                         </div>
                                     </div>
@@ -518,6 +518,83 @@
                 },
                 employees_phone: {
                     required: true,
+                    digits: true,
+                    minlength: 2
+                },
+                employees_salary: "required",
+                username: {
+                    required: true,
+                    minlength: 2
+                },
+                password: {
+                    required: true,
+                    minlength: 2
+                },
+            },
+            messages: {
+                branches_id: "Please choose a branch",
+                roles_id: "Please choose a Role",
+                employees_name: {
+                    required: "Please enter a name",
+                    minlength: "Name must consist of at least 2 characters"
+                },
+                employees_address: {
+                    required: "Please enter an address",
+                    minlength: "Address consist of at least 2 characters"
+                },
+                employees_phone: {
+                    required: "Please enter a phone number",
+                    minlength: "Phone Number consist of at least 2 characters"
+                },
+                employees_salary: "Please fill a salary",
+                username: {
+                    required: "Please enter a username",
+                    minlength: "Username consist of at least 2 characters"
+                },
+                password: {
+                    required: "Please enter a password",
+                    minlength: "Password consist of at least 2 characters"
+                }
+            },
+            errorElement: "em",
+            errorPlacement: function(error, element) {
+                // Add the `help-block` class to the error element
+                error.addClass("help-block");
+
+                if (element.prop("type") === "checkbox") {
+                    error.insertAfter(element.parent("label"));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).parents(".col-sm-5").addClass("has-error").removeClass("has-success");
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).parents(".col-sm-5").addClass("has-success").removeClass("has-error");
+            }
+
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#editForm").validate({
+            rules: {
+                branches_id: "required",
+                roles_id: "required",
+                employees_name: {
+                    required: true,
+                    minlength: 2
+                },
+                employees_address: {
+                    required: true,
+                    minlength: 2
+                },
+                employees_phone: {
+                    required: true,
+                    digits: true,
                     minlength: 2
                 },
                 employees_salary: "required",
@@ -616,4 +693,42 @@
     });
 </script>
 
+<script>
+    $(document).ready(function() {
+        document.getElementById('username').value = ''
+        $('#submitForm').attr('disabled', 'disabled');
+        $('#username').keyup(function() {
+            var error_user = '';
+            var username = $('#username').val();
+            var _token = $('input[name="_token"]').val();
+
+            $.ajax({
+                url: "{{url('/Employee/check')}}",
+                method: "POST",
+                data: {
+                    username: username,
+                    _token: _token
+                },
+                success: function(result) {
+                    if (!$('#username').val()){
+                        $('#error_user').html('');
+                        $('#username').removeClass('has-error');
+                        $('#submitForm').attr('disabled', 'disabled');
+                    }
+                    else if (result == 'unique') {
+                        $('#error_user').html('');
+                        $('#username').removeClass('has-error');
+                        $('#submitForm').attr('disabled', false);
+                    } else {
+                        $('#error_user').html('<label class="text-danger">Username not Available</label>');
+                        $('#username').addClass('has-error');
+                        $('#submitForm').attr('disabled', 'disabled');
+                    }
+                }
+            })
+
+        });
+
+    });
+</script>
 @endsection

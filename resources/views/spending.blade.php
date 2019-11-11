@@ -252,7 +252,7 @@
                         <div class="modal-body">
                             <div class="page-body">
                                 @if(count($spendings))
-                                {{ Form::model($spendings, ['method' => 'PATCH', 'route' => ['Spending.update', $spending->spendings_id]]) }}
+                                {{ Form::model($spendings, ['method' => 'PATCH', 'route' => ['Spending.update', $spending->spendings_id], 'id' => 'editForm']) }}
 
                                 {{-- {{ Form::open(array('route' => ['Branch.update', $branch->id], 'method' => 'PATCH')) }}
                                 --}}
@@ -529,11 +529,6 @@
 
 <script src="{{ asset('files/assets/js/jquery.validate.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
-    // $.validator.setDefaults({
-    //     submitHandler: function() {
-    //         alert("submitted!");
-    //     }
-    // });
 
     $(document).ready(function () {
         $("#addForm").validate({
@@ -544,10 +539,11 @@
                 },
                 branches_id: "required",
                 spending_categories_id: "required",
-                spendings_total: "required",
+                spendings_total: {
+                    required: true,
+                    digits: true
+                },
                 spendings_date: "required"
-
-
             },
             messages: {
                 spendings_name: {
@@ -556,7 +552,10 @@
                 },
                 branches_id: "please choose a branch",
                 spending_categories_id: "Please choose a category",
-                spendings_total: "Please fill the total box",
+                spendings_total: {
+                    required: "Please fill the total box",
+                    digits: "Total must be a number"
+                },
                 spendings_date: "Please choose a date"
             },
             errorElement: "em",
@@ -581,7 +580,60 @@
             }
         });
     });
+</script>
 
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#editForm").validate({
+            rules: {
+                spendings_name: {
+                    required: true,
+                    minlength: 2
+                },
+                branches_id: "required",
+                spending_categories_id: "required",
+                spendings_total: {
+                    required: true,
+                    digits: true
+                },
+                spendings_date: "required"
+            },
+            messages: {
+                spendings_name: {
+                    required: "Please enter a Spending name",
+                    minlength: "Your Spending name must consist of at least 2 characters"
+                },
+                branches_id: "please choose a branch",
+                spending_categories_id: "Please choose a category",
+                spendings_total: {
+                    required: "Please fill the total box",
+                    digits: "Total must be a number"
+                },
+                spendings_date: "Please choose a date"
+            },
+            errorElement: "em",
+            errorPlacement: function (error, element) {
+                // Add the `help-block` class to the error element
+                error.addClass("help-block");
+
+                if (element.prop("id") === "spendings_date") {
+                    error.insertAfter(element.parent("div"));
+                } else if (element.prop("id") === "spendings_total") {
+                    // errorLabelContainer: '#errors';
+                    error.appendTo("#errors");
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).parents(".col-sm-5").addClass("has-error").removeClass("has-success");
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).parents(".col-sm-5").addClass("has-success").removeClass("has-error");
+            }
+        });
+    });
 </script>
 
 @endsection

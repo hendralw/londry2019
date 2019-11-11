@@ -166,7 +166,7 @@
                         <div class="modal-body">
                             <div class="page-body">
                                 @if(count($roles))
-                                {{ Form::model($roles, ['method' => 'PATCH', 'route' => ['Role.update', $role->roles_id]]) }}
+                                {{ Form::model($roles, ['method' => 'PATCH', 'route' => ['Role.update', $role->roles_id], 'id' => 'editForm']) }}
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group row" hidden>
@@ -356,6 +356,99 @@
         });
     });
 </script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#addForm").validate({
+            rules: {
+                roles_name: {
+                    required: true,
+                    minlength: 2
+                },
+                roles_code: {
+                    required: true,
+                    minlength: 2
+                }
+
+            },
+            messages: {
+                roles_name: {
+                    required: "Please enter a name",
+                    minlength: "Name consist of at least 2 characters"
+                },
+                roles_code: {
+                    required: "Please enter a code",
+                    minlength: "Code consist of at least 2 digits"
+                }
+            },
+            errorElement: "em",
+            errorPlacement: function(error, element) {
+                // Add the `help-block` class to the error element
+                error.addClass("help-block");
+
+                if (element.prop("type") === "checkbox") {
+                    error.insertAfter(element.parent("label"));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).parents(".col-sm-5").addClass("has-error").removeClass("has-success");
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).parents(".col-sm-5").addClass("has-success").removeClass("has-error");
+            }
+
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#editForm").validate({
+            rules: {
+                roles_name: {
+                    required: true,
+                    minlength: 2
+                },
+                roles_code: {
+                    required: true,
+                    minlength: 2
+                }
+
+            },
+            messages: {
+                roles_name: {
+                    required: "Please enter a name",
+                    minlength: "Name consist of at least 2 characters"
+                },
+                roles_code: {
+                    required: "Please enter a code",
+                    minlength: "Code consist of at least 2 digits"
+                }
+            },
+            errorElement: "em",
+            errorPlacement: function(error, element) {
+                // Add the `help-block` class to the error element
+                error.addClass("help-block");
+
+                if (element.prop("type") === "checkbox") {
+                    error.insertAfter(element.parent("label"));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).parents(".col-sm-5").addClass("has-error").removeClass("has-success");
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).parents(".col-sm-5").addClass("has-success").removeClass("has-error");
+            }
+
+        });
+    });
+</script>
+
 <script type="text/javascript">
     $('#editmodal').on('show.bs.modal', function(e) {
         var a = $(e.relatedTarget);
