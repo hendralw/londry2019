@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Transaction;
+use App\List_Item;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -28,14 +29,14 @@ class TransactionController extends Controller
     {
         $query = $request->get('query');
         $query = str_replace(" ", "%", $query);
-        $transactions = Transaction::where('transactions_id', 'like', '%' . $query . '%')
-            ->orWhere('customers_name', 'like', '%' . $query . '%')
+        $list_items = List_Item::where('list_items_id', 'like', '%' . $query . '%')
+            ->orWhere('list_items_name', 'like', '%' . $query . '%')
             ->orWhere('created_at', 'like', '%' . $query . '%')->get();
         if ($request->ajax()) {
-            return view('searchb', compact('transactions'))->render();
+            return view('searchb', compact('list_items'))->render();
         } else {
             // $transactions = Transaction::orderBy('transactions_id', 'ASC')->get();
-            return view('transaction', compact('transactions'));
+            return view('transaction', compact('list_items'));
         }
     }
 
@@ -44,71 +45,135 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function cart()
     {
         return view('transaction');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function addToCart($id)
     {
-        Transaction::create($request->all());
-        return redirect()->route('Transaction.index')->with('success', 'item created succesfully');
+        $product = List_Item::find($id);
+
+        if (!$product) {
+
+            abort(404);
+        }
+
+        $cart = session()->get('cart');
+
+        // if cart is empty then this the first product
+        if (!$cart) {
+
+            $cart = [
+                $id => [
+                    "iditem" => $product->list_items_id,
+                    "name" => $product->list_items_name,
+                    "quantity" => 1,
+                    "price" => $product->list_items_price,
+                ]
+            ];
+
+            session()->put('cart', $cart);
+
+            $htmlCart = view('cart')->render();
+
+            return response()->json(['msg' => 'Product added to cart successfully!', 'data' => $htmlCart]);
+
+            //return redirect()->back()->with('success', 'Product added to cart successfully!');
+        }
+
+        // if cart not empty then check if this product exist then increment quantity
+        if (isset($cart[$id])) {
+
+            $cart[$id]['quantity'] = $cart[$id]['quantity'] + 1; 
+
+            session()->put('cart', $cart);
+
+            $htmlCart = view('cart')->render();
+
+            return response()->json(['msg' => 'Product added to cart successfully!', 'data' => $htmlCart]);
+
+            //return redirect()->back()->with('success', 'Product added to cart successfully!');
+
+        }
+
+        // if item not exist in cart then add to cart with quantity = 1
+        $cart[$id] = [
+            "iditem" => $product->list_items_id,
+            "name" => $product->list_items_name,
+            "quantity" => 1,
+            "price" => $product->list_items_price,
+        ];
+
+        session()->put('cart', $cart);
+
+        $htmlCart = view('cart')->render();
+
+        return response()->json(['msg' => 'Product added to cart successfully!', 'data' => $htmlCart]);
+
+        //return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function update(Request $request)
     {
-        $transactions = Transaction::find($id);
-        return view('transaction', compact('transactions'));
+        if ($request->id and $request->quantity) {
+            $cart = session()->get('cart');
+
+            $cart[$request->id]["quantity"] = $request->quantity;
+
+            session()->put('cart', $cart);
+
+            $subTotal = $cart[$request->id]['quantity'] * $cart[$request->id]['price'];
+
+            $total = $this->getCartTotal();
+
+            $htmlCart = view('cart')->render();
+
+            return response()->json(['msg' => 'Cart updated successfully', 'data' => $htmlCart, 'total' => $total, 'subTotal' => $subTotal]);
+
+            //session()->flash('success', 'Cart updated successfully');
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function remove(Request $request)
     {
-        $transactions = Transaction::find($id);
-        return view('transaction', compact('transactions'));
+        if ($request->id) {
+
+            $cart = session()->get('cart');
+
+            if (isset($cart[$request->id])) {
+
+                unset($cart[$request->id]);
+
+                session()->put('cart', $cart);
+            }
+
+            $total = $this->getCartTotal();
+
+            $htmlCart = view('cart')->render();
+
+            return response()->json(['msg' => 'Product removed successfully', 'data' => $htmlCart, 'total' => $total]);
+
+            //session()->flash('success', 'Product removed successfully');
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-
-        $id = $request->input('transactions_id');
-        Transaction::find($id)->update($request->all());
-        return redirect()->route('Transaction.index')->with('success', 'item updated succesfully');
-    }
 
     /**
-     * Remove the specified resource from storage.
+     * getCartTotal
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     *
+     * @return float|int
      */
-    public function destroy($id)
+    private function getCartTotal()
     {
-        Transaction::find($id)->delete();
-        return redirect()->route('Transaction.index')->with('success', 'Item Deleted successfully');
+        $total = 0;
+
+        $cart = session()->get('cart');
+
+        foreach ($cart as $id => $details) {
+            $total += $details['price'] * $details['quantity'];
+        }
+
+        return number_format($total, 2);
     }
 }

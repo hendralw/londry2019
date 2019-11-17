@@ -1,10 +1,6 @@
 @extends('templates.default')
 
 @section('content')
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" /> -->
-
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
-
 
 
 
@@ -40,7 +36,7 @@
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Data Kategori Unit Item</h4>
+                                    <h4>Transaksi</h4>
                                 </div>
                             </div>
                         </div>
@@ -58,9 +54,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="container"><br>
-                            <button class="btn btn-primary btn-md waves-effect f-right d-inline-block md-trigger" data-toggle="modal" data-target="#default-Modal"><i class="fa fa-plus"></i>Add</button>
-                        </div>
+
                     </div>
                 </div>
 
@@ -72,25 +66,33 @@
 
                 <div class="page-body">
 
+                   
+
                     <div class="app-inner-layout app-inner-layout-page">
+
 
                         <div class="container-fluid">
                             <input class="form-control mb-3" id="myInput" type="text" placeholder="Search..">
-
+                            
                             <div id="mydiv">
                                 @include('searchb')
                             </div>
-                            <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
 
                         </div>
 
                     </div>
 
                 </div>
+                    <!-- cart -->
+                    <div id="mycart">
+                        @include('cart')
+                    </div>
+                    <!-- sampai sini cart -->
             </div>
 
 
         </div>
+        
     </div>
     <div class="md-overlay"></div>
 </div>
@@ -220,16 +222,19 @@
     function fetch_data(query) {
         $.ajax({
             url: "/Transaction",
-            data : {query:query},
+            data: {
+                query: query
+            },
             success: function(data) {
                 $('#mydiv').html('');
                 $('#mydiv').html(data);
+                eval(document.getElementById("runscript").innerHTML);
             }
         })
     }
     $(document).on('keyup', '#myInput', function() {
         var query = $('#myInput').val();
-        
+
         fetch_data(query);
     });
     // $(document).on('click', '.pagination a', function(event) {
@@ -244,4 +249,95 @@
     //     fetch_data(page, query);
     // });
 </script>
+
+<script type="text/javascript" id="runscript">
+        $(".add-to-cart").click(function (e) {
+            e.preventDefault();
+
+            var ele = $(this);
+
+            ele.siblings('.btn-loading').show();
+
+            $.ajax({
+                url: '{{ url('add-to-cart') }}' + '/' + ele.attr("data-id"),
+                method: "get",
+                data: {_token: '{{ csrf_token() }}'},
+                dataType: "json",
+                success: function (response) {
+                    
+                    ele.siblings('.btn-loading').hide();
+                    
+                    $("span#status").html('<div class="alert alert-success">'+response.msg+'</div>');
+                    $('#mycart').html(response.data);
+                    eval(document.getElementById("runscript2").innerHTML);
+                }
+            });
+        });
+    </script>
+
+  <script type="text/javascript" id="runscript2">
+
+        $(".update-cart").click(function (e) {
+            e.preventDefault();
+
+            var ele = $(this);
+
+            var parent_row = ele.parents("tr");
+
+            var quantity = parent_row.find(".quantity").val();
+
+            var product_subtotal = parent_row.find("span.product-subtotal");
+
+            var cart_total = $(".cart-total");
+
+            var loading = parent_row.find(".btn-loading");
+
+            loading.show();
+
+            $.ajax({
+                url: '{{ url('update-cart') }}',
+                method: "patch",
+                data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id"), quantity: quantity},
+                dataType: "json",
+                success: function (response) {
+                    loading.hide();
+
+                    $("span#status").html('<div class="alert alert-success">'+response.msg+'</div>');
+
+                    product_subtotal.text(response.subTotal);
+
+                    cart_total.text(response.total);
+                    
+                }
+            });
+        });
+
+        $(".remove-from-cart").click(function (e) {
+            e.preventDefault();
+
+            var ele = $(this);
+
+            var parent_row = ele.parents("tr");
+
+            var cart_total = $(".cart-total");
+
+            if(confirm("Are you sure")) {
+                $.ajax({
+                    url: '{{ url('remove-from-cart') }}',
+                    method: "DELETE",
+                    data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id")},
+                    dataType: "json",
+                    success: function (response) {
+                        parent_row.remove();
+
+                        $("span#status").html('<div class="alert alert-success">'+response.msg+'</div>');
+
+                        cart_total.text(response.total);
+                        
+                    }
+                });
+            }
+        });
+
+    </script>
 @endsection

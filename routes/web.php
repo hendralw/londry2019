@@ -49,3 +49,11 @@ Route::get('/', 'AuthController@home');
 
 Route::post('/Employee/check', 'UniqeCheckController@checkEmployee');
 Route::post('/Item_Category/check', 'UniqeCheckController@checkItemCategory');
+
+Route::get('cart', 'TransactionController@cart');
+
+Route::get('add-to-cart/{id}', 'TransactionController@addToCart');
+
+Route::patch('update-cart', 'TransactionController@update');
+
+Route::delete('remove-from-cart', 'TransactionController@remove');
