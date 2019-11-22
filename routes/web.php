@@ -29,6 +29,7 @@ use App\Employee;
 Route::resource('Branch', 'BranchController');
 Route::resource('Duration', 'DurationController');
 Route::resource('Employee', 'EmployeeController');
+Route::resource('Customer', 'CustomerController');
 
 Route::resource('Item_Category', 'ItemCategoryController');
 Route::resource('List_Item', 'ListItemController');
