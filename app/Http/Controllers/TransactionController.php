@@ -174,6 +174,6 @@ class TransactionController extends Controller
             $total += $details['price'] * $details['quantity'];
         }
 
-        return number_format($total, 2);
+        return number_format($total,2,',','.');
     }
 }

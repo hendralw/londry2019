@@ -256,7 +256,7 @@
 
             var ele = $(this);
 
-            ele.siblings('.btn-loading').show();
+            // ele.siblings('.btn-loading').show();
 
             $.ajax({
                 url: '{{ url('add-to-cart') }}' + '/' + ele.attr("data-id"),
@@ -265,10 +265,10 @@
                 dataType: "json",
                 success: function (response) {
                     
-                    ele.siblings('.btn-loading').hide();
+                    // ele.siblings('.btn-loading').hide();
                     
                     $("span#status").html('<div class="alert alert-success">'+response.msg+'</div>');
-                    $('#mycart').html(response.data);
+                    $('#mycart').fadeIn(500).html(response.data);
                     eval(document.getElementById("runscript2").innerHTML);
                 }
             });
@@ -339,5 +339,23 @@
             }
         });
 
+        $(document).ready(function() {
+            var x = document.getElementById("addCustomer");
+            x.style.display = "none";
+                $("#buttonAdd").click(function() {
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+                    } else {
+                        x.style.display = "none";
+                    }
+                });
+        });
+        
+        $(document).on('keyup', '#money', function() {
+        var retun = $('#money').val() - $('#total').val();
+        $('#return').val(retun.toFixed(2));
+    });
+
     </script>
+
 @endsection

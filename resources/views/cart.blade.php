@@ -46,7 +46,7 @@
     <tfoot>
         <tr class="visible-xs">
             <td colspan="3"></td>
-            <td class="text-center"><strong>Total Rp.<span class="cart-total">{{ $total }}</span></strong></td>
+            <td class="text-center"><strong>Total Rp.<span class="cart-total">{{ number_format($total,2,',','.') }}</span></strong></td>
             <td><button class="btn btn-primary btn-md waves-effect f-right d-inline-block md-trigger" data-toggle="modal" data-target="#default-Modal" id="open">payment</button></td>
         </tr>
     </tfoot>
@@ -72,31 +72,74 @@
                             <div class="form-group row">
                                 <label class="col-sm-12 col-form-label">Name
                                 </label>
-                                <div class="col-sm-12">
+                                <div class="col-sm-9">
                                     <input type="text" class="form-control" name="customers_name" id="durations_name">
                                 </div>
+                                <div class="col-sm-3">
+                                    <button type="button" class="btn" id="buttonAdd">Add</button>
+                                </div>
+                            </div>
+                            <div id="addCustomer">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Name
+                                    </label>
+
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="customers_name" id="customers_name">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Address
+                                    </label>
+
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="customers_name" id="customers_name">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Phone Number
+                                    </label>
+
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="customers_name" id="customers_name">
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-6 col-form-label">Amount of Money
+                                </label>
+                                <label class="col-sm-6 col-form-label">Return
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="number" class="form-control" name="money" id="money">
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="number" class="form-control" name="return" id="return">
+                                </div>                                
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-12 col-form-label">Detail Transaction
                                 </label>
                                 <div class="col-sm-12">
-                                    @if(session('cart'))
+                                    <!-- @if(session('cart'))
                                     @foreach((array) session('cart') as $id => $details)
                                     <div class="col-3">{{$details['name']}}</div>
                                     <div class="col-3">{{ $details['quantity']}}</div>
                                     @endforeach
-                                    @endif
-                                    <p>Total Rp. {{ $total }}</p>
+                                    @endif -->
+                                    <p>Total = Rp. {{ $total }}</p>
+                                    
                                 </div>
                             </div>
                             <div class="form-group row f-right">
                                 <div class="col-sm-12">
-                                    <button type="reset" class="btn btn-danger">Reset</button>
-                                    <button type="submit" class="btn btn-primary m-b-0" id="submitForm">Save</button>
+                                    <button type="submit" class="btn btn-primary m-b-0" id="submitForm">Pay</button>
                                 </div>
                             </div>
                         </div>
                         {{ Form::close() }}
+                        <input type="number" id="total" value="{{ $total }}" hidden>
                     </div>
                 </div>
             </div>
