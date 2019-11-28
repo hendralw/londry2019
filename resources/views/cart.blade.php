@@ -1,4 +1,8 @@
-<span id="status"></span>
+<?php
+use App\Customer;
+$customers = Customer::orderBy('customers_id', 'ASC')->get();
+?>
+
 
 <table id="cart" class="table table-hover table-condensed table-responsive">
     <thead>
@@ -47,102 +51,9 @@
         <tr class="visible-xs">
             <td colspan="3"></td>
             <td class="text-center"><strong>Total Rp.<span class="cart-total">{{ number_format($total,2,',','.') }}</span></strong></td>
-            <td><button class="btn btn-primary btn-md waves-effect f-right d-inline-block md-trigger" data-toggle="modal" data-target="#default-Modal" id="open">payment</button></td>
+            <td><button class="btn btn-primary btn-md waves-effect f-right d-inline-block md-trigger" data-toggle="modal" data-target="#payModal" data-total="{{ $total }}" id="open">payment</button></td>
         </tr>
     </tfoot>
 </table>
 
 
-{{-- Modal Add Data --}}
-<div class="modal fade" id="default-Modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="alert alert-danger" style="display:none"></div>
-            <div class="modal-header">
-                <h4 class="modal-title">Add Transaction</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="page-body">
-                    {{ Form::open(array('route' => 'Duration.store', 'method' => 'POST', 'id' => 'addForm')) }}
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form-group row">
-                                <label class="col-sm-12 col-form-label">Name
-                                </label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="customers_name" id="durations_name">
-                                </div>
-                                <div class="col-sm-3">
-                                    <button type="button" class="btn" id="buttonAdd">Add</button>
-                                </div>
-                            </div>
-                            <div id="addCustomer">
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Name
-                                    </label>
-
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="customers_name" id="customers_name">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Address
-                                    </label>
-
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="customers_name" id="customers_name">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Phone Number
-                                    </label>
-
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="customers_name" id="customers_name">
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-6 col-form-label">Amount of Money
-                                </label>
-                                <label class="col-sm-6 col-form-label">Return
-                                </label>
-                                <div class="col-sm-6">
-                                    <input type="number" class="form-control" name="money" id="money">
-                                </div>
-                                <div class="col-sm-6">
-                                    <input type="number" class="form-control" name="return" id="return">
-                                </div>                                
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-12 col-form-label">Detail Transaction
-                                </label>
-                                <div class="col-sm-12">
-                                    <!-- @if(session('cart'))
-                                    @foreach((array) session('cart') as $id => $details)
-                                    <div class="col-3">{{$details['name']}}</div>
-                                    <div class="col-3">{{ $details['quantity']}}</div>
-                                    @endforeach
-                                    @endif -->
-                                    <p>Total = Rp. {{ $total }}</p>
-                                    
-                                </div>
-                            </div>
-                            <div class="form-group row f-right">
-                                <div class="col-sm-12">
-                                    <button type="submit" class="btn btn-primary m-b-0" id="submitForm">Pay</button>
-                                </div>
-                            </div>
-                        </div>
-                        {{ Form::close() }}
-                        <input type="number" id="total" value="{{ $total }}" hidden>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>

@@ -58,3 +58,5 @@ Route::get('add-to-cart/{id}', 'TransactionController@addToCart');
 Route::patch('update-cart', 'TransactionController@update');
 
 Route::delete('remove-from-cart', 'TransactionController@remove');
+
+Route::post('CustomerStore','TransactionController@CustomerStore');

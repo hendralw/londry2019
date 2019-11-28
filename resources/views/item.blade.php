@@ -392,10 +392,7 @@
     src="{{ asset('files/bower_components/jquery/js/jquery.min.js') }}"></script>
 <script type="260fa9511e1061cdeb18b6d1-text/javascript"
     src="{{ asset('files/bower_components/jquery-ui/js/jquery-ui.min.js') }}"></script>
-<script type="260fa9511e1061cdeb18b6d1-text/javascript"
-    src="{{ asset('files/bower_components/popper.js/js/popper.min.js') }}"></script>
-<script type="260fa9511e1061cdeb18b6d1-text/javascript"
-    src="{{ asset('files/bower_components/bootstrap/js/bootstrap.min.js') }}"></script>
+
 
 <script type="260fa9511e1061cdeb18b6d1-text/javascript"
     src="{{ asset('files/bower_components/jquery-slimscroll/js/jquery.slimscroll.js') }}"></script>

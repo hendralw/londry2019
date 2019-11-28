@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Transaction;
+use App\Customer;
 use App\List_Item;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -27,16 +26,20 @@ class TransactionController extends Controller
      */
     public function index(Request $request)
     {
+       
         $query = $request->get('query');
         $query = str_replace(" ", "%", $query);
         $list_items = List_Item::where('list_items_id', 'like', '%' . $query . '%')
             ->orWhere('list_items_name', 'like', '%' . $query . '%')
             ->orWhere('created_at', 'like', '%' . $query . '%')->get();
+        $customers = Customer::orderBy('customers_id', 'ASC')->get();
         if ($request->ajax()) {
             return view('searchb', compact('list_items'))->render();
         } else {
             // $transactions = Transaction::orderBy('transactions_id', 'ASC')->get();
-            return view('transaction', compact('list_items'));
+           
+            return view('transaction', compact('list_items', 'customers'));
+            
         }
     }
 
@@ -175,5 +178,12 @@ class TransactionController extends Controller
         }
 
         return number_format($total,2,',','.');
+    }
+
+    public function CustomerStore(Request $request)
+    {
+        Customer::create($request->all());
+        $id = $request->customers_id;
+        return response()->json(['msg' => 'Customer created successfully']);
     }
 }

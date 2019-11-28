@@ -15,15 +15,18 @@
 <link rel="stylesheet" type="text/css" href="{{ asset ('files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}">
 <!-- <link rel="stylesheet" type="text/css" href="{{ asset ('files/assets/pages/data-table/extensions/responsive/css/responsive.dataTables.css') }}"> -->
 
-<link rel="stylesheet" type="text/css" href="{{ asset ('files/assets/pages/advance-elements/css/bootstrap-datetimepicker.css') }}">
+<!-- <link rel="stylesheet" type="text/css" href="{{ asset ('files/assets/pages/advance-elements/css/bootstrap-datetimepicker.css') }}"> -->
 
-<link rel="stylesheet" type="text/css" href="{{ asset ('files/bower_components/bootstrap-daterangepicker/css/daterangepicker.css') }}" />
-<link rel="stylesheet" type="text/css" href="{{ asset ('files/bower_components/datedropper/css/datedropper.min.css') }}" />
+<!-- <link rel="stylesheet" type="text/css" href="{{ asset ('files/bower_components/bootstrap-daterangepicker/css/daterangepicker.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ asset ('files/bower_components/datedropper/css/datedropper.min.css') }}" /> -->
+
 
 <link href="{{ asset ('files/assets/pages/jquery.filer/css/jquery.filer.css') }}" type="text/css" rel="stylesheet" />
 <link href="{{ asset ('files/assets/pages/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css') }}" type="text/css" rel="stylesheet" />
 
 <link rel="stylesheet" type="text/css" href="{{ asset ('files/assets/icon/font-awesome/css/font-awesome.min.css') }}">
+
+<link rel="stylesheet" type="text/css" href="{{ asset ('files/bower_components/bootstrap-select/css/bootstrap-select.min.css') }}" />
 
 
 
@@ -46,9 +49,7 @@
                                     <li class="breadcrumb-item">
                                         <a href="{{ '/' }}"> <i class="feather icon-home"></i> </a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="#!">Data Master</a>
-                                    </li>
-                                    <li class="breadcrumb-item"><a href="#!">Unit Item</a>
+                                    <li class="breadcrumb-item"><a href="#!">Transaction</a>
                                     </li>
 
                                 </ul>
@@ -74,7 +75,7 @@
                         <div class="container-fluid">
                             <input class="form-control mb-3" id="myInput" type="text" placeholder="Search..">
                             
-                            <div id="mydiv">
+                            <div id="mydiv" class="pre-scrollable">
                                 @include('searchb')
                             </div>
 
@@ -83,11 +84,110 @@
                     </div>
 
                 </div>
+                <span id="status"></span>
                     <!-- cart -->
                     <div id="mycart">
                         @include('cart')
                     </div>
                     <!-- sampai sini cart -->
+                    {{-- Modal Add Data --}}
+                        <div class="modal fade" id="payModal" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="alert alert-danger" style="display:none"></div>
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Pay Transaction</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="page-body">
+                                        <span id="statuscus"></span>
+                                            <div id="addCustomer">
+                                                <form id="formaddcustomer" method="post" action="javascript:void(0)">
+                                                <p>Add New Customer</p>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Name
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" name="customers_name" id="customers_name">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Address
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" name="customers_address" id="customers_address">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Phone Number
+                                                    </label>
+
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" name="customers_phone" id="customers_phone">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <button type="submit" class="btn btn-primary m-b-0" id="submitForm">Create</button>
+                                                    </div>
+                                                </div>
+                                                </form>
+                                            </div>
+                                            {{ Form::open(array('route' => 'Transaction.store', 'method' => 'POST', 'id' => 'addForm')) }}
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-12 col-form-label">Name
+                                                        </label>
+                                                        <div class="col-sm-9">
+                                                            <select class="selectpicker" data-live-search="true">
+                                                                @foreach($customers as $customer)
+                                                                    <option data-tokens="{{ $customer->customers_id }}">{{ $customer->customers_name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <button type="button" class="btn" id="buttonAdd">Add</button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-6 col-form-label">Amount of Money
+                                                        </label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" class="form-control" name="money" id="money">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-6 col-form-label">Return
+                                                        </label>
+                                                        <div class="col-sm-6">
+                                                            <span class="return"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-12 col-form-label">Detail Transaction
+                                                        </label>
+                                                        <div class="col-sm-12">
+                                                        <strong>Total Rp.<span class="cart-total"></span></strong>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row f-right">
+                                                        <div class="col-sm-12">
+                                                            <button type="submit" class="btn btn-primary m-b-0" id="submitForm">Pay</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {{ Form::close() }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
             </div>
 
 
@@ -98,16 +198,16 @@
 </div>
 <script data-cfasync="false" src="{{ asset('cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js') }}"></script>
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/jquery/js/jquery.min.js') }}"></script>
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/jquery-ui/js/jquery-ui.min.js') }}"></script>
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/popper.js/js/popper.min.js') }}"></script>
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/bootstrap/js/bootstrap.min.js') }}"></script>
+<!-- <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/jquery-ui/js/jquery-ui.min.js') }}"></script> -->
+<!-- <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/popper.js/js/popper.min.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/bootstrap/js/bootstrap.min.js') }}"></script> -->
 
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/jquery-slimscroll/js/jquery.slimscroll.js') }}"></script>
 
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/modernizr/js/modernizr.js') }}"></script>
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/modernizr/js/css-scrollbars.js') }}"></script>
 
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/pages/advance-elements/moment-with-locales.min.js') }}"></script>
+<!-- <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/pages/advance-elements/moment-with-locales.min.js') }}"></script>
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/pages/advance-elements/bootstrap-datetimepicker.min.js') }}"></script>
 
@@ -115,7 +215,7 @@
 
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/bower_components/datedropper/js/datedropper.min.js') }}"></script>
 
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/bower_components/sweetalert/js/sweetalert.min.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/bower_components/sweetalert/js/sweetalert.min.js') }}"></script> -->
 <!-- <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/js/modal.js') }}"></script> -->
 
 
@@ -123,23 +223,24 @@
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset ('files/assets/js/classie.js') }}"></script>
 
 
-<script src="{{ asset('files/bower_components/datatables.net/js/jquery.dataTables.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
+<!-- <script src="{{ asset('files/bower_components/datatables.net/js/jquery.dataTables.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
 <script src="{{ asset('files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js')}}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
-<script src="{{ asset('files/assets/pages/data-table/js/jszip.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
+<script src="{{ asset('files/assets/pages/data-table/js/jszip.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script> -->
 
-<script src="{{ asset('files/assets/pages/data-table/js/pdfmake.min.js')}}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
-<script src="{{ asset('files/assets/pages/data-table/js/vfs_fonts.js')}}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
+<!-- <script src="{{ asset('files/assets/pages/data-table/js/pdfmake.min.js')}}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
+<script src="{{ asset('files/assets/pages/data-table/js/vfs_fonts.js')}}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script> -->
 <!-- <script src="{{ asset('files/assets/pages/data-table/extensions/responsive/js/dataTables.responsive.min.js')}}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script> -->
-<script src="{{ asset('files/bower_components/datatables.net-buttons/js/buttons.print.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
-<script src="{{ asset('files/bower_components/datatables.net-buttons/js/buttons.html5.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
+<!-- <script src="{{ asset('files/bower_components/datatables.net-buttons/js/buttons.print.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
+<script src="{{ asset('files/bower_components/datatables.net-buttons/js/buttons.html5.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script> -->
 <!-- <script src="{{ asset('files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script>
 <script src="{{ asset('files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script> -->
 <!-- <script src="{{ asset('files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}" type="260fa9511e1061cdeb18b6d1-text/javascript"></script> -->
 
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/i18next/js/i18next.min.js') }}"></script>
+<!-- <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/i18next/js/i18next.min.js') }}"></script>
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/i18next-xhr-backend/js/i18nextXHRBackend.min.js') }}"></script>
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/i18next-browser-languagedetector/js/i18nextBrowserLanguageDetector.min.js') }}"></script>
-<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/jquery-i18next/js/jquery-i18next.min.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/jquery-i18next/js/jquery-i18next.min.js') }}"></script> -->
+
 <!-- 
 <script type="260fa9511e1061cdeb18b6d1-text/javascript" src="../files/assets/pages/advance-elements/custom-picker.js"></script> -->
 
@@ -160,22 +261,16 @@
     gtag('config', 'UA-23581568-13');
 </script>
 <script src="{{ asset ('ajax.cloudflare.com/cdn-cgi/scripts/95c75768/cloudflare-static/rocket-loader.min.js') }}" data-cf-settings="260fa9511e1061cdeb18b6d1-|49" defer=""></script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<!-- 
-<script type="text/javascript">
-    $('#editmodal').on('show.bs.modal', function(e) {
-        var a = $(e.relatedTarget);
-        var id = a.data('id');
-        var name = a.data('name');
-        // $("#branches_idmodal").val(id);
-        var modal = $(this)
-        document.getElementById("unit_items_name_modal").value = name;
-        document.getElementById("unit_items_id_modal").value = id;
-    })
-</script> -->
-<!-- <script src="{{ asset('files/assets/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+<script type="text/javascript" src="{{ asset('files/bower_components/jquery-slim/js/jquery-slim.min.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/popper.js/js/popper.min.js') }}"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/bootstrap/js/bootstrap.min.js') }}"></script>
+
+<script src="{{ asset('files/assets/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+<script type="260fa9511e1061cdeb18b6d1-text/javascript" src="{{ asset('files/bower_components/bootstrap-select/js/bootstrap-select.min.js') }}"></script>
+<!--
 <script type="text/javascript">
     // $.validator.setDefaults({
     //     submitHandler: function() {
@@ -229,6 +324,7 @@
                 $('#mydiv').html('');
                 $('#mydiv').html(data);
                 eval(document.getElementById("runscript").innerHTML);
+                
             }
         })
     }
@@ -237,19 +333,9 @@
 
         fetch_data(query);
     });
-    // $(document).on('click', '.pagination a', function(event) {
-    //     event.preventDefault();
-    //     var page = $(this).attr('href').split('page=')[1];
-    //     $('#hidden_page').val(page);
-
-    //     var query = $('#myInput').val();
-
-    //     $('li').removeClass('active');
-    //     $(this).parent().addClass('active');
-    //     fetch_data(page, query);
-    // });
 </script>
 
+<!-- add to cart -->
 <script type="text/javascript" id="runscript">
         $(".add-to-cart").click(function (e) {
             e.preventDefault();
@@ -270,11 +356,16 @@
                     $("span#status").html('<div class="alert alert-success">'+response.msg+'</div>');
                     $('#mycart').fadeIn(500).html(response.data);
                     eval(document.getElementById("runscript2").innerHTML);
-                }
+                    $( '.selectpicker' ).selectpicker( 'refresh' );
+                },
+            error: function(e) {
+                alert('Error' + e);
+            }
             });
         });
     </script>
 
+<!-- edit delete reurn -->
   <script type="text/javascript" id="runscript2">
 
         $(".update-cart").click(function (e) {
@@ -305,11 +396,13 @@
                     $("span#status").html('<div class="alert alert-success">'+response.msg+'</div>');
 
                     product_subtotal.text(response.subTotal);
-
                     cart_total.text(response.total);
-                    
-                }
-            });
+                  
+                },
+            error: function(e) {
+                alert('Error' + e);
+            }
+            }); 
         });
 
         $(".remove-from-cart").click(function (e) {
@@ -318,7 +411,6 @@
             var ele = $(this);
 
             var parent_row = ele.parents("tr");
-
             var cart_total = $(".cart-total");
 
             if(confirm("Are you sure")) {
@@ -334,12 +426,24 @@
 
                         cart_total.text(response.total);
                         
-                    }
+                    },
+            error: function(e) {
+                alert('Error' + e);
+            }
                 });
             }
         });
-
-        $(document).ready(function() {
+       
+   
+    </script>
+    <script >
+         $('#payModal').on('show.bs.modal', function(e) {
+        var a = $(e.relatedTarget);
+        // $("#branches_idmodal").val(id);
+        $('.selectpicker').selectpicker('refresh');
+        $('.cart_total').text('.cart_total')
+    });
+    $(document).ready(function() {
             var x = document.getElementById("addCustomer");
             x.style.display = "none";
                 $("#buttonAdd").click(function() {
@@ -352,10 +456,78 @@
         });
         
         $(document).on('keyup', '#money', function() {
-        var retun = $('#money').val() - $('#total').val();
-        $('#return').val(retun.toFixed(2));
+        var retun = $('#money').val() - (parseInt(($('.cart-total').html().split('.').join("")), 10) );
+        $('.return').text(retun.toFixed(2));
+        
     });
+    if ($("#formaddcustomer").length > 0) {
+    $("#formaddcustomer").validate({
+      
+    rules: {
+      customers_name: {
+        required: true,
+        minlength: 2
+      },
+      customers_phone: {
+            required: true,
+            digits:true,
+            minlength: 10,
+            maxlength:12,
+        },
+    customers_address: {
+            required: true,
+            minlength: 2,
+            maxlength: 50,
+        },    
+    },
+    messages: {
+        
+    customers_name: {
+        required: "Please enter name",
+        minlength: "The name minlength should be 2 characters long."
+      },
+      customers_phone: {
+        required: "Please enter contact number",
+        minlength: "The contact number should be 10 digits",
+        digits: "Please enter only numbers",
+        maxlength: "The contact number should be 12 digits",
+      },
+      customers_address: {
+          required: "Please enter valid email",
+          minlength: "The address minlength should be 2 characters long",
+          maxlength: "The address name should less than or equal to 50 characters",
+        },
+         
+    },
+    submitHandler: function(form) {
+     $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+      $('#submitForm').html('Sending..');
+      $.ajax({
+        url: '{{ url('CustomerStore') }}',
+        type: "POST",
+        data: $('#formaddcustomer').serialize(),
+        success: function( response ) {
+            $("span#statuscus").html('<div class="alert alert-success">'+response.msg+'</div>');
+            $('#submitForm').html('Submit');
+            
+            document.getElementById("addCustomer").style.display ="none";
+            document.getElementById("customers_name").value ="";
+            document.getElementById("customers_address").value ="";
+            document.getElementById("customers_phone").value ="";
+            $('.selectpicker').append($('<option>', {
+            value: res.getcategories[i].cat_id,
+            text: res.getcategories[i].category
+            }));
+            $('.selectpicker').selectpicker('refresh');
+        }
+      });
+    }
+  });
+}
 
-    </script>
-
+</script>
 @endsection
