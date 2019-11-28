@@ -28,7 +28,7 @@ $customers = Customer::orderBy('customers_id', 'ASC')->get();
                 <div class="row">
                     <div class="col-sm-3 hidden-xs"></div>
                     <div class="col-sm-9">
-                        <h4 class="nomargin">{{ $details['name'] }}</h4>
+                        <h6 class="nomargin">{{ $details['name'] }}</h6>
                     </div>
                 </div>
             </td>
@@ -38,8 +38,8 @@ $customers = Customer::orderBy('customers_id', 'ASC')->get();
             </td>
             <td data-th="Subtotal" class="text-center">Rp.<span class="product-subtotal">{{ $details['price'] * $details['quantity'] }}</span></td>
             <td class="actions" data-th="">
-                <button class="btn btn-info btn-sm update-cart" data-id="{{ $id }}"><i class="fa fa-refresh"></i></button>
-                <button class="btn btn-danger btn-sm remove-from-cart" data-id="{{ $id }}"><i class="fa fa-trash-o"></i></button>
+                <a href="" class="btn-info btn-mini update-cart" data-id="{{ $id }}"><i class="fa fa-refresh"></i></a>
+                <a href="" class="btn-danger btn-mini remove-from-cart" data-id="{{ $id }}"><i class="fa fa-trash-o"></i></a>
                 <i class="fa fa-circle-o-notch fa-spin btn-loading" style="font-size:24px; display: none"></i>
             </td>
         </tr>
@@ -51,7 +51,10 @@ $customers = Customer::orderBy('customers_id', 'ASC')->get();
         <tr class="visible-xs">
             <td colspan="3"></td>
             <td class="text-center"><strong>Total Rp.<span class="cart-total">{{ number_format($total,2,',','.') }}</span></strong></td>
-            <td><button class="btn btn-primary btn-md waves-effect f-right d-inline-block md-trigger" data-toggle="modal" data-target="#payModal" data-total="{{ $total }}" id="open">payment</button></td>
+        </tr>
+        <tr>
+            <td colspan="4"></td>
+            <td><button class="btn btn-primary btn-md waves-effect f-right d-inline-block md-trigger" data-toggle="modal" data-target="#payModal" data-total="{{ $total }}" id="open">payment</button></td>     
         </tr>
     </tfoot>
 </table>

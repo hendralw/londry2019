@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-4" hidden>
                             <div class="page-header-breadcrumb">
                                 <ul class="breadcrumb-title">
                                     <li class="breadcrumb-item">
@@ -61,26 +61,18 @@
 
                 @if ($message = Session::get('success'))
                 <div class="alert alert-success border-success">
-                    <strong>Success</strong> {{ $message }}
+                    <strong>Success</strong> {{ $message }} 
                 </div>
                 @endif
 
                 <div class="page-body">
-
-                   
-
                     <div class="app-inner-layout app-inner-layout-page">
-
-
                         <div class="container-fluid">
                             <input class="form-control mb-3" id="myInput" type="text" placeholder="Search..">
-                            
                             <div id="mydiv" class="pre-scrollable">
                                 @include('searchb')
                             </div>
-
                         </div>
-
                     </div>
 
                 </div>
@@ -365,7 +357,7 @@
         });
     </script>
 
-<!-- edit delete reurn -->
+<!-- edit delete return -->
   <script type="text/javascript" id="runscript2">
 
         $(".update-cart").click(function (e) {
