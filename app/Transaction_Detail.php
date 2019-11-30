@@ -9,7 +9,7 @@ class Transaction_Detail extends Model
     protected $table = "detail_transactions";
     protected $primaryKey = 'detail_transactions_id';
     public $timestamps = true;
-    protected $fillable = ['transactions_id', 'amount', 'sub_total'];
+    protected $fillable = ['transactions_id','list_items_id', 'quantity', 'sub_total'];
 
     public function transaksi()
     {

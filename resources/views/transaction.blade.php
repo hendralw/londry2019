@@ -61,7 +61,7 @@
 
                 @if ($message = Session::get('success'))
                 <div class="alert alert-success border-success">
-                    <strong>Success</strong> {{ $message }}
+                    <strong>Success</strong> {{ $message }} 
                 </div>
                 @endif
 
@@ -74,6 +74,9 @@
 
                         <div class="container-fluid">
                             <input class="form-control mb-3" id="myInput" type="text" placeholder="Search..">
+                            <div id="alert">
+                            <span id="status"></span>
+                            </div>
                             
                             <div id="mydiv" class="pre-scrollable">
                                 @include('searchb')
@@ -84,7 +87,6 @@
                     </div>
 
                 </div>
-                <span id="status"></span>
                     <!-- cart -->
                     <div id="mycart">
                         @include('cart')
@@ -103,7 +105,10 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="page-body">
-                                        <span id="statuscus"></span>
+                                            <div class="alert">
+                                            <span id="statuscus"></span>
+                                            </div>
+                                        
                                             <div id="addCustomer">
                                                 <form id="formaddcustomer" method="post" action="javascript:void(0)">
                                                 <p>Add New Customer</p>
@@ -143,9 +148,9 @@
                                                         <label class="col-sm-12 col-form-label">Name
                                                         </label>
                                                         <div class="col-sm-9">
-                                                            <select class="selectpicker" data-live-search="true">
+                                                            <select class="selectpicker" name="customers_id" id="customers_id" data-live-search="true">
                                                                 @foreach($customers as $customer)
-                                                                    <option data-tokens="{{ $customer->customers_id }}">{{ $customer->customers_name }}</option>
+                                                                    <option value="{{ $customer->customers_id }}">{{ $customer->customers_name }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -357,6 +362,11 @@
                     $('#mycart').fadeIn(500).html(response.data);
                     eval(document.getElementById("runscript2").innerHTML);
                     $( '.selectpicker' ).selectpicker( 'refresh' );
+                    $(".alert").fadeTo(3000, 0).slideUp(2000, function(){
+                        $(this).slideUp(500);
+                    });
+                   
+                    
                 },
             error: function(e) {
                 alert('Error' + e);
@@ -394,10 +404,11 @@
                     loading.hide();
 
                     $("span#status").html('<div class="alert alert-success">'+response.msg+'</div>');
-
                     product_subtotal.text(response.subTotal);
                     cart_total.text(response.total);
-                  
+                    $(".alert").fadeTo(3000, 0).slideUp(2000, function(){
+                        $(this).slideUp(500);
+                    });
                 },
             error: function(e) {
                 alert('Error' + e);
@@ -423,9 +434,10 @@
                         parent_row.remove();
 
                         $("span#status").html('<div class="alert alert-success">'+response.msg+'</div>');
-
                         cart_total.text(response.total);
-                        
+                        $(".alert").fadeTo(3000, 0).slideUp(2000, function(){
+                            $(this).slideUp(500);
+                        });
                     },
             error: function(e) {
                 alert('Error' + e);
@@ -441,7 +453,7 @@
         var a = $(e.relatedTarget);
         // $("#branches_idmodal").val(id);
         $('.selectpicker').selectpicker('refresh');
-        $('.cart_total').text('.cart_total')
+        $('.cart_total').text('.cart_total');
     });
     $(document).ready(function() {
             var x = document.getElementById("addCustomer");
@@ -513,14 +525,13 @@
         success: function( response ) {
             $("span#statuscus").html('<div class="alert alert-success">'+response.msg+'</div>');
             $('#submitForm').html('Submit');
-            
             document.getElementById("addCustomer").style.display ="none";
             document.getElementById("customers_name").value ="";
             document.getElementById("customers_address").value ="";
             document.getElementById("customers_phone").value ="";
             $('.selectpicker').append($('<option>', {
-            value: res.getcategories[i].cat_id,
-            text: res.getcategories[i].category
+            value: response.last_insert_id,
+            text: response.name
             }));
             $('.selectpicker').selectpicker('refresh');
         }
@@ -529,5 +540,17 @@
   });
 }
 
+</script>
+<script type="text/javascript">
+
+$(document).ready(function () {
+ 
+window.setTimeout(function() {
+    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+        $(this).slideUp(500);
+    });
+}, 5000);
+ 
+});
 </script>
 @endsection

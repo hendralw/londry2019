@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Customer;
 use App\List_Item;
 use App\Http\Controllers\Controller;
+use App\Transaction;
+use App\Transaction_Detail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -182,8 +184,31 @@ class TransactionController extends Controller
 
     public function CustomerStore(Request $request)
     {
-        Customer::create($request->all());
-        $id = $request->customers_id;
-        return response()->json(['msg' => 'Customer created successfully']);
+        $data = Customer::create($request->all());
+        $name = $request->customers_name;
+        return response()->json(['msg' => 'Customer created successfully','last_insert_id' => $data->customers_id, 'name' => $name]);
+    }
+    
+    public function store(Request $request)
+    {
+        $data = Transaction::create([
+            'customers_id' => $request->customers_id,
+            'employees_id' => session()->get('id'),
+            'total' => floor(str_replace(".", "", $this->getCartTotal()))
+        ]);
+
+        $cart = session()->get('cart');
+        foreach ($cart as $item) {
+        Transaction_Detail::create([
+            'transactions_id' => $data->transactions_id,
+            'list_items_id' => $item['iditem'],
+            'quantity' => $item['quantity'],
+            'sub_total' => $item['price']*$item['quantity']
+        ]);
+        unset($cart[$item['iditem']]);
+        session()->put('cart', $cart);
+        }
+    
+        return redirect()->route('Transaction.index')->with('success', 'Pay the laundry');
     }
 }
