@@ -25,4 +25,9 @@ class List_Item extends Model
     {
         return $this->belongsTo('App\Duration', 'durations_id');
     }
+
+    public function detail_transaksi()
+    {
+        return $this->hasMany('App\Transaction_Detail', 'detail_transactions_id');
+    }
 }

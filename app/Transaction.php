@@ -20,4 +20,9 @@ class Transaction extends Model
     {
         return $this->belongsTo('App\Employee', 'employees_id');
     }
+
+    public function customer()
+    {
+        return $this->belongsTo('App\Customer', 'customers_id');
+    }
 }

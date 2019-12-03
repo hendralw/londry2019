@@ -60,4 +60,6 @@ Route::patch('update-cart', 'TransactionController@update');
 Route::delete('remove-from-cart', 'TransactionController@remove');
 
 Route::post('CustomerStore','TransactionController@CustomerStore');
+
+Route::get('TransactionView','TransactionController@view');
 // Route::post('TransactionStore','TransactionController@TransactionStore');

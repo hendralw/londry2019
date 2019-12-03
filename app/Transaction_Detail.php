@@ -15,4 +15,9 @@ class Transaction_Detail extends Model
     {
         return $this->belongsTo('App\Transaction', 'transactions_id');
     }
+
+    public function list_item()
+    {
+        return $this->belongsTo('App\List_Item', 'list_items_id');
+    }
 }

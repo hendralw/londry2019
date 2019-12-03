@@ -212,4 +212,14 @@ class TransactionController extends Controller
     
         return redirect()->route('Transaction.index')->with('success', 'Pay the laundry');
     }
+    public function view(Request $request)
+    {
+  
+            $transactions = Transaction::orderBy('transactions_id', 'ASC')->get();
+            $detail_transactions = Transaction_Detail::orderBy('transactions_id', 'ASC')->get();
+           
+            return view('transactionview', compact('transactions', 'detail_transactions'));
+            
+    
+    }
 }
