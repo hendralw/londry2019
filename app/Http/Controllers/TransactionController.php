@@ -33,6 +33,7 @@ class TransactionController extends Controller
         $query = str_replace(" ", "%", $query);
         $list_items = List_Item::where('list_items_id', 'like', '%' . $query . '%')
             ->orWhere('list_items_name', 'like', '%' . $query . '%')
+            ->orWhere('list_items_price', 'like', '%' . $query . '%')
             ->orWhere('created_at', 'like', '%' . $query . '%')->get();
         $customers = Customer::orderBy('customers_id', 'ASC')->get();
         if ($request->ajax()) {
