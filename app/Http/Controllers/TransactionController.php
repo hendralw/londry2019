@@ -216,7 +216,9 @@ class TransactionController extends Controller
     {
   
             $transactions = Transaction::orderBy('transactions_id', 'ASC')->get();
-            $detail_transactions = Transaction_Detail::orderBy('transactions_id', 'ASC')->get();
+            $detail_transactions = Transaction_Detail::orderBy('transactions_id', 'ASC')->with(['list_item'=> function ($query) {
+                $query->with('unit_item');
+            }])->get();
            
             return view('transactionview', compact('transactions', 'detail_transactions'));
             

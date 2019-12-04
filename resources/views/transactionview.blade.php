@@ -136,7 +136,6 @@
                                                     <address>
                                                         <strong>Elf Cafe</strong>
                                                         <br>
-                                                        2135 Sunset Blvd
                                                         <br>
                                                         Los Angeles, CA 90026
                                                         <br>
@@ -150,42 +149,18 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Product</th>
-                                                            <th class="text-center">Price</th>
-                                                            <th class="text-center">Total</th>
+                                                            <th class="text-center">Quantity</th>
+                                                            <th class="text-center">Sub Total</th>
                                                         </tr>
                                                     </thead>
+                                                    <tbody id="detail_transactions_foreach"></tbody>
                                                     <tbody>
                                                         <tr>
-                                                            <td class=""><em>Baked Rodopa Sheep Feta</em></h4>
-                                                            </td>
-                                                            <td class="" style="text-align: center"> 2 </td>
-                                                            <td class=" text-center">$13</td>
-                                                        </tr>
-                                                       
-                                                        <tr>
-                                                            <td class="text-right">
-                                                                <p>
-                                                                    <strong>Subtotal: </strong>
-                                                                </p>
-                                                                <p>
-                                                                    <strong>Tax: </strong>
-                                                                </p>
-                                                            </td>
-                                                            <td class="text-center">
-                                                                <p>
-                                                                    <strong>$6.94</strong>
-                                                                </p>
-                                                                <p>
-                                                                    <strong>$6.94</strong>
-                                                                </p>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-right">
+                                                            <td colspan="2" class="text-right">
                                                                 <h4><strong>Total: </strong></h4>
                                                             </td>
                                                             <td class="text-center text-danger">
-                                                                <h4><strong>$31.53</strong></h4>
+                                                                <h4><strong id="total_price"></strong></h4>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -389,15 +364,39 @@
         document.getElementById("list_items_price_edit").value = list_items_price_edit;
     })
 
-</script>
-
-<script type="text/javascript">
-    $('#deletemodal').on('show.bs.modal', function (e) {
-        var a = $(e.relatedTarget);
-        var list_items_id_delete = a.data('id');
-        var modal = $(this)
-        document.getElementById("list_items_id_delete").value = list_items_id_delete;
-    })
-
 </script> -->
+
+    <script type="text/javascript">
+        <?php echo 'let detail_transaksi = ' . $detail_transactions->toJson() . ";"; ?>
+
+        $(document).ready(function() {
+            // console.log("detail", detail_transaksi)
+            $('#lookmodal').on('show.bs.modal', function(e) {
+                var a = $(e.relatedTarget);
+                var transactions_id = a.data('id');
+                var modal = $(this)
+                let detail = detail_transaksi.filter(item => item.transactions_id == transactions_id)
+                var element = document.getElementById("detail_transactions_foreach");
+                var temp = "";
+                var total = 0;
+                detail.forEach(myFunction);
+
+                function myFunction(item) {
+                    total = total + item.sub_total;
+                    temp += "<tr><td align=left> <h4><em>" + item.list_item.list_items_name + "</em></h4></td>";
+                    temp += "<td align=center>" + item.quantity + " " + item.list_item.unit_item.unit_items_name + "</td>";
+                    temp += "<td align=center> Rp." + rubah(item.sub_total) + "</td></tr>";
+                }
+
+                function rubah(angka) {
+                    var reverse = angka.toString().split('').reverse().join(''),
+                    ribuan = reverse.match(/\d{1,3}/g);
+                    ribuan = ribuan.join('.').split('').reverse().join('');
+                    return ribuan;
+                }
+                element.innerHTML = temp;
+                document.getElementById("total_price").innerHTML = "Rp." + rubah(total);
+            })
+        })
+    </script>
     @endsection
