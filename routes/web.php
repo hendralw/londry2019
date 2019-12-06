@@ -41,12 +41,13 @@ Route::resource('Role', 'RoleController');
 Route::resource('Transaction', 'TransactionController');
 Route::resource('Transaction_Detail', 'TransactionDetailController');
 
+Route::get('/', 'AuthController@index');
 Route::get('/Login', 'AuthController@index');
 Route::post('/loginPost', 'AuthController@loginPost');
 Route::get('/logout', 'AuthController@logout');
 
 
-Route::get('/', 'AuthController@home');
+Route::get('/Homepage', 'AuthController@home');
 
 Route::post('/Employee/check', 'UniqeCheckController@checkEmployee');
 Route::post('/Item_Category/check', 'UniqeCheckController@checkItemCategory');

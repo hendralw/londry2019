@@ -89,7 +89,6 @@
                         <div class="modal fade" id="payModal" tabindex="-1" role="dialog">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-                                    <div class="alert alert-danger" style="display:none"></div>
                                     <div class="modal-header">
                                         <h4 class="modal-title">Pay Transaction</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -98,9 +97,9 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="page-body">
-                                            <div class="alert">
+                                           
                                             <span id="statuscus"></span>
-                                            </div>
+                                      
                                         
                                             <div id="addCustomer">
                                                 <form id="formaddcustomer" method="post" action="javascript:void(0)">
@@ -170,7 +169,7 @@
                                                         <label class="col-sm-12 col-form-label">Detail Transaction
                                                         </label>
                                                         <div class="col-sm-12">
-                                                        <strong>Total Rp.<span class="cart-total"></span></strong>
+                                                        <strong>Total Rp.<span class="cart_totalmodal"></span></strong>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row f-right">
@@ -438,17 +437,21 @@
                 });
             }
         });
+        $("#open").click(function (e) {
+        var a = $(e.relatedTarget);
+        // $("#branches_idmodal").val(id);
+        $('.selectpicker').selectpicker('refresh');
+        var cart = document.getElementById("cart-total");
+        cart = cart.innerHTML;
+        $('.cart_totalmodal').text(cart);
+    });
        
    
     </script>
     <script >
-         $('#payModal').on('show.bs.modal', function(e) {
-        var a = $(e.relatedTarget);
-        // $("#branches_idmodal").val(id);
-        $('.selectpicker').selectpicker('refresh');
-        $('.cart_total').text('.cart_total');
-    });
+       
     $(document).ready(function() {
+        
             var x = document.getElementById("addCustomer");
             x.style.display = "none";
                 $("#buttonAdd").click(function() {

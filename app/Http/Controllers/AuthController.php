@@ -27,8 +27,12 @@ class AuthController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('login');
+    {  
+        if (!Session::get('login')) {
+            return view('login');
+        } else {
+            return redirect('Homepage');
+        }
     }
     public function home()
     {
@@ -50,7 +54,7 @@ class AuthController extends Controller
                 Session::put('id', $data->employees_id);
                 Session::put('username', $data->username);
                 Session::put('login', TRUE);
-                return redirect('/')->with('success', 'Login Berhasil!');
+                return redirect('/Homepage')->with('success', 'Login Berhasil!');
             } else {
                 return redirect('Login')->with('alert', 'Password atau Email, Salah !');
             }

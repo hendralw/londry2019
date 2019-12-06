@@ -69,7 +69,7 @@
                                         <table id="new-cons" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
-                                                    <th>No</th>
+                                                    <th>No Nota</th>
                                                     <th>Customer Name</th>
                                                     <th>Pegawai</th>
                                                     <th>Total</th>
@@ -84,7 +84,9 @@
                                                 <?php $no++ ?>
                                                 <tr>
                                                     <td>
-                                                        {{ $no }}
+                                                    <a href="#" data-toggle="modal" data-target="#lookmodal" id="transactions_id" data-id="{{ $transaction->transactions_id }}">
+                                                    {{ $transaction->created_at->format('dmmY') }} - {{ $transaction->transactions_id }}</a>
+                                                    
                                                     </td>
                                                     <td>
                                                         {{ $transaction->customer->customers_name }}
@@ -96,11 +98,10 @@
                                                         {{ $transaction->total }}
                                                     </td>
                                                     <td>
-                                                        {{ $transaction->created_at }}
+                                                        {{ $transaction->created_at->format('d M Y') }}
                                                     </td>
                                                     <td>
-                                                        <a href="#" data-toggle="modal" data-target="#lookmodal" id="transactions_id" data-id="{{ $transaction->transactions_id }}">
-                                                            <i class="fa fa-search btn btn-warning btn-mini btn-round"></i></a>
+                                                       
 
                                                     </td>
                                                 </tr>

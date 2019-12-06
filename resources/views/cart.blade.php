@@ -50,7 +50,7 @@ $customers = Customer::orderBy('customers_id', 'ASC')->get();
     <tfoot>
         <tr class="visible-xs">
             <td colspan="3"></td>
-            <td class="text-center"><strong>Total Rp.<span class="cart-total">{{ number_format($total,2,',','.') }}</span></strong></td>
+            <td class="text-center"><strong>Total Rp.<span class="cart-total" id="cart-total">{{ number_format($total,2,',','.') }}</span></strong></td>
         </tr>
         <tr>
             <td colspan="4"></td>
