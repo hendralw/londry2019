@@ -145,9 +145,9 @@
                                     <div class="">
                                         <div class="">
                                             <div class="row">
-                                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="col-xs-12 col-sm-12 col-md-12">
                                                     <address>
-                                                        <strong>Elf Cafe</strong>
+                                                        <strong>Conzept Laundry</strong>
                                                         <br>
                                                         <br>
                                                         Los Angeles, CA 90026
@@ -158,7 +158,7 @@
                                             </div>
                                             <div class="">
                                                 </span>
-                                                <table class="table table-hover">
+                                                <table class="class="table table-hover table-condensed table-responsive">
                                                     <thead>
                                                         <tr>
                                                             <th>Product</th>
