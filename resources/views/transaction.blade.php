@@ -60,7 +60,7 @@
                 </div>
 
                 @if ($message = Session::get('success'))
-                <div class="alert alert-success border-success">
+                <div class="alert alert-success border-success transalert">
                     <strong>Success</strong> {{ $message }} 
                 </div>
                 @endif
@@ -69,7 +69,7 @@
                     <div class="app-inner-layout app-inner-layout-page">
                         <div class="container-fluid">
                             <input class="form-control mb-3" id="myInput" type="text" placeholder="Search..">
-                            <div id="alert">
+                            <div id="alert cartalert">
                             <span id="status"></span>
                             </div>
                             
@@ -350,11 +350,11 @@
                     
                     // ele.siblings('.btn-loading').hide();
                     
-                    $("span#status").html('<div class="alert alert-success">'+response.msg+'</div>');
+                    $("span#status").html('<div class="alert alert-success cartalert">'+response.msg+'</div>');
                     $('#mycart').fadeIn(500).html(response.data);
                     eval(document.getElementById("runscript2").innerHTML);
                     $( '.selectpicker' ).selectpicker( 'refresh' );
-                    $(".alert").fadeTo(3000, 0).slideUp(2000, function(){
+                    $(".cartalert").fadeTo(3000, 0).slideUp(2000, function(){
                         $(this).slideUp(500);
                     });
                    
@@ -395,10 +395,10 @@
                 success: function (response) {
                     loading.hide();
 
-                    $("span#status").html('<div class="alert alert-success">'+response.msg+'</div>');
+                    $("span#status").html('<div class="alert alert-success cartalert">'+response.msg+'</div>');
                     product_subtotal.text(response.subTotal);
                     cart_total.text(response.total);
-                    $(".alert").fadeTo(3000, 0).slideUp(2000, function(){
+                    $(".cartalert").fadeTo(3000, 0).slideUp(2000, function(){
                         $(this).slideUp(500);
                     });
                 },
@@ -425,9 +425,9 @@
                     success: function (response) {
                         parent_row.remove();
 
-                        $("span#status").html('<div class="alert alert-success">'+response.msg+'</div>');
+                        $("span#status").html('<div class="alert alert-success cartalert">'+response.msg+'</div>');
                         cart_total.text(response.total);
-                        $(".alert").fadeTo(3000, 0).slideUp(2000, function(){
+                        $(".cartalert").fadeTo(3000, 0).slideUp(2000, function(){
                             $(this).slideUp(500);
                         });
                     },
@@ -542,7 +542,7 @@
 $(document).ready(function () {
  
 window.setTimeout(function() {
-    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+    $(".transalert").fadeTo(1000, 0).slideUp(1000, function(){
         $(this).slideUp(500);
     });
 }, 5000);

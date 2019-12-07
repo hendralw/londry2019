@@ -19,8 +19,8 @@
 
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.js"></script> -->
 
 
 <div class="pcoded-content">
@@ -73,6 +73,7 @@
                                                     <th>Customer Name</th>
                                                     <th>Pegawai</th>
                                                     <th>Total</th>
+                                                    <th>Status</th>
                                                     <th>Tanggal</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -84,9 +85,9 @@
                                                 <?php $no++ ?>
                                                 <tr>
                                                     <td>
-                                                    <a href="#" data-toggle="modal" data-target="#lookmodal" id="transactions_id" data-id="{{ $transaction->transactions_id }}">
-                                                    {{ $transaction->created_at->format('dmmY') }} - {{ $transaction->transactions_id }}</a>
-                                                    
+                                                        <a href="#" data-toggle="modal" data-target="#lookmodal" id="transactions_id" data-id="{{ $transaction->transactions_id }}">
+                                                            {{ $transaction->created_at->format('dmmY') }} - {{ $transaction->transactions_id }}</a>
+
                                                     </td>
                                                     <td>
                                                         {{ $transaction->customer->customers_name }}
@@ -98,10 +99,21 @@
                                                         {{ $transaction->total }}
                                                     </td>
                                                     <td>
+                                                        <form action="proses.php" method="POST">
+                                                            <select id="sel_id" name="sel_name" class="form-control" onchange="this.form.submit();">
+                                                                <option value="0">Select</option>
+                                                                <option value="2">Honda</option>
+                                                                <option value="3">Kawasaki</option>
+                                                                <option value="4">Yamaha</option>
+                                                            </select>
+                                                        </form>
+                                                    </td>
+                                                    <td>
                                                         {{ $transaction->created_at->format('d M Y') }}
                                                     </td>
                                                     <td>
-                                                       
+                                                    <a href="" data-toggle="modal" data-target="#deletemodal" id="transactions_id" data-id="{{ $transaction->transactions_idd }}"><i class="fa fa-payment btn btn-danger btn-mini btn-round"></i></a>
+                                                        <a href="" data-toggle="modal" data-target="#deletemodal" id="transactions_id" data-id="{{ $transaction->transactions_idd }}"><i class="fa fa-trash-o btn btn-danger btn-mini btn-round"></i></a>
 
                                                     </td>
                                                 </tr>
@@ -391,7 +403,7 @@
 
                 function rubah(angka) {
                     var reverse = angka.toString().split('').reverse().join(''),
-                    ribuan = reverse.match(/\d{1,3}/g);
+                        ribuan = reverse.match(/\d{1,3}/g);
                     ribuan = ribuan.join('.').split('').reverse().join('');
                     return ribuan;
                 }

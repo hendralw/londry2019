@@ -210,7 +210,7 @@ class TransactionController extends Controller
         session()->put('cart', $cart);
         }
     
-        return redirect()->route('Transaction.index')->with('success', 'Pay the laundry');
+        return redirect()->route('Transaction.index')->with('success', 'Create Transaction');
     }
     public function view(Request $request)
     {
