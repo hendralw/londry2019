@@ -8,6 +8,7 @@ use App\Transaction;
 use App\Transaction_Detail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use SebastianBergmann\Environment\Console;
 
 class TransactionController extends Controller
 {
@@ -187,7 +188,8 @@ class TransactionController extends Controller
     {
         $data = Customer::create($request->all());
         $name = $request->customers_name;
-        return response()->json(['msg' => 'Customer created successfully','last_insert_id' => $data->customers_id, 'name' => $name]);
+        $phone = $request->customers_phone;
+        return response()->json(['msg' => 'Customer created successfully','last_insert_id' => $data->customers_id, 'name' => $name, 'phone' => $phone]);
     }
     
     public function store(Request $request)
@@ -195,6 +197,7 @@ class TransactionController extends Controller
         $data = Transaction::create([
             'customers_id' => $request->customers_id,
             'employees_id' => session()->get('id'),
+            'status' => 'Pesanan Dibuat',
             'total' => floor(str_replace(".", "", $this->getCartTotal()))
         ]);
 
@@ -210,18 +213,32 @@ class TransactionController extends Controller
         session()->put('cart', $cart);
         }
     
-        return redirect()->route('Transaction.index')->with('success', 'Create Transaction');
+        return redirect('TransactionView')->with('success', 'Create Transaction');
     }
     public function view(Request $request)
     {
   
-            $transactions = Transaction::orderBy('transactions_id', 'ASC')->get();
+            $transactions = Transaction::orderBy('transactions_id', 'Desc')->get();
             $detail_transactions = Transaction_Detail::orderBy('transactions_id', 'ASC')->with(['list_item'=> function ($query) {
                 $query->with('unit_item');
             }])->get();
            
             return view('transactionview', compact('transactions', 'detail_transactions'));
-            
-    
+    }
+    public function StatusProses($id, Request $request)
+    {
+        $status = $request->get('sel_name');
+        Transaction::find($id)->update([
+            'status' => $status
+        ]);
+        return redirect('TransactionView')->with('success', 'Update Status');
+    }
+    public function PayProses(Request $request)
+    {
+        $id = $request->get('customers_ids');
+        Transaction::find($id)->update([
+            'status' => 'Lunas'
+        ]);
+        return redirect('TransactionView')->with('success', 'Payment Success');
     }
 }

@@ -59,11 +59,7 @@
                     </div>
                 </div>
 
-                @if ($message = Session::get('success'))
-                <div class="alert alert-success border-success transalert">
-                    <strong>Success</strong> {{ $message }} 
-                </div>
-                @endif
+
 
                 <div class="page-body">
                     <div class="app-inner-layout app-inner-layout-page">
@@ -90,7 +86,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Pay Transaction</h4>
+                                        <h4 class="modal-title">Create Transaction</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -142,7 +138,7 @@
                                                         <div class="col-sm-9">
                                                             <select class="selectpicker" name="customers_id" id="customers_id" data-live-search="true">
                                                                 @foreach($customers as $customer)
-                                                                    <option value="{{ $customer->customers_id }}">{{ $customer->customers_name }}</option>
+                                                                    <option value="{{ $customer->customers_id }}">{{ $customer->customers_name }}-{{ $customer->customers_phone }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -150,23 +146,8 @@
                                                             <button type="button" class="btn" id="buttonAdd">Add</button>
                                                         </div>
                                                     </div>
-
                                                     <div class="form-group row">
-                                                        <label class="col-sm-6 col-form-label">Amount of Money
-                                                        </label>
-                                                        <div class="col-sm-6">
-                                                            <input type="number" class="form-control" name="money" id="money">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-sm-6 col-form-label">Return
-                                                        </label>
-                                                        <div class="col-sm-6">
-                                                            <span class="return"></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-sm-12 col-form-label">Detail Transaction
+                                                        <label class="col-sm-12 col-form-label">Total Transaction
                                                         </label>
                                                         <div class="col-sm-12">
                                                         <strong>Total Rp.<span class="cart_totalmodal"></span></strong>
@@ -174,7 +155,7 @@
                                                     </div>
                                                     <div class="form-group row f-right">
                                                         <div class="col-sm-12">
-                                                            <button type="submit" class="btn btn-primary m-b-0" id="submitForm">Pay</button>
+                                                            <button type="submit" class="btn btn-primary m-b-0" id="submitForm">Create</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -463,11 +444,6 @@
                 });
         });
         
-        $(document).on('keyup', '#money', function() {
-        var retun = $('#money').val() - (parseInt(($('.cart-total').html().split('.').join("")), 10) );
-        $('.return').text(retun.toFixed(2));
-        
-    });
     if ($("#formaddcustomer").length > 0) {
     $("#formaddcustomer").validate({
       
@@ -527,7 +503,7 @@
             document.getElementById("customers_phone").value ="";
             $('.selectpicker').append($('<option>', {
             value: response.last_insert_id,
-            text: response.name
+            text: response.name -response.phone
             }));
             $('.selectpicker').selectpicker('refresh');
         }

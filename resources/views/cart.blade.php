@@ -34,7 +34,7 @@ $customers = Customer::orderBy('customers_id', 'ASC')->get();
             </td>
             <td data-th="Price">Rp.{{ $details['price'] }}</td>
             <td data-th="Quantity">
-                <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity" />
+                <input type="number" step="0.01" value="{{ $details['quantity'] }}" class="form-control quantity" />
             </td>
             <td data-th="Subtotal" class="text-center">Rp.<span class="product-subtotal">{{ $details['price'] * $details['quantity'] }}</span></td>
             <td class="actions" data-th="">

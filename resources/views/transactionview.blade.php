@@ -38,15 +38,7 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="page-header-breadcrumb">
-                                <ul class="breadcrumb-title">
-                                    <li class="breadcrumb-item">
-                                        <a href="{{ '/' }}"> <i class="feather icon-home"></i> </a>
-                                    </li>
-                                    <li class="breadcrumb-item"><a href="#!">Data Master</a>
-                                    </li>
-                                    <li class="breadcrumb-item"><a href="#!">Data Transaction</a>
-                                    </li>
-                                </ul>
+
                             </div>
                         </div>
                         <div class="container"><br>
@@ -79,10 +71,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php $no = 0; ?>
+
                                                 @if(count($transactions))
                                                 @foreach ($transactions as $transaction)
-                                                <?php $no++ ?>
+
                                                 <tr>
                                                     <td>
                                                         <a href="#" data-toggle="modal" data-target="#lookmodal" id="transactions_id" data-id="{{ $transaction->transactions_id }}">
@@ -90,7 +82,7 @@
 
                                                     </td>
                                                     <td>
-                                                        {{ $transaction->customer->customers_name }}
+                                                        {{ $transaction->customer->customers_name }} {{ $transaction->customer->customers_phone }}
                                                     </td>
                                                     <td>
                                                         {{ $transaction->employee->employees_name }}
@@ -99,21 +91,36 @@
                                                         {{ $transaction->total }}
                                                     </td>
                                                     <td>
-                                                        <form action="proses.php" method="POST">
-                                                            <select id="sel_id" name="sel_name" class="form-control" onchange="this.form.submit();">
-                                                                <option value="0">Select</option>
-                                                                <option value="2">Honda</option>
-                                                                <option value="3">Kawasaki</option>
-                                                                <option value="4">Yamaha</option>
+                                                        @if($transaction->status === "Lunas")
+                                                       <span class="text-success">Lunas</span> 
+                                                       <span>  pada tanggal {{ $transaction->updated_at->format('m/d/Y')}} </span>
+                                                        @else
+                                                        <form action="/StatusProses/{{ $transaction->transactions_id }}" method="POST">
+                                                            {{ csrf_field() }}
+                                                            {{ method_field('PATCH') }}
+                                                            @if($transaction->status === "Pesanan Dibuat")
+                                                            <select id="sel_id" name="sel_name" class="form-control btn-info" onchange="this.form.submit();">
+                                                            @elseif( $transaction->status === "Dikerjakan")
+                                                            <select id="sel_id" name="sel_name" class="form-control btn-warning" onchange="this.form.submit();">
+                                                            @else($transaction->status === "Selesai")
+                                                            <select id="sel_id" name="sel_name" class="form-control btn-success" onchange="this.form.submit();">
+                                                            @endif
+                                                                <option selected value="{{ $transaction->status }}" disabled>{{ $transaction->status }}</option>
+                                                                <option value="Pesanan Dibuat">Pesanan Dibuat</option>
+                                                                <option value="Dikerjakan">Dikerjakan</option>
+                                                                <option value="Selesai">Selesai</option>
                                                             </select>
                                                         </form>
+                                               @endif
                                                     </td>
                                                     <td>
                                                         {{ $transaction->created_at->format('d M Y') }}
                                                     </td>
                                                     <td>
-                                                    <a href="" data-toggle="modal" data-target="#deletemodal" id="transactions_id" data-id="{{ $transaction->transactions_idd }}"><i class="fa fa-payment btn btn-danger btn-mini btn-round"></i></a>
-                                                        <a href="" data-toggle="modal" data-target="#deletemodal" id="transactions_id" data-id="{{ $transaction->transactions_idd }}"><i class="fa fa-trash-o btn btn-danger btn-mini btn-round"></i></a>
+                                                        @if( $transaction->status === "Selesai")
+                                                        <a href="" data-toggle="modal" data-target="#payModal" data-name="{{ $transaction->customer->customers_name }}" data-phone="{{ $transaction->customer->customers_phone}}" data-address="{{ $transaction->customer->customers_address }}" data-id="{{ $transaction->transactions_id }}" data-total="{{ $transaction->total }}" id="open"><i class="fa fa-money btn btn-primary btn-mini btn-round"></i></a>
+                                                        @endif
+                                                        <a href="" data-toggle="modal" data-target="#deletemodal" id="transactions_id" data-id="{{ $transaction->transactions_id }}"><i class="fa fa-trash-o btn btn-danger btn-mini btn-round"></i></a>
 
                                                     </td>
                                                 </tr>
@@ -157,8 +164,7 @@
                                                 </div>
                                             </div>
                                             <div class="">
-                                                </span>
-                                                <table class="class="table table-hover table-condensed table-responsive">
+                                                <table class="table table-hover table-condensed table-responsive">
                                                     <thead>
                                                         <tr>
                                                             <th>Product</th>
@@ -189,6 +195,69 @@
                 </div>
 
 
+            </div>
+
+            {{-- Modal Add Data --}}
+            <div class="modal fade" id="payModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Payment</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="page-body">
+                            
+                                {{ Form::open(array('url' => 'PayProses', 'method' => 'PATCH')) }}
+                                <div class="row">
+                                    <div class="col-xs-6 col-sm-6 col-md-6">
+                                        <address>
+                                            Name : <strong id="customer_names"></strong>
+                                            <br><br>
+                                            Address : <span id="customer_addresss"></span><br>
+                                            Phone Number : <span id="customer_phones"></span>
+                                        </address>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <input type="number" name="customers_ids" id="customers_ids" hidden>
+                                    <div class="col-sm-12">
+                                        <div class="form-group row">
+                                            <label class="col-sm-6 col-form-label">Amount of Money
+                                            </label>
+                                            <div class="col-sm-6">
+                                                <input type="number" class="form-control" name="money" id="money">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-6 col-form-label">Return
+                                            </label>
+                                            <div class="col-sm-6">
+                                                Rp. <span class="return"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-12 col-form-label">Detail Transaction
+                                            </label>
+                                            <div class="col-sm-12">
+                                                <strong>Total Rp.<span class="cart_totalmodal"></span></strong>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row f-right">
+                                            <div class="col-sm-12">
+                                                <button type="submit" class="btn btn-primary m-b-0" id="submitPay">Pay</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{ Form::close() }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="md-overlay"></div>
@@ -242,11 +311,11 @@
         gtag('config', 'UA-23581568-13');
     </script>
     <script src="{{ asset ('ajax.cloudflare.com/cdn-cgi/scripts/95c75768/cloudflare-static/rocket-loader.min.js') }}" data-cf-settings="260fa9511e1061cdeb18b6d1-|49" defer=""></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous">
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" crossorigin="anonymous">
     </script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous">
     </script>
 
     {{-- Validation --}}
@@ -411,5 +480,55 @@
                 document.getElementById("total_price").innerHTML = "Rp." + rubah(total);
             })
         })
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            window.setTimeout(function() {
+                $(".alert").fadeTo(1000, 0).slideUp(1000, function() {
+                    $(this).slideUp(500);
+                });
+            }, 5000);
+
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#submitPay').attr('disabled', 'disabled');
+
+            function rubah(angka) {
+                var reverse = angka.toString().split('').reverse().join(''),
+                    ribuan = reverse.match(/\d{1,3}/g);
+                ribuan = ribuan.join('.').split('').reverse().join('');
+                return ribuan;
+            }
+            $('#payModal').on('show.bs.modal', function(e) {
+                var modal = $(e.relatedTarget);
+                var id = modal.data('id');
+                var name = modal.data('name');
+                var address = modal.data('address');
+                var phone = modal.data('phone');
+                var total = modal.data('total');
+
+                $('.cart_totalmodal').text(rubah(total));
+                $('#customer_names').text(name);
+                $('#customer_phones').text(phone);
+                $('#customer_addresss').text(address);
+                document.getElementById('customers_ids').value = id;
+
+
+                $(document).on('keyup', '#money', function() {
+                    var retun = $('#money').val() - total;
+                    $('.return').text(retun.toFixed(2));
+
+                    if ($('#money').val() < total) {
+                        $('#submitPay').attr('disabled', 'disabled');
+                    } else {
+                        $('#submitPay').attr('disabled', false);
+                    }
+
+                });
+            });
+        });
     </script>
     @endsection

@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
-use App\Employee;
+// use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Route;
+
 // use Illuminate\Routing\Route as IlluminateRoute;
 // use App\Http\Controllers\CaseInsensitiveUriValidator;
 // use Illuminate\Routing\Matching\UriValidator;
@@ -63,4 +64,6 @@ Route::delete('remove-from-cart', 'TransactionController@remove');
 Route::post('CustomerStore','TransactionController@CustomerStore');
 
 Route::get('TransactionView','TransactionController@view');
+Route::patch('StatusProses/{id}','TransactionController@StatusProses');
+Route::patch('PayProses','TransactionController@PayProses');
 // Route::post('TransactionStore','TransactionController@TransactionStore');
